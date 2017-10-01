@@ -209,6 +209,8 @@ function Nef.PendConditionSP()
 				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 				if ft<=0 then return false end
 
+				if n1 == 0 or n2 == 0 then return end
+
 				if pexfunc1 and pexfunc1(lpz):IsExists(Nef.PConditionFilterSP2,1,nil,e,tp,lscale,rscale,filter1,argTable1,filter2,argTable2,lpz,rpz) then
 					return true
 				end
@@ -220,8 +222,8 @@ function Nef.PendConditionSP()
 				if Duel.GetLocationCount(tp, LOCATION_MZONE) > 0 then loc = loc + LOCATION_HAND end
 				if Duel.GetLocationCountFromEx(tp) > 0 then loc = loc + LOCATION_EXTRA end
 				if loc == 0 then return false end
-				local g = nil
 
+				local g = nil
 				if og then
 					g = og:Filter(Card.IsLocation, nil, loc)
 					return g:IsExists(Nef.PConditionFilterSP,1,nil,e,tp,lscale,rscale,filter1,argTable1,filter2,argTable2,lpz,rpz)
@@ -357,13 +359,14 @@ function Nef.GetPendSPInfo(c)
 	local pend_num = 99
 	local pend_filter = Auxiliary.TRUE
 	local pend_arg = {1}
-	local pend_tag = nil
+	local pend_tag = ""
 	local pend_extra_func = Group.CreateGroup
 	for _,te in ipairs(eset) do
 		local mt=Nef.order_table[te:GetValue()]
 		if mt then
 			if mt.pend_num then
-				pend_num=math.min(pend_num,mt.pend_num)
+				local pnum = type(mt.pend_num) == "number" and mt.pend_num or mt.pend_num(c)
+				pend_num = math.min(pend_num, pnum)
 			end
 			if mt.pend_filter then				
 				local f1=pend_filter
@@ -375,7 +378,7 @@ function Nef.GetPendSPInfo(c)
 				pend_filter=function(c) return f1(c) and f2(c) end
 			end
 			pend_arg=mt.pend_arg or pend_arg
-			pend_tag=mt.pend_tag and pand_tag..mt.pend_tag or pend_tag
+			pend_tag=mt.pend_tag and pend_tag..mt.pend_tag or pend_tag
 		end
 	end
 	for _,te in ipairs(eset_ex) do
