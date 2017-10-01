@@ -77,6 +77,6 @@ function c20245.thop(e,tp,eg,ep,ev,re,r,rp)
 	if lpz or rpz then return end
 	local lp=Duel.CreateToken(tp,20252)
 	local rp=Duel.CreateToken(tp,20253)
-	Duel.MoveToField(lp, tp, tp, LOCATION_PZONE, POS_FACEUP, true)
-	Duel.MoveToField(rp, tp, tp, LOCATION_PZONE, POS_FACEUP, true)
+	Duel.MoveToField(lp, tp, tp, LOCATION_SZONE, POS_FACEUP, true)
+	Duel.MoveToField(rp, tp, tp, LOCATION_SZONE, POS_FACEUP, true)
 end

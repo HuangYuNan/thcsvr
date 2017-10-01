@@ -20,7 +20,6 @@ function c22123.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local z=Duel.GetMatchingGroup(c22123.cfilter,tp,LOCATION_MZONE,0,nil)
 	local tc=z:GetFirst()
-	local Duel.SetTargetCard(tc)
 	local seq=tc:GetSequence()
 	local g=Group.CreateGroup()
 	if seq==1 then
@@ -49,6 +48,9 @@ function c22123.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,6) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,6))
 		end
+		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,5) then
+			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,5))
+		end
 	elseif seq<4 then
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1))
@@ -76,25 +78,32 @@ function c22123.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,6) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,6))
 		end
+		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,5) then
+			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,5))
+		end
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,1) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,1))
 		end
 		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,3) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,3))
+			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,3))
 		end
 	elseif seq==6 then
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,5) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,5))
 		end
+		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,6) then
+			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,6))
+		end
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,3) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,3))
 		end
 		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,1))
+			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,1))
 		end
 	end
 	if g:IsContains(e:GetHandler()) then
 		g:RemoveCard(e:GetHandler()) end
+	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 	local h=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,g:GetCount()-h)
@@ -130,6 +139,9 @@ function c22123.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,6) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,6))
 		end
+		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,5) then
+			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,5))
+		end
 	elseif seq<4 then
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1))
@@ -157,21 +169,27 @@ function c22123.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,6) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,6))
 		end
+		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,5) then
+			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,5))
+		end
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,1) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,1))
 		end
 		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,3) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,3))
+			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,3))
 		end
 	elseif seq==6 then
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,5) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,5))
 		end
+		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,6) then
+			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,6))
+		end
 		if Duel.GetFieldCard(tp,LOCATION_MZONE,3) then
 			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,3))
 		end
 		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,1))
+			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,1))
 		end
 	end
 	if g:IsContains(e:GetHandler()) then

@@ -15,7 +15,7 @@ function c60020.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,0)
-	e2:SetCondition(c60020.sccon)
+	e2:SetCondition(c60020.spcon)
 	e2:SetTarget(c60020.splimit)
 	c:RegisterEffect(e2)
 	--level down
