@@ -107,6 +107,7 @@ function M.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tc = sg1:GetFirst()
 		sg1:Merge(sg2)
 		Duel.SendtoHand(sg1, tp, REASON_EFFECT)
+		Duel.ConfirmCards(1-tp, sg1)
 		if tc:IsType(TYPE_MONSTER) and tc:GetLevel() < 3 and tc:IsCanBeSpecialSummoned(e, 0, tp, false, false) 
 			and Duel.SelectYesNo(tp, aux.Stringid(Mid, 5)) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
