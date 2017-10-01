@@ -79,14 +79,20 @@ function M.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 end
 
 function M.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local lpz = Duel.GetFieldCard(tp, LOCATION_PZONE, 0)
-	local rpz = Duel.GetFieldCard(tp, LOCATION_PZONE, 1)
+	local lpz = Duel.GetFieldCard(tp, LOCATION_SZONE, 0)
+	local rpz = Duel.GetFieldCard(tp, LOCATION_SZONE, 4)
 	if chk == 0 then return lpz == nil and rpz == nil end
 end
 
 function M.operation(e,tp,eg,ep,ev,re,r,rp)
-	local lpz = Duel.GetFieldCard(tp, LOCATION_PZONE, 0)
-	local rpz = Duel.GetFieldCard(tp, LOCATION_PZONE, 1)
+	local c = e:GetHandler()
+	local seq = c:GetSequence()
+	if c:IsLocation(LOCATION_SZONE) and (seq == 0 or seq == 4) then 
+		Duel.SendtoGrave(c, REASON_RULE)
+	end
+
+	local lpz = Duel.GetFieldCard(tp, LOCATION_SZONE, 0)
+	local rpz = Duel.GetFieldCard(tp, LOCATION_SZONE, 4)
 	if lpz or rpz then return end
 
 	local rg = e:GetLabelObject()
