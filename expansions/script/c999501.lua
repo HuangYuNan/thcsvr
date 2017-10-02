@@ -113,11 +113,11 @@ function M.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function M.drfilter(c)
-	return c:IsDestructable() and c:IsSetCard(0x999) and c:GetSequence()>5
+	return c:IsDestructable() and c:IsSetCard(0x999)
 end
 
 function M.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(M.drfilter, tp, LOCATION_SZONE, 0, 1, nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(M.drfilter, tp, LOCATION_PZONE, 0, 1, nil) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0, CATEGORY_DRAW, nil, 0, tp, 1)
