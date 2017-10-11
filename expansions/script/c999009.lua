@@ -45,6 +45,11 @@ function M.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 
+M.hana_mat={
+aux.FilterBoolFunction(Card.IsFusionSetCard,0xaa6),
+aux.FilterBoolFunction(Card.IsFusionSetCard,0x9999),
+}
+
 function M.spfilter(c, e, tp, lv, def, code)
 	local flag = (not c:IsType(TYPE_XYZ) and not c:IsType(TYPE_LINK)) and lv > c:GetLevel() and c:IsCanBeSpecialSummoned(e, 0, tp, false, false, POS_FACEUP_DEFENSE)
 	if def then
