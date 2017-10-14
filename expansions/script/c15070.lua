@@ -50,7 +50,7 @@ function c15070.filter(c)
 	return c:IsSetCard(0x150) and c:IsAbleToHand()
 end
 function c15070.tuhanfilter(c,lv)
-	return c:GetLevel()<=lv and not c:IsType(TYPE_XYZ) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
+	return c:IsLevelBelow(lv) and c:IsAbleToHand()
 end
 function c15070.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c15070.filter,tp,LOCATION_REMOVED+LOCATION_DECK,0,1,nil) end

@@ -60,13 +60,13 @@ function c4031106.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c4031106.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDestructable()
+	return c:IsFaceup() and c:IsDestructable()
 end
 function c4031106.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c4031106.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c4031106.filter,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c4031106.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c4031106.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c4031106.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,c4031106.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c4031106.desop(e,tp,eg,ep,ev,re,r,rp)

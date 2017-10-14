@@ -86,7 +86,7 @@ function c15059.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function c15059.desfilter(c)
-	return c:IsFaceup() and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsAbleToHand() and not c:IsType(TYPE_LINK)
 end
 function c15059.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c15059.desfilter,tp,0,LOCATION_ONFIELD,1,e:GetHandler()) end
