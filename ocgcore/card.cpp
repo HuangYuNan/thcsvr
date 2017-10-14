@@ -16,6 +16,12 @@
 #include <iostream>
 #include <algorithm>
 
+//millux
+uint32 card::get_ritual_type() {
+	if(current.location == LOCATION_SZONE && (data.type & TYPE_MONSTER))
+		return data.type;
+	return get_type();
+}
 //222DIY
 uint32 card::set_entity_code(uint32 entity_code, bool remove_alias) {
 	card_data dat;
@@ -2511,7 +2517,7 @@ int32 card::filter_set_procedure(uint8 playerid, effect_set* peset, uint8 ignore
 	}
 	if(!pduel->game_field->is_player_can_mset(SUMMON_TYPE_NORMAL, playerid, this))
 		return FALSE;
-	int32 rcount = get_summon_tribute_count();
+	int32 rcount = get_set_tribute_count();
 	int32 min = rcount & 0xffff;
 	int32 max = (rcount >> 16) & 0xffff;
 	if(!pduel->game_field->is_player_can_mset(SUMMON_TYPE_ADVANCE, playerid, this))
@@ -3348,6 +3354,8 @@ int32 card::is_capable_cost_to_grave(uint8 playerid) {
 	if(current.location == LOCATION_GRAVE)
 		return FALSE;
 	if(is_affected_by_effect(EFFECT_CANNOT_USE_AS_COST))
+		return FALSE;
+	if(is_affected_by_effect(EFFECT_CANNOT_TO_GRAVE_AS_COST))
 		return FALSE;
 	if(!is_capable_send_to_grave(playerid))
 		return FALSE;

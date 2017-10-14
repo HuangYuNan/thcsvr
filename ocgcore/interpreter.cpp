@@ -16,6 +16,8 @@
 #include "interpreter.h"
 
 static const struct luaL_Reg cardlib[] = {
+	//millux
+	{ "IsRitualType", scriptlib::card_is_ritual_type },
 	//222DIY
 	{ "GetAffectingEffect", scriptlib::card_get_affecting_effect },
 	{ "FilterEffect", scriptlib::card_filter_effect },
@@ -108,6 +110,9 @@ static const struct luaL_Reg cardlib[] = {
 	{ "IsSynchroType", scriptlib::card_is_synchro_type },
 	{ "IsXyzType", scriptlib::card_is_xyz_type },
 	{ "IsLinkType", scriptlib::card_is_link_type },
+	{ "IsLevel", scriptlib::card_is_level },
+	{ "IsRank", scriptlib::card_is_rank },
+	{ "IsLink", scriptlib::card_is_link },
 	{ "IsRace", scriptlib::card_is_race },
 	{ "IsAttribute", scriptlib::card_is_attribute },
 	{ "IsFusionAttribute", scriptlib::card_is_fusion_attribute },
@@ -337,6 +342,7 @@ static const struct luaL_Reg grouplib[] = {
 	{ "FilterCount", scriptlib::group_filter_count },
 	{ "FilterSelect", scriptlib::group_filter_select },
 	{ "Select", scriptlib::group_select },
+	{ "SelectUnselect", scriptlib::group_select_unselect },
 	{ "RandomSelect", scriptlib::group_random_select },
 	{ "IsExists", scriptlib::group_is_exists },
 	{ "CheckWithSumEqual", scriptlib::group_check_with_sum_equal },
@@ -1180,6 +1186,11 @@ int32 interpreter::call_coroutine(int32 f, uint32 param_count, uint32 * yield_va
 		}
 		return COROUTINE_ERROR;
 	}
+}
+int32 interpreter::clone_function_ref(int32 func_ref) {
+	lua_rawgeti(current_state, LUA_REGISTRYINDEX, func_ref);
+	int32 ref = luaL_ref(current_state, LUA_REGISTRYINDEX);
+	return ref;
 }
 //Convert a pointer to a lua value, +1 -0
 void interpreter::card2value(lua_State* L, card* pcard) {

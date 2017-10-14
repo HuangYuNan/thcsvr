@@ -16,6 +16,8 @@ public:
 	static int32 check_param(lua_State* L, int32 param_type, int32 index, BOOL retfalse = FALSE);
 	static int32 check_param_count(lua_State* L, int32 count);
 	static int32 check_action_permission(lua_State* L);
+	//millux
+	static int32 card_is_ritual_type(lua_State *L);
 	//222DIY
 	static int32 card_get_affecting_effect(lua_State *L);
 	static int32 card_set_entity_code(lua_State *L);
@@ -118,6 +120,9 @@ public:
 	static int32 card_is_synchro_type(lua_State *L);
 	static int32 card_is_xyz_type(lua_State *L);
 	static int32 card_is_link_type(lua_State *L);
+	static int32 card_is_level(lua_State *L);
+	static int32 card_is_rank(lua_State *L);
+	static int32 card_is_link(lua_State *L);
 	static int32 card_is_race(lua_State *L);
 	static int32 card_is_attribute(lua_State *L);
 	static int32 card_is_fusion_attribute(lua_State *L);
@@ -338,6 +343,7 @@ public:
 	static int32 group_filter_count(lua_State *L);
 	static int32 group_filter_select(lua_State *L);
 	static int32 group_select(lua_State *L);
+	static int32 group_select_unselect(lua_State *L);
 	static int32 group_random_select(lua_State *L);
 	static int32 group_is_exists(lua_State *L);
 	static int32 group_check_with_sum_equal(lua_State *L);
