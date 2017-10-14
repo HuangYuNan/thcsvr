@@ -2,7 +2,7 @@
 function c26078.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fus.AddFusionProcFun2(c,c26078.ffilter,aux.FilterBoolFunction(Card.IsFusionType,TYPE_FLIP),false)
+	aux.AddFusionProcFun2(c,c26078.ffilter,aux.FilterBoolFunction(Card.IsFusionType,TYPE_FLIP),true)
 	--special summon rule
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)
@@ -33,6 +33,10 @@ function c26078.initial_effect(c)
 	e2:SetOperation(c26078.operation)
 	c:RegisterEffect(e2)
 end
+c26078.hana_mat={
+aux.FilterBoolFunction(Card.IsFusionSetCard,0x229),
+aux.FilterBoolFunction(Card.IsFusionType,TYPE_FLIP),
+}
 function c26078.ffilter(c)
 	return c:IsFusionSetCard(0x229)
 end

@@ -26,7 +26,7 @@ function c27145.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c27145.filter(c,def)
-	return c:IsFaceup() and c:IsAbleToHand() and c:GetDefense()<=def
+	return c:IsFaceup() and c:IsAbleToHand() and c:GetDefense()<=def and not c:IsType(TYPE_LINK)
 end
 function c27145.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

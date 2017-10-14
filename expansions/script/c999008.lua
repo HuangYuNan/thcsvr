@@ -39,6 +39,11 @@ function M.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 
+M.hana_mat={
+aux.FilterBoolFunction(Card.IsFusionSetCard,0xaa6),
+aux.FilterBoolFunction(Card.IsFusionSetCard,0x110),
+}
+
 function M.darkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
