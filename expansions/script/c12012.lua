@@ -26,7 +26,7 @@ function c12012.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(c12012.uncon)
+	e3:SetCondition(aux.IsUnionState)
 	e3:SetTarget(c12012.sptg)
 	e3:SetOperation(c12012.espop)
 	c:RegisterEffect(e3)
@@ -35,7 +35,7 @@ function c12012.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_EQUIP)
 	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e4:SetCode(EFFECT_DESTROY_SUBSTITUTE)
-	e4:SetCondition(c12012.uncon)
+	e4:SetCondition(aux.IsUnionState)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 	--eqlimit
@@ -66,10 +66,7 @@ function c12012.geqop(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	Duel.Equip(tp,c,tc,true)
-	c:SetStatus(STATUS_UNION,true)
-end
-function c12012.uncon(e)
-	return e:GetHandler():IsStatus(STATUS_UNION)
+	aux.SetUnionState(c)
 end
 function c12012.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x993) and c:GetUnionCount()==0
@@ -93,7 +90,7 @@ function c12012.eqop(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	if not Duel.Equip(tp,c,tc,false) then return end
-	c:SetStatus(STATUS_UNION,true)
+	aux.SetUnionState(c)
 end
 function c12012.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(12012)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

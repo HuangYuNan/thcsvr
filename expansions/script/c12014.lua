@@ -1,5 +1,4 @@
- 
---战车娘里香
+ --战车娘里香
 function c12014.initial_effect(c)
 	--equip
 	local e1=Effect.CreateEffect(c)
@@ -36,7 +35,7 @@ function c12014.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c12014.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc and Duel.Equip(tp,tc,c,true) then
-		tc:SetStatus(STATUS_UNION,true)
+		aux.SetUnionState(tc)
 	end
 end
 function c12014.afilter(c)

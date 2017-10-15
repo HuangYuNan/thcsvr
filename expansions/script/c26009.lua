@@ -54,6 +54,7 @@ function c26009.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(c26009.eqlimit)
 		tc:RegisterEffect(e1)
+		aux.SetUnionState(tc)
 	end
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)

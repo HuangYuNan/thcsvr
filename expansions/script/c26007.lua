@@ -1,5 +1,4 @@
- 
---星莲-见越入道 云山
+ --星莲-见越入道 云山
 function c26007.initial_effect(c)
 	--equip
 	local e1=Effect.CreateEffect(c)
@@ -76,7 +75,7 @@ function c26007.eqop(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	if not Duel.Equip(tp,c,tc,false) then return end
-	c:SetStatus(STATUS_UNION,true)
+	aux.SetUnionState(c)
 end
 function c26007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(26007)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

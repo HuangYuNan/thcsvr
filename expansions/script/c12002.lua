@@ -1,5 +1,4 @@
- 
---花式战车
+ --花式战车
 function c12002.initial_effect(c)
 	--unaffectable
 	local e1=Effect.CreateEffect(c)
@@ -24,7 +23,7 @@ function c12002.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(c12002.uncon)
+	e3:SetCondition(aux.IsUnionState)
 	e3:SetTarget(c12002.sptg)
 	e3:SetOperation(c12002.espop)
 	c:RegisterEffect(e3)
@@ -33,7 +32,7 @@ function c12002.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_EQUIP)
 	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e4:SetCode(EFFECT_DESTROY_SUBSTITUTE)
-	e4:SetCondition(c12002.uncon)
+	e4:SetCondition(aux.IsUnionState)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 	--eqlimit
@@ -46,9 +45,6 @@ function c12002.initial_effect(c)
 end
 function c12002.efilter(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
-end
-function c12002.uncon(e)
-	return e:GetHandler():IsStatus(STATUS_UNION)
 end
 function c12002.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x993) and c:GetUnionCount()==0
@@ -72,7 +68,7 @@ function c12002.eqop(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	if not Duel.Equip(tp,c,tc,false) then return end
-	c:SetStatus(STATUS_UNION,true)
+	aux.SetUnionState(c)
 end
 function c12002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(12002)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -132,6 +132,7 @@ function c26106.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(c26106.eqlimit)
 		tc:RegisterEffect(e1)
+		aux.SetUnionState(tc)
 	end
 end
 function c26106.eqlimit(e,c)
