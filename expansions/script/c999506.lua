@@ -54,7 +54,7 @@ function M.lvop(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e1)
 		end
 		-- change level
-		if not tc:IsType(TYPE_XYZ) and not c:IsType(TYPE_LINK) then
+		if not tc:IsType(TYPE_XYZ) and not tc:IsType(TYPE_LINK) then
 			local op = -1
 			if tc:GetLevel() == 1 then 
 				op = Duel.SelectOption(tp,aux.Stringid(Mid, 1))
