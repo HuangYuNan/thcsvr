@@ -72,18 +72,17 @@ function c26081.scost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
 	Duel.SendtoDeck(e:GetHandler(),nil,1,REASON_COST)
 end
-function c26081.filter1(c)
+function c26081.filter1(c,e,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsSetCard(0x208) and Duel.GetLocationCountFromEx(tp,tp,c)
+		and Duel.IsExistingMatchingCard(c26081.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
-function c26081.filter2(c,e,tp,mg)
-	return c:IsSetCard(0x229) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and c:IsType(TYPE_XYZ)--and c:IsXyzSummonable(mg)
+function c26081.filter2(c,e,tp,mc)
+	return c:IsSetCard(0x229) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and c:IsType(TYPE_XYZ) and mc:IsCanBeXyzMaterial(c)
 end
 function c26081.stg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c26081.filter1(chkc) end
 	if chk==0 then
-		local mg=Duel.GetMatchingGroup(c26081.filter1,tp,LOCATION_MZONE,0,nil)
 		return Duel.GetLocationCountFromEx(tp)>-1 and Duel.IsExistingTarget(c26081.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp)
-		and Duel.IsExistingMatchingCard(c26081.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg)
 		and Duel.GetMatchingGroupCount(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)==1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local g=Duel.SelectTarget(tp,c26081.filter1,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
@@ -93,9 +92,8 @@ function c26081.sop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<0 then return end
 	local tc=Duel.GetFirstTarget()
 	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) then return end
-	local mg=Duel.GetMatchingGroup(c26081.filter1,tp,LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c26081.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,mg)
+	local g=Duel.SelectMatchingCard(tp,c26081.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
 	local sc=g:GetFirst()
 	if sc then
 		Duel.Overlay(sc,Group.FromCards(tc))
