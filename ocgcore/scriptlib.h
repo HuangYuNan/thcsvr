@@ -32,6 +32,7 @@ public:
 	static int32 duel_read_card(lua_State *L);
 	static int32 duel_exile(lua_State *L);
 	static int32 duel_disable_action_check(lua_State *L);
+	static int32 duel_setmetatable(lua_State *L);
 
 	//card lib
 	static int32 card_get_code(lua_State *L);
@@ -274,7 +275,6 @@ public:
 	static int32 card_reset_negate_effect(lua_State *L);
 	static int32 card_assume_prop(lua_State *L);
 	static int32 card_set_spsummon_once(lua_State *L);
-	static int32 card_check_mzone_from_ex(lua_State *L);
 
 	//Effect functions
 	static int32 effect_new(lua_State *L);
@@ -370,8 +370,10 @@ public:
 	static int32 duel_get_draw_count(lua_State *L);
 	static int32 duel_register_effect(lua_State *L);
 	static int32 duel_register_flag_effect(lua_State *L);
-	static int32 duel_reset_flag_effect(lua_State *L);
 	static int32 duel_get_flag_effect(lua_State *L);
+	static int32 duel_reset_flag_effect(lua_State *L);
+	static int32 duel_set_flag_effect_label(lua_State *L);
+	static int32 duel_get_flag_effect_label(lua_State *L);
 	static int32 duel_destroy(lua_State *L);
 	static int32 duel_remove(lua_State *L);
 	static int32 duel_sendto_grave(lua_State *L);
@@ -447,6 +449,7 @@ public:
 	static int32 duel_increase_summon_count(lua_State *L);
 	static int32 duel_check_summon_count(lua_State *L);
 	static int32 duel_get_location_count(lua_State *L);
+	static int32 duel_get_mzone_count(lua_State *L);
 	static int32 duel_get_location_count_fromex(lua_State *L);
 	static int32 duel_get_usable_mzone_count(lua_State *L);
 	static int32 duel_get_linked_group(lua_State *L);
@@ -456,6 +459,7 @@ public:
 	static int32 duel_check_location(lua_State *L);
 	static int32 duel_get_current_chain(lua_State *L);
 	static int32 duel_get_chain_info(lua_State *L);
+	static int32 duel_get_chain_event(lua_State *L);
 	static int32 duel_get_first_target(lua_State *L);
 	static int32 duel_get_current_phase(lua_State *L);
 	static int32 duel_skip_phase(lua_State *L);

@@ -40,12 +40,11 @@ int32 scriptlib::card_filter_effect(lua_State *L) {
 	check_param(L, PARAM_TYPE_CARD, 1);
 	card* pcard = *(card**) lua_touserdata(L, 1);
 	uint32 code = lua_tointeger(L, 2);
-	int32 sort = lua_toboolean(L, 3);
+	uint8 sort = TRUE;
+	if(lua_gettop(L) >= 3)
+		sort = lua_toboolean(L, 3);
 	effect_set eset;
-	if(sort || (lua_gettop(L) < 3))
-		pcard->filter_effect(code, &eset, TRUE);
-	else
-		pcard->filter_effect(code, &eset, FALSE);
+	pcard->filter_effect(code, &eset, sort);
 	if(eset.size() <= 0)
 		return 0;
 	int32 count = 0;
@@ -408,7 +407,14 @@ int32 scriptlib::card_get_linked_zone(lua_State *L) {
 	check_param_count(L, 1);
 	check_param(L, PARAM_TYPE_CARD, 1);
 	card* pcard = *(card**) lua_touserdata(L, 1);
-	lua_pushinteger(L, pcard->get_linked_zone());
+	uint32 zone = pcard->get_linked_zone();
+	int32 cp = pcard->current.controler;
+	if(lua_gettop(L) >= 2 && !lua_isnil(L, 2))
+		cp = lua_tointeger(L, 2);
+	if(cp == 1 - pcard->current.controler)
+		lua_pushinteger(L, (((zone & 0xffff) << 16) | (zone >> 16)));
+	else
+		lua_pushinteger(L, zone);
 	return 1;
 }
 int32 scriptlib::card_get_mutual_linked_group(lua_State *L) {
@@ -434,7 +440,14 @@ int32 scriptlib::card_get_mutual_linked_zone(lua_State *L) {
 	check_param_count(L, 1);
 	check_param(L, PARAM_TYPE_CARD, 1);
 	card* pcard = *(card**)lua_touserdata(L, 1);
-	lua_pushinteger(L, pcard->get_mutual_linked_zone());
+	uint32 zone = pcard->get_mutual_linked_zone();
+	int32 cp = pcard->current.controler;
+	if(lua_gettop(L) >= 2 && !lua_isnil(L, 2))
+		cp = lua_tointeger(L, 2);
+	if(cp == 1 - pcard->current.controler)
+		lua_pushinteger(L, (((zone & 0xffff) << 16) | (zone >> 16)));
+	else
+		lua_pushinteger(L, zone);
 	return 1;
 }
 int32 scriptlib::card_is_link_state(lua_State *L) {
@@ -482,11 +495,18 @@ int32 scriptlib::card_get_column_zone(lua_State *L) {
 	int32 loc = lua_tointeger(L, 2);
 	int32 left = 0;
 	int32 right = 0;
+	int32 cp = pcard->current.controler;	
 	if(lua_gettop(L) >= 3)
 		left = lua_tointeger(L, 3);
 	if(lua_gettop(L) >= 4)
 		right = lua_tointeger(L, 4);
-	lua_pushinteger(L, pcard->get_column_zone(loc, left, right));
+	if(lua_gettop(L) >= 5 && !lua_isnil(L, 5))
+		cp = lua_tointeger(L, 5);
+	uint32 zone = pcard->get_column_zone(loc, left, right);
+	if(cp == 1 - pcard->current.controler)
+		lua_pushinteger(L, (((zone & 0xffff) << 16) | (zone >> 16)));
+	else
+		lua_pushinteger(L, zone);
 	return 1;
 }
 int32 scriptlib::card_is_all_column(lua_State *L) {
@@ -1430,9 +1450,6 @@ int32 scriptlib::card_register_effect(lua_State *L) {
 		pduel->game_field->core.reseted_effects.insert(peffect);
 		return 0;
 	}
-	if((peffect->type & 0x7f0)
-		|| (pduel->game_field->core.reason_effect && (pduel->game_field->core.reason_effect->status & EFFECT_STATUS_ACTIVATED)))
-		peffect->status |= EFFECT_STATUS_ACTIVATED;
 	int32 id;
 	if (peffect->handler)
 		id = -1;
@@ -1882,9 +1899,7 @@ int32 scriptlib::card_is_can_be_special_summoned(lua_State *L) {
 		toplayer = lua_tointeger(L, 8);
 	if(lua_gettop(L) >= 9)
 		zone = lua_tointeger(L, 9);
-	if(lua_gettop(L) >= 10)
-		nozoneusedcheck = lua_toboolean(L, 10);
-	if(pcard->is_can_be_special_summoned(peffect, sumtype, sumpos, sumplayer, toplayer, nocheck, nolimit, zone, nozoneusedcheck))
+	if(pcard->is_can_be_special_summoned(peffect, sumtype, sumpos, sumplayer, toplayer, nocheck, nolimit, zone))
 		lua_pushboolean(L, 1);
 	else
 		lua_pushboolean(L, 0);
@@ -2863,19 +2878,4 @@ int32 scriptlib::card_set_spsummon_once(lua_State *L) {
 	pcard->spsummon_code = lua_tointeger(L, 2);
 	pcard->pduel->game_field->core.global_flag |= GLOBALFLAG_SPSUMMON_ONCE;
 	return 0;
-}
-int32 scriptlib::card_check_mzone_from_ex(lua_State *L) {
-	check_param_count(L, 2);
-	check_param(L, PARAM_TYPE_CARD, 1);
-	card* pcard = *(card**) lua_touserdata(L, 1);
-	int32 playerid = lua_tointeger(L, 2);
-	duel* pduel = pcard->pduel;
-	field::card_set linked_cards;
-	uint32 linked_zone = pduel->game_field->core.duel_rule >= 4 ? pduel->game_field->get_linked_zone(playerid) | (1u << 5) | (1u << 6) : 0x1f;
-	pduel->game_field->get_cards_in_zone(&linked_cards, linked_zone, playerid, LOCATION_MZONE);
-	if(linked_cards.find(pcard) != linked_cards.end())
-		lua_pushboolean(L, 1);
-	else
-		lua_pushboolean(L, 0);
-	return 1;
 }

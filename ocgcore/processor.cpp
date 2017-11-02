@@ -204,7 +204,7 @@ int32 field::process() {
 		return pduel->bufferlen;
 	}
 	case PROCESSOR_SELECT_TRIBUTE: {
-		if (select_tribute_cards(it->step, it->arg1 & 0xff, (it->arg1 >> 16) & 0xff, (it->arg2) & 0xff, (it->arg2 >> 16) & 0xff, it->arg3))
+		if (select_tribute_cards(it->step, it->arg1 & 0xff, (it->arg1 >> 16) & 0xff, (it->arg2) & 0xff, (it->arg2 >> 16) & 0xff, it->arg3, it->arg4))
 			core.units.pop_front();
 		else
 			it->step++;
@@ -739,7 +739,7 @@ int32 field::process() {
 	}
 	case PROCESSOR_SELECT_TRIBUTE_S: {
 		if(it->step == 0) {
-			add_process(PROCESSOR_SELECT_TRIBUTE, 0, it->peffect, it->ptarget, it->arg1, it->arg2, it->arg3);
+			add_process(PROCESSOR_SELECT_TRIBUTE, 0, it->peffect, it->ptarget, it->arg1, it->arg2, it->arg3, it->arg4);
 			it->step++;
 		} else {
 			group* pgroup = pduel->new_group();
@@ -1429,7 +1429,7 @@ int32 field::process_phase_event(int16 step, int32 phase) {
 				if(peffect->is_flag(EFFECT_FLAG_FIELD_ONLY))
 					remove_effect(peffect);
 				else
-					phandler->remove_effect(peffect);
+					peffect->handler->remove_effect(peffect);
 				continue;
 			}
 			newchain.triggering_effect = peffect;
@@ -1547,7 +1547,7 @@ int32 field::process_phase_event(int16 step, int32 phase) {
 			if(peffect->is_flag(EFFECT_FLAG_FIELD_ONLY))
 				remove_effect(peffect);
 			else
-				phandler->remove_effect(peffect);
+				peffect->handler->remove_effect(peffect);
 			adjust_all();
 			core.units.begin()->step = 3;
 		} else if(!(peffect->type & EFFECT_TYPE_CONTINUOUS)) {
@@ -3073,12 +3073,11 @@ int32 field::process_battle_command(uint16 step) {
 		} else
 			pduel->write_buffer32(0);
 		core.attack_rollback = FALSE;
+		core.opp_mzone.clear();
 		for(uint32 i = 0; i < player[1 - infos.turn_player].list_mzone.size(); ++i) {
 			card* pcard = player[1 - infos.turn_player].list_mzone[i];
 			if(pcard)
-				core.opp_mzone[i] = pcard->fieldid_r;
-			else
-				core.opp_mzone[i] = 0;
+				core.opp_mzone.insert(pcard->fieldid_r);
 		}
 		//core.units.begin()->arg1 ---> is rollbacked
 		if(!core.units.begin()->arg1) {
@@ -3378,6 +3377,12 @@ int32 field::process_battle_command(uint16 step) {
 				pduel->write_buffer8(HINT_CARD);
 				pduel->write_buffer8(0);
 				pduel->write_buffer32(indestructable_effect->owner->data.code);
+				if(indestructable_effect->description) {
+					pduel->write_buffer8(MSG_HINT);
+					pduel->write_buffer8(12);
+					pduel->write_buffer8(0);
+					pduel->write_buffer32(indestructable_effect->description);
+				}
 				bd[0] = FALSE;
 			} else
 				core.attacker->set_status(STATUS_BATTLE_RESULT, TRUE);
@@ -3389,6 +3394,12 @@ int32 field::process_battle_command(uint16 step) {
 				pduel->write_buffer8(HINT_CARD);
 				pduel->write_buffer8(0);
 				pduel->write_buffer32(indestructable_effect->owner->data.code);
+				if(indestructable_effect->description) {
+					pduel->write_buffer8(MSG_HINT);
+					pduel->write_buffer8(12);
+					pduel->write_buffer8(0);
+					pduel->write_buffer32(indestructable_effect->description);
+				}
 				bd[1] = FALSE;
 			} else
 				core.attack_target->set_status(STATUS_BATTLE_RESULT, TRUE);
@@ -5325,20 +5336,14 @@ int32 field::adjust_step(uint16 step) {
 			attacker->set_status(STATUS_ATTACK_CANCELED, TRUE);
 		if(core.attack_rollback)
 			return FALSE;
+		std::set<uint16> fidset;
 		for(uint32 i = 0; i < player[1 - infos.turn_player].list_mzone.size(); ++i) {
 			card* pcard = player[1 - infos.turn_player].list_mzone[i];
-			if(pcard) {
-				if(!core.opp_mzone[i] || core.opp_mzone[i] != pcard->fieldid_r) {
-					core.attack_rollback = TRUE;
-					break;
-				}
-			} else {
-				if(core.opp_mzone[i]) {
-					core.attack_rollback = TRUE;
-					break;
-				}
-			}
+			if(pcard)
+				fidset.insert(pcard->fieldid_r);
 		}
+		if(fidset != core.opp_mzone)
+			core.attack_rollback = TRUE;
 		return FALSE;
 	}
 	case 15: {
