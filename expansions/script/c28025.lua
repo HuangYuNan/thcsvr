@@ -1,5 +1,4 @@
- 
---秘封「鸟船遗迹」
+ --秘封「鸟船遗迹」
 function c28025.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -14,7 +13,7 @@ function c28025.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetCondition(c28025.condition)
 	e2:SetTarget(c28025.filter)
-	e2:SetValue(-1300)
+	e2:SetValue(-1200)
 	c:RegisterEffect(e2)
 	--Def down
 	local e3=e2:Clone()
