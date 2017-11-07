@@ -58,6 +58,10 @@ function c31501.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-500)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		c:RegisterEffect(e1)
+		local fg=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,2)
+		if fg:GetFirst()==fg:RandomSelect(tp,1):GetFirst() then
+			Duel.Hint(11,0,aux.Stringid(31501,4))
+		end
 	end
 end
 function c31501.drcost(e,tp,eg,ep,ev,re,r,rp,chk)

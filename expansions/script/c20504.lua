@@ -99,6 +99,10 @@ function c20504.retreg(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	c:RegisterEffect(e2)
+		local fg=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,1)
+		if fg:GetFirst()==fg:RandomSelect(tp,1):GetFirst() then
+			Duel.Hint(11,0,aux.Stringid(20504,4))
+		end
 end
 function c20504.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

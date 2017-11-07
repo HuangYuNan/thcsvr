@@ -7,7 +7,7 @@ function c28507.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	--e1:SetCondition(c28507.smcon)
+	e1:SetCondition(c28507.smcon)
 	e1:SetOperation(c28507.retreg)
 	c:RegisterEffect(e1)
 	--activate
@@ -93,5 +93,8 @@ function c28507.smcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c28507.smfilter,tp,LOCATION_MZONE,0,3,nil)
 end
 function c28507.retreg(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(28507,4))
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,1)
+	if g:GetFirst()==g:RandomSelect(tp,1):GetFirst() then
+		Duel.Hint(11,0,aux.Stringid(28507,4))
+	end
 end
