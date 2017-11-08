@@ -36,7 +36,7 @@ function c22504.matfilter(c)
 	return not c:IsLinkType(TYPE_TOKEN) and c:IsSetCard(0x999)
 end
 function c22504.thfilter(c)
-	return c:IsSetCard(0x999) and c:IsAbleToHand()
+	return c:IsSetCard(0x999) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
 end
 function c22504.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c22504.thfilter(chkc) end
@@ -47,8 +47,15 @@ function c22504.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c22504.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
+		local c=e:GetHandler()
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1:SetReset(RESET_EVENT+0xff0000)
+		e1:SetValue(1)
+		c:RegisterEffect(e1,true)
 	end
 end
 function c22504.incon(e)

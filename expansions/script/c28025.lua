@@ -35,7 +35,7 @@ function c28025.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_CHAIN_UNIQUE)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_TO_GRAVE)
-	e5:SetCost(c28025.cost)
+	e5:SetCountLimit(1,28025)
 	e5:SetTarget(c28025.target)
 	e5:SetOperation(c28025.operation)
 	c:RegisterEffect(e5)
@@ -59,10 +59,6 @@ function c28025.mtop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.Destroy(e:GetHandler(),REASON_RULE)
 	end
-end
-function c28025.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,28025)<=1 end
-	Duel.RegisterFlagEffect(tp,28025,RESET_PHASE+PHASE_END,0,1)
 end
 function c28025.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

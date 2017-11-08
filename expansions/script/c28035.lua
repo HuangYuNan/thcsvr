@@ -14,9 +14,14 @@ function c28035.initial_effect(c)
 		c28035.global_check=true
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ATTACK_ANNOUNCE)
+		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge1:SetOperation(c28035.checkop)
 		Duel.RegisterEffect(ge1,0)
+		local ge2=Effect.CreateEffect(c)
+		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+		ge2:SetOperation(c28035.clear)
+		Duel.RegisterEffect(ge2,0)
 	end
 	--Activate
 	local e2=Effect.CreateEffect(c)
@@ -32,15 +37,22 @@ function c28035.initial_effect(c)
 end
 function c28035.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if not tc:IsSetCard(0x211) then
-		Duel.RegisterFlagEffect(tc:GetControler(),28035,RESET_PHASE+PHASE_END,0,1)
+	while tc do
+		if not tc:IsSetCard(0x211) then
+			c28035[tc:GetSummonPlayer()]=false
+		end
+		tc=eg:GetNext()
 	end
+end
+function c28035.clear(e,tp,eg,ep,ev,re,r,rp)
+	c28035[0]=true
+	c28035[1]=true
 end
 function c28035.cfilter(c)
 	return not c:IsSetCard(0x211)
 end
 function c28035.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,28035)==0 end
+	if chk==0 then return c28035[tp] and Duel.GetFlagEffect(tp,28035)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
