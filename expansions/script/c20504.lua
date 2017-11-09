@@ -116,17 +116,17 @@ function c20504.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function c20504.thfilter(c)
-	return c:IsSetCard(0x684)
+	return c:IsSetCard(0x684) and c:IsAbleToHand()
 end
 function c20504.thfilter2(c)
-	return c:IsType(TYPE_SPIRIT)
+	return c:IsType(TYPE_SPIRIT) and c:IsAbleToHand()
 end
 function c20504.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c20504.thfilter,tp,LOCATION_GRAVE,0,nil)
 	local g2=Duel.GetMatchingGroup(c20504.thfilter2,tp,LOCATION_GRAVE,0,nil)
 	local sg=Group.CreateGroup()
 	if g:GetCount()>0 then
-		local sg=g:GetMinGroup(Card.GetSequence)
+		sg=g:GetMinGroup(Card.GetSequence)
 	end
 	if g2:GetCount()>0 then
 		local sg2=g2:GetMinGroup(Card.GetSequence)
