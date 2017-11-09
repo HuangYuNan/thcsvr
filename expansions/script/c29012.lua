@@ -58,5 +58,7 @@ function c29012.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_PZONE,0,1,e:GetHandler(),29014)
 end
 function c29012.sumlimit(e,c,sump,sumtype,sumpos,targetp)
-	return sumtype==SUMMON_TYPE_PENDULUM and not c:IsSetCard(0x826)
+	local code=c:GetOriginalCode()
+	local mt=_G["c" .. code]
+	return sumtype==SUMMON_TYPE_PENDULUM and not (mt and mt.DescSetName==0x826)
 end
