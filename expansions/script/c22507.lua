@@ -9,7 +9,7 @@ function c22507.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e0:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e0:SetCondition(c22507.descon)
+	e0:SetCountLimit(1,22507)
 	e0:SetTarget(c22507.tg)
 	e0:SetOperation(c22507.op)
 	c:RegisterEffect(e0)
@@ -30,23 +30,20 @@ end
 function c22507.matfilter(c)
 	return not c:IsLinkType(TYPE_TOKEN) and c:IsSetCard(0x813)
 end
-function c22507.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_LINK
-end
 function c22507.filter(c)
 	return c:IsRace(RACE_FIEND) and c:IsAbleToDeck()
 end
 function c22507.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c22507.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c22507.filter,tp,LOCATION_GRAVE,0,2,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c22507.filter,tp,LOCATION_GRAVE,0,3,nil) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		local g=Duel.SelectTarget(tp,c22507.filter,tp,LOCATION_GRAVE,0,2,2,nil)
+		local g=Duel.SelectTarget(tp,c22507.filter,tp,LOCATION_GRAVE,0,3,3,nil)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c22507.op(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=2 then return end
+	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
 	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
