@@ -34,6 +34,11 @@ function c28035.initial_effect(c)
 	e2:SetTarget(c28035.target1)
 	e2:SetOperation(c28035.operation)
 	c:RegisterEffect(e2)
+--
+	Duel.AddCustomActivityCounter(28035,ACTIVITY_SPSUMMON,c28035.counterfilter)   
+end
+function c28035.counterfilter(c)
+	return c:IsSetCard(0x211)
 end
 function c28035.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
@@ -48,17 +53,17 @@ function c28035.clear(e,tp,eg,ep,ev,re,r,rp)
 	c28035[0]=true
 	c28035[1]=true
 end
-function c28035.cfilter(c)
+function c28035.splimit(e,c)
 	return not c:IsSetCard(0x211)
 end
 function c28035.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c28035[tp] and Duel.GetFlagEffect(tp,28035)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e1:SetProperty(EFFECT_FLAG_OATH)
-	e1:SetTarget(aux.TargetBoolFunction(c28035.cfilter))
-	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetTarget(c28035.splimit)
+	e1:SetTargetRange(1,0)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

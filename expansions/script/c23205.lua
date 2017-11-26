@@ -45,6 +45,7 @@ function c23205.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SpecialSummonComplete()
 			end
 			tc:AddCounter(0x128a,e:GetLabel())
+		end
 	else 
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=Duel.SelectMatchingCard(tp,c23205.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()

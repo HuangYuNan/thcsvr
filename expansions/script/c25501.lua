@@ -35,59 +35,81 @@ function c25501.initial_effect(c)
 	e6:SetValue(c25501.efilter)
 	c:RegisterEffect(e6)
 end
-function c25501.lkfilter(c, lc, tp)
-	local flag = c:IsFaceup() and c:IsCanBeLinkMaterial(lc)
+--
+function c25501.lkfilter(c,lc,tp)
+	local flag=c:IsFaceup() and c:IsCanBeLinkMaterial(lc)
 	if c:IsControler(tp) then
-		return flag
+		return flag and c:IsType(TYPE_MONSTER) 
 	else
-		return flag and not c:IsType(TYPE_LINK)
+		return flag and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_LINK)
 	end
 end
--- 每个素材对应的素材值
-function c25501.val(c)
-	return 1
+function c25501.lvfilter(c)
+	if c:IsType(TYPE_LINK) and c:GetLink()>1 then
+		return 1+0x10000*c:GetLink()
+	else 
+		return 1 
+	end
 end
--- 首个素材必须满足的要求
-function c25501.matfilter(c, mg, tp)
-	if Duel.GetLocationCountFromEx(tp, tp, c) < 1 then return end
-	local target_val = 7 -- 目标素材值
-	local minc = 7		 -- 最小所需个数
-	local maxc = 99		 -- 最大所需个数
-	local val = c25501.val(c)
-	if val == 99 then return false end
-	local g = mg:Clone()
-	g:RemoveCard(c)
-	-- 卧槽CheckWithSumGreater不能指定最小所需个数
-	-- return g:CheckWithSumGreater(func, target_val-val, minc, maxc)
-	return g:GetCount() >= minc - 1
+--
+function c25501.lcheck(tp,sg,lc,minc,ct)
+	return ct>=minc and sg:CheckWithSumEqual(c25501.lvfilter,lc:GetLink(),ct,ct) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0
 end
+function c25501.lkchenk(c,tp,sg,mg,lc,ct,minc,maxc)
+	sg:AddCard(c)
+	ct=ct+1
+	local res=c25501.lcheck(tp,sg,lc,minc,ct) or (ct<maxc and mg:IsExists(c25501.lkchenk,1,sg,tp,sg,mg,lc,ct,minc,maxc))
+	sg:RemoveCard(c)
+	ct=ct-1
+	return res
+end
+--
 function c25501.lkcon(e,c)
 	if c==nil then return true end
 	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(c25501.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c,tp)
-	return mg:IsExists(c25501.matfilter, 1, nil, mg, tp)
-end
-function c25501.lkop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg = Duel.GetMatchingGroup(c25501.lkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c,tp)
-	local func = c25501.val
-	local fmat = mg:FilterSelect(tp, c25501.matfilter, 1, 1, nil, mg, func, tp):GetFirst()
-	if not fmat then return end
-	local val = func(fmat)
-	if val == 99 then return end
-	mg:RemoveCard(fmat)
-	local target_val = 7 -- 目标素材值
-	local minc = 7		 -- 最小所需个数
-	local maxc = 99		 -- 最大所需个数
-	-- 卧槽SelectWithSumGreater不能指定最小所需个数
-	-- local mat = mg:SelectWithSumGreater(c:GetControler(), func, target_val-val, minc, maxc)
-	local mat = mg:Select(tp, minc, maxc, nil)
-	mat:AddCard(fmat)
-	if mat:GetCount() > 0 then
-		c:SetMaterial(mat)
-		Duel.SendtoGrave(mat,REASON_MATERIAL+REASON_LINK)
+	local mg=Duel.GetMatchingGroup(c25501.lkfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,c,tp)
+	local sg=Group.CreateGroup()
+	for i,pe in ipairs({Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_LMATERIAL)}) do
+		local pc=pe:GetHandler()
+		if not mg:IsContains(pc) then return false end
+		sg:AddCard(pc)
 	end
+	local ct=sg:GetCount()
+	local minc=7
+	local maxc=8
+	if ct>maxc then return false end
+	return c25501.lcheck(tp,sg,c,minc,ct) or mg:IsExists(c25501.lkchenk,1,nil,tp,sg,mg,c,ct,minc,maxc)
 end
+--
+function c25501.lkop(e,tp,eg,ep,ev,re,r,rp,c)
+	local mg=Duel.GetMatchingGroup(c25501.lkfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,c,tp)
+	local sg=Group.CreateGroup()
+	for i,pe in ipairs({Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_LMATERIAL)}) do
+		sg:AddCard(pe:GetHandler())
+	end
+	local ct=sg:GetCount()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
+	sg:Select(tp,ct,ct,nil)
+	local minc=7
+	local maxc=8
+	for i=ct,maxc-1 do
+		local cg=mg:Filter(c25501.lkchenk,sg,tp,sg,mg,c,i,minc,maxc)
+		if cg:GetCount()==0 then break end
+		local minct=1
+		if c25501.lcheck(tp,sg,c,minc,i) then
+			if not Duel.SelectYesNo(tp,210) then break end
+			minct=0
+		end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
+		local g=cg:Select(tp,minct,1,nil)
+		if g:GetCount()==0 then break end
+		sg:Merge(g)
+	end
+	c:SetMaterial(sg)
+	Duel.SendtoGrave(sg,REASON_MATERIAL+REASON_LINK)
+end
+--
 function c25501.atkval(e,c)
 	return c:GetLinkedGroupCount()*1000
 end

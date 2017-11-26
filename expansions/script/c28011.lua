@@ -85,7 +85,7 @@ function c28011.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(tp)
 end
 function c28011.filter(c,tp)
-	return c:IsSetCard(0xc211) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp
+	return c:IsSetCard(0xc211) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp and c:GetPreviousLocation()==LOCATION_ONFIELD
 end
 function c28011.scon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c28011.filter,1,nil,tp)
@@ -100,7 +100,8 @@ function c28011.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c28011.stg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(aux.TRUE,tp,0xf,0xf,1,nil) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+	and Duel.IsExistingMatchingCard(aux.TRUE,tp,0xf,0xf,1,nil) end
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0xf,0xf,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
