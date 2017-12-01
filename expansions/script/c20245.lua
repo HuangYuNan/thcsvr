@@ -3,7 +3,7 @@ function c20245.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fus.AddFusionProcFun2(c,c20245.mfilter1,c20245.mfilter,true)
-	--看闹特比性哭咯马特绕
+	--
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)

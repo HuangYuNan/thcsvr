@@ -33,7 +33,7 @@ function c25152.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		end
 		for i = 1,ct2 do
-			local token=Duel.CreateToken(tp,25162)
+			local token=Duel.CreateToken(1-tp,25162)
 			Duel.SpecialSummonStep(token,0,1-tp,1-tp,false,false,POS_FACEUP)
 		end
 		Duel.SpecialSummonComplete()

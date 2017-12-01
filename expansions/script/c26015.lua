@@ -1,4 +1,3 @@
---3
 --星莲-封印的魔法使 圣白莲
 function c26015.initial_effect(c)
 	--synchro summon
@@ -63,6 +62,10 @@ function c26015.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,5)
+		if g:RandomSelect(tp,1):IsContains(g:GetFirst()) then
+			Duel.Hint(11,0,aux.Stringid(26015,4))
+		end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

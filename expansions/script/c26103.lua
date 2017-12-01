@@ -109,7 +109,7 @@ function c26103.condition(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x251)
 end
 function c26103.spfilter(c,e,tp)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x251) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetSequence()>5
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x251) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c26103.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c26103.spfilter(chkc,e,tp) end

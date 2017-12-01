@@ -1,5 +1,4 @@
- 
---梦靥的蝴蝶梦丸
+ --梦靥的蝴蝶梦丸
 function c21044.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -97,6 +96,7 @@ function c21044.act2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

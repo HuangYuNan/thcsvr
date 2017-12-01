@@ -27,6 +27,7 @@ function c26066.initial_effect(c)
 	e3:SetOperation(c26066.flipop)
 	c:RegisterEffect(e3)
 end
+c26066.DescSetName = 0x229
 function c26066.thfilter(c)
 	return c:IsSetCard(0x306) and c:IsAbleToHand()
 end

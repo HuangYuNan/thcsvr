@@ -1,5 +1,4 @@
- 
---EX-克劳⑨
+ --EX-克劳⑨
 function c22099.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x208),aux.NonTuner(Card.IsSetCard,0x999),1)
@@ -58,6 +57,10 @@ function c22099.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c22099.op(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3)
+	if g:RandomSelect(tp,1):IsContains(g:GetFirst()) then
+		Duel.Hint(11,0,aux.Stringid(22099,4))
+	end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)

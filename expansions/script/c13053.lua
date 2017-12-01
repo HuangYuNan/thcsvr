@@ -53,9 +53,11 @@ function c13053.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 		Duel.BreakEffect()
-		c:CancelToGrave()
-		Duel.ChangePosition(c,POS_FACEDOWN)
-		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
+		if c:IsCanTurnSet() then
+			c:CancelToGrave()
+			Duel.ChangePosition(c,POS_FACEDOWN)
+			Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
+		end
 	end
 end
 function c13053.aclimit(e,re,tp)

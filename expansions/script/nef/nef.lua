@@ -144,8 +144,8 @@ function Nef.EnablePendulumAttributeSP(c,num,filter,argTable,reg,tag)
 end
 
 function Nef.PendSummonCheck(c,e,tp,lscale,rscale,filter,argTable,filter2,argTable2,lpc,rpc)
-	local eset1={lpc:FilterEffect(10000001)}
-	local eset2={rpc:FilterEffect(10000001)}
+	local eset1={lpc:IsHasEffect(10000001)}
+	local eset2={rpc:IsHasEffect(10000001)}
 	if c:IsType(TYPE_RITUAL) then
 		for _,te in ipairs(eset1) do
 			local mt=Nef.order_table[te:GetValue()]
@@ -345,7 +345,7 @@ end
 
 function Nef.GetPendMaxNum(c)
 	local ret=0
-	local eset={c:FilterEffect(10000002)}
+	local eset={c:IsHasEffect(10000002)}
 	for _,te in ipairs(eset) do
 		local v=te:GetValue()
 		if v and type(v)=="number" then ret=math.max(ret,v) end
@@ -354,8 +354,8 @@ function Nef.GetPendMaxNum(c)
 end
 
 function Nef.GetPendSPInfo(c)
-	local eset={c:FilterEffect(10000001)}
-	local eset_ex={c:FilterEffect(10000003)}
+	local eset={c:IsHasEffect(10000001)}
+	local eset_ex={c:IsHasEffect(10000003)}
 	local pend_num = 99
 	local pend_filter = Auxiliary.TRUE
 	local pend_arg = {1}
@@ -730,7 +730,7 @@ function Nef.AddSummonMusic(c,desc,stype)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	if stype then
-		e1:SetCondition(cm.SummonTypeCondition(stype))
+		e1:SetCondition(Nef.SummonTypeCondition(stype))
 	end
 	e1:SetOperation(function()
 		Duel.Hint(11,0,desc)
