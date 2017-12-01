@@ -69,12 +69,13 @@ public:
 	int32 is_can_be_forbidden();
 	int32 is_available();
 	int32 check_count_limit(uint8 playerid);
-	int32 is_activateable(uint8 playerid, const tevent& e, int32 neglect_cond = FALSE, int32 neglect_cost = FALSE, int32 neglect_target = FALSE, int32 neglect_loc = FALSE);
+	int32 is_activateable(uint8 playerid, const tevent& e, int32 neglect_cond = FALSE, int32 neglect_cost = FALSE, int32 neglect_target = FALSE, int32 neglect_loc = FALSE, int32 neglect_faceup = FALSE);
 	int32 is_action_check(uint8 playerid);
 	int32 is_activate_ready(uint8 playerid, const tevent& e, int32 neglect_cond = FALSE, int32 neglect_cost = FALSE, int32 neglect_target = FALSE);
 	int32 is_condition_check(uint8 playerid, const tevent& e);
 	int32 is_activate_check(uint8 playerid, const tevent& e, int32 neglect_cond = FALSE, int32 neglect_cost = FALSE, int32 neglect_target = FALSE);
 	int32 is_target(card* pcard);
+	int32 is_fit_target_function(card* pcard);
 	int32 is_target_player(uint8 playerid);
 	int32 is_player_effect_target(card* pcard);
 	int32 is_immuned(card* pcard);
@@ -325,6 +326,7 @@ inline effect_flag operator|(effect_flag flag1, effect_flag flag2)
 #define EFFECT_TRIBUTE_LIMIT			154
 #define EFFECT_EXTRA_RELEASE_SUM		155
 //#define EFFECT_TRIPLE_TRIBUTE			156
+#define EFFECT_ADD_EXTRA_TRIBUTE		157
 #define EFFECT_PUBLIC					160
 #define EFFECT_COUNTER_PERMIT			0x10000
 #define EFFECT_COUNTER_LIMIT			0x20000
@@ -401,6 +403,9 @@ inline effect_flag operator|(effect_flag flag1, effect_flag flag2)
 #define EFFECT_TO_GRAVE_REDIRECT_CB		313
 #define EFFECT_CHANGE_LEVEL_FINAL		314
 #define EFFECT_CHANGE_RANK_FINAL		315
+#define EFFECT_MUST_BE_FMATERIAL		316
+#define EFFECT_MUST_BE_XMATERIAL		317
+#define EFFECT_MUST_BE_LMATERIAL		318
 #define EFFECT_SPSUMMON_PROC_G			320
 #define EFFECT_SPSUMMON_COUNT_LIMIT		330
 #define EFFECT_LEFT_SPSUMMON_COUNT		331
