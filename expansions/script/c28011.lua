@@ -1,5 +1,4 @@
- 
---秘封 宇佐见莲子
+ --秘封 宇佐见莲子
 function c28011.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
@@ -69,7 +68,8 @@ function c28011.filter2(c)
 	return not c:IsSetCard(0x208) and c:IsDestructable() and c:IsFaceup()
 end
 function c28011.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c28011.cfilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsExistingMatchingCard(c28011.jfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c28011.cfilter,tp,LOCATION_HAND,0,1,nil)
+		and Duel.IsExistingMatchingCard(c28011.jfilter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function c28011.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 then return end
@@ -85,7 +85,7 @@ function c28011.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(tp)
 end
 function c28011.filter(c,tp)
-	return c:IsSetCard(0xc211) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp
+	return c:IsSetCard(0xc211) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp and c:GetPreviousLocation()==LOCATION_ONFIELD
 end
 function c28011.scon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c28011.filter,1,nil,tp)
@@ -94,13 +94,14 @@ function c28011.costfilter(c)
 	return c:IsSetCard(0x211) and c:IsAbleToGraveAsCost() and c:IsFaceup()
 end
 function c28011.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c28011.costfilter,tp,LOCATION_REMOVED,0,7,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c28011.costfilter,tp,LOCATION_REMOVED,0,8,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c28011.costfilter,tp,LOCATION_REMOVED,0,7,7,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c28011.costfilter,tp,LOCATION_REMOVED,0,8,8,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c28011.stg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(aux.TRUE,tp,0xf,0xf,1,nil) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+	and Duel.IsExistingMatchingCard(aux.TRUE,tp,0xf,0xf,1,nil) end
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0xf,0xf,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)

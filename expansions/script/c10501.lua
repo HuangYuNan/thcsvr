@@ -9,6 +9,7 @@ function c10501.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e1:SetTarget(c10501.tgtg)
 	e1:SetValue(c10501.atkval)
 	c:RegisterEffect(e1)
 	local e4=e1:Clone()
@@ -35,6 +36,9 @@ function c10501.initial_effect(c)
 	e3:SetTarget(c10501.drtg)
 	e3:SetOperation(c10501.drop)
 	c:RegisterEffect(e3)
+end
+function c10501.tgtg(e,c)
+	return c:GetLevel()>=4
 end
 function c10501.atkval(e,c)
 	local val=math.max(c:GetLevel(),c:GetRank())
@@ -74,19 +78,19 @@ end
 function c10501.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end
-function c10501.filter(c,tp)
+function c10501.filter(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and c:IsAbleToHand()
 end
 function c10501.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local mg=e:GetHandler():GetMaterial()
-	if chk==0 then return mg:IsExists(c10501.filter,1,nil,tp) end
+	if chk==0 then return mg:IsExists(c10501.filter,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 end
 function c10501.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local mg=e:GetHandler():GetMaterial()
-	local sg=mg:FilterSelect(tp,c10501.filter,1,1,nil,tp)
+	local sg=mg:FilterSelect(tp,c10501.filter,1,1,nil)
 	if sg:GetCount()>0 then
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)

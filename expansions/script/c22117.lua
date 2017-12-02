@@ -1,5 +1,4 @@
- 
---红魔馆·里
+ --红魔馆·里
 function c22117.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -48,7 +47,7 @@ function c22117.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c22117.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x208) and c:IsLevelAbove(1)
+	return c:IsFaceup() and c:IsSetCard(0x208) and c:IsLevelAbove(1) and not c:IsType(TYPE_LINK)
 end
 function c22117.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c22117.filter(chkc) end
@@ -76,7 +75,7 @@ function c22117.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22117.filter1(c)
-	return c:IsFaceup() and c:IsLevelAbove(2)
+	return c:IsFaceup() and c:IsLevelAbove(2) and not c:IsType(TYPE_LINK)
 end
 function c22117.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c22117.filter1(chkc) end
@@ -99,7 +98,7 @@ function c22117.operation1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22117.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x813) and not c:IsType(TYPE_TUNER)
+	return c:IsFaceup() and c:IsSetCard(0x813) and not c:IsType(TYPE_TUNER) and not c:IsType(TYPE_LINK)
 end
 function c22117.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c22117.filter2(chkc) end

@@ -40,6 +40,9 @@ function c23501.addc(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		tc:AddCounter(0x128a,2)
+		if Duel.GetFlagEffect(tc:GetControler(),23200)==0 then
+			Duel.RegisterFlagEffect(tc:GetControler(),23200,0,0,0)
+		end
 	end
 end
 function c23501.repfilter(c,tp,hc)

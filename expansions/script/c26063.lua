@@ -29,6 +29,7 @@ function c26063.initial_effect(c)
 	e3:SetOperation(c26063.flipop)
 	c:RegisterEffect(e3)
 end
+c26063.DescSetName = 0x229
 function c26063.cffilter(c,e,tp)
 	return c:IsSetCard(0x229) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and not c:IsPublic()
 end

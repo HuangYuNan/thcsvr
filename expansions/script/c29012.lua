@@ -20,7 +20,7 @@ function c29012.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetRange(LOCATION_PZONE)
 	e4:SetCondition(c29012.sccon)
-	e4:SetValue(1)
+	e4:SetValue(0)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_CHANGE_RSCALE)
@@ -58,5 +58,7 @@ function c29012.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_PZONE,0,1,e:GetHandler(),29014)
 end
 function c29012.sumlimit(e,c,sump,sumtype,sumpos,targetp)
-	return sumtype==SUMMON_TYPE_PENDULUM and not c:IsSetCard(0x826)
+	local code=c:GetOriginalCode()
+	local mt=_G["c" .. code]
+	return sumtype==SUMMON_TYPE_PENDULUM and not (mt and mt.DescSetName==0x826)
 end

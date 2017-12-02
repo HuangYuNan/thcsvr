@@ -1,5 +1,4 @@
- 
---秘封 玛艾里贝莉·哈恩
+ --秘封 玛艾里贝莉·哈恩
 function c28016.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
@@ -81,7 +80,7 @@ function c28016.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c28016.filter(c,tp)
-	return c:IsSetCard(0xa211) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp
+	return c:IsSetCard(0xa211) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp and c:GetPreviousLocation()==LOCATION_ONFIELD
 end
 function c28016.scon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c28016.filter,1,nil,tp)
@@ -90,13 +89,14 @@ function c28016.rfilter(c)
 	return c:IsSetCard(0x211) and c:IsAbleToRemoveAsCost()
 end
 function c28016.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c28016.rfilter,tp,LOCATION_GRAVE,0,7,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c28016.rfilter,tp,LOCATION_GRAVE,0,8,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c28016.rfilter,tp,LOCATION_GRAVE,0,7,7,nil)
+	local g=Duel.SelectMatchingCard(tp,c28016.rfilter,tp,LOCATION_GRAVE,0,8,8,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c28016.stg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0x1e,0x1e,1,nil) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0x1e,0x1e,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0x1e,0x1e,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)

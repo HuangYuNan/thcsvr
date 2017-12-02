@@ -1,5 +1,4 @@
- 
---最后的审判
+ --最后的审判
 function c15039.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -17,7 +16,7 @@ end
 function c15039.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c15039.spfilter,tp,LOCATION_GRAVE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
-	return ct>4
+	return ct>5
 end
 function c15039.filter(c,e,tp)
 	return c:IsCode(15016) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

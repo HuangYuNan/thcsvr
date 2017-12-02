@@ -29,6 +29,7 @@ function c26069.initial_effect(c)
 	e3:SetOperation(c26069.flipop)
 	c:RegisterEffect(e3)
 end
+c26069.DescSetName = 0x229
 function c26069.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)

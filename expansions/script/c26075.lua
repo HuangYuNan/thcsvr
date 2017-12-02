@@ -33,6 +33,7 @@ function c26075.initial_effect(c)
 	e3:SetOperation(c26075.desop)
 	c:RegisterEffect(e3)
 end
+c26075.DescSetName = 0x229
 function c26075.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)

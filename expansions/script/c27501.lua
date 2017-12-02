@@ -58,6 +58,7 @@ function c27501.filter(c,e,tp)
 end
 function c27501.gscon(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler():IsSetCard(0x912) and Duel.IsExistingMatchingCard(c27501.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and ep==tp
 end
 function c27501.gsop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -69,6 +70,7 @@ function c27501.thfilter(c)
 end
 function c27501.nycon(e,tp,eg,ep,ev,re,r,rp)
 	return (re:GetHandler():IsCode(27092) or re:GetHandler():IsCode(27093)) and Duel.IsExistingMatchingCard(c27501.thfilter,tp,LOCATION_DECK,0,1,nil)
+		and ep==tp
 end
 function c27501.nyop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

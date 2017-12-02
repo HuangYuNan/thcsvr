@@ -71,15 +71,20 @@ end
 function c26122.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
-		e1:SetValue(0)
+		e1:SetValue(tc:GetBaseAttack()*2)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE)
+		e2:SetValue(tc:GetBaseDefense()*2)
 		tc:RegisterEffect(e2)
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,5)
+		if g:RandomSelect(tp,2):IsContains(g:GetFirst()) then
+			Duel.Hint(11,0,aux.Stringid(26122,4))
+		end
 	end
 end

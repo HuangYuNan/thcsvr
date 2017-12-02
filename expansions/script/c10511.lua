@@ -69,7 +69,7 @@ function c10511.eqlimit(e,c)
 	return e:GetOwner()==c
 end
 function c10511.val(e,c)
-	return c:GetEquipCount()*400
+	return c:GetEquipCount()*300
 end
 function c10511.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetLinkedGroupCount()>0 end
@@ -80,6 +80,6 @@ end
 function c10511.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetLinkedGroup()
 	if Duel.Destroy(g,REASON_EFFECT)>0 then
-		Duel.Damage(1-tp,1000,REASON_EFFECT)
+		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
 end

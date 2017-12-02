@@ -11,9 +11,12 @@ function c27061.initial_effect(c)
 	e1:SetOperation(c27061.activate)
 	c:RegisterEffect(e1)
 end
+function c27061.rfilter(c)
+	return c:IsReleasable() and c:IsLocation(LOCATION_HAND)
+end
 function c27061.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupEx(tp,Card.IsReleasable,1,nil) end
-	local rg=Duel.SelectReleaseGroupEx(tp,Card.IsReleasable,1,1,nil)
+	if chk==0 then return Duel.CheckReleaseGroupEx(tp,c27061.rfilter,1,nil) end
+	local rg=Duel.SelectReleaseGroupEx(tp,c27061.rfilter,1,1,nil)
 	Duel.Release(rg,REASON_COST)
 	if rg:GetFirst():IsLevelBelow(4) then
 		e:SetLabel(1)
@@ -22,10 +25,10 @@ function c27061.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c27061.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsDestructable() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsDestructable,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsPosition(POS_FACEUP_ATTACK) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsPosition,tp,0,LOCATION_MZONE,1,nil,POS_FACEUP_ATTACK) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,Card.IsDestructable,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsPosition,tp,0,LOCATION_MZONE,1,1,nil,POS_FACEUP_ATTACK)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c27061.tgfilter(c)
@@ -33,7 +36,7 @@ function c27061.tgfilter(c)
 end
 function c27061.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and tc:IsAttackPos() then
 		Duel.Destroy(tc,REASON_EFFECT)
 		if e:GetLabel()==1 and Duel.IsExistingMatchingCard(c27061.tgfilter,tp,LOCATION_DECK,0,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(27061,0)) then

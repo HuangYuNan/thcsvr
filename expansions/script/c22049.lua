@@ -1,5 +1,4 @@
- 
---红魔 七曜的魔女
+ --红魔 七曜的魔女
 function c22049.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x813),1)
