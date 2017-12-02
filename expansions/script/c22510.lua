@@ -41,6 +41,7 @@ function c22510.thop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_DISABLE_FIELD)
+	e2:SetReset(RESET_EVENT+0x1fe0000)
 	e2:SetOperation(c22510.disop)
 	c:RegisterEffect(e2)
 end

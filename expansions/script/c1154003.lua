@@ -44,7 +44,7 @@ function c1154003.initial_effect(c)
 end
 --
 function c1154003.lkcheck(c)
-	return c:IsRace(RACE_ZOMBIE) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TOKEN)
+	return c:IsSetCard(0x813) and c:IsType(TYPE_MONSTER)
 end
 --
 function c1154003.tfilter1(c)
@@ -165,7 +165,7 @@ function c1154003.op2(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c1154003.cfilter2,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	e:GetHandler():RegisterFlagEffect(1154003,0,RESET_EVENT+0x1fe0000,0)
+	e:GetHandler():RegisterFlagEffect(1154003,RESET_EVENT+0x1fe0000,0,0)
 	sg:Merge(g)
 end
 --

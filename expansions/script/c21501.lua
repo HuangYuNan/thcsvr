@@ -57,7 +57,7 @@ function c21501.filter(c,e,zone)
 end
 function c21501.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local zone=e:GetHandler():GetLinkedZone()
+		local zone=e:GetHandler():GetLinkedZone()*0x10000
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and zone~=0 and Duel.IsExistingMatchingCard(c21501.filter,tp,LOCATION_HAND,0,1,nil,e,0,zone) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,tp,LOCATION_HAND)
