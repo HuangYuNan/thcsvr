@@ -85,7 +85,7 @@ function c28011.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(tp)
 end
 function c28011.filter(c,tp)
-	return c:IsSetCard(0xc211) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp and c:GetPreviousLocation()==LOCATION_ONFIELD
+	return c:IsSetCard(0xc211) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp and c:GetLocation()==LOCATION_ONFIELD
 end
 function c28011.scon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c28011.filter,1,nil,tp)
