@@ -46,7 +46,7 @@ function c26145.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(c26145.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) and Duel.GetLocationCountFromEx(tp)>0
 		and Duel.IsExistingMatchingCard(c26145.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then t[p]=aux.Stringid(26145,2) p=p+1 end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(26145,3))
-	local sel=Duel.SelectOption(tp,table.unpack(t))
+	local sel=Duel.SelectOption(tp,table.unpack(t))+1
 	local opt=t[sel]-aux.Stringid(26145,0)
 	local sg=Group.CreateGroup()
 	if opt==1 then
