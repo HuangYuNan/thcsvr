@@ -52,7 +52,7 @@ function c20161.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+0x1620000)
 			e1:SetCondition(c20161.ccon)
 			e1:SetOperation(c20161.cop)
-			tc:GetFirst():RegisterEffect(e1)
+			tc:RegisterEffect(e1)
 		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

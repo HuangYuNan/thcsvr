@@ -44,7 +44,7 @@ function c13085.operation(e,tp,eg,ep,ev,re,r,rp)
 		and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK) and not tc:IsForbidden()
 		and Duel.SelectYesNo(tp,aux.Stringid(13085,0)) then
 		Duel.BreakEffect()
-		Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
+		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
 end
 function c13085.sdcon(e)

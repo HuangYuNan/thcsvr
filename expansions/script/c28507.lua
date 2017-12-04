@@ -61,7 +61,7 @@ function c28507.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c28507.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousPosition(POS_FACEUP)
+	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():GetReasonPlayer()==1-tp
 end
 function c28507.sfilter(c)
 	return c:IsAbleToHand() and bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL

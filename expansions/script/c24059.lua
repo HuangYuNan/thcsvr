@@ -48,7 +48,7 @@ function c24059.activate(e,tp,eg,ep,ev,re,r,rp)
 			ct1=ct1-1
 		end
 		while ct2>0 do
-			local token=Duel.CreateToken(tp,24064)
+			local token=Duel.CreateToken(1-tp,24064)
 			Duel.SpecialSummonStep(token,0,1-tp,1-tp,false,false,POS_FACEUP)
 			ct2=ct2-1
 		end

@@ -47,12 +47,13 @@ function c26145.activate(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(c26145.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then t[p]=aux.Stringid(26145,2) p=p+1 end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(26145,3))
 	local sel=Duel.SelectOption(tp,table.unpack(t))
+	local opt=t[sel]-aux.Stringid(26145,0)
 	local sg=Group.CreateGroup()
-	if sel==0 then
+	if opt==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		sg=Duel.SelectMatchingCard(tp,c26145.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		if Duel.SpecialSummon(sg,0,tp,tp,true,true,POS_FACEUP)==0 then return end
-	elseif sel==1 then 
+	elseif opt==2 then 
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c26145.cfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

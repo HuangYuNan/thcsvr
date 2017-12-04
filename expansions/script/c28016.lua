@@ -80,7 +80,7 @@ function c28016.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c28016.filter(c,tp)
-	return c:IsSetCard(0xa211) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp and c:GetLocation()==LOCATION_ONFIELD
+	return c:IsSetCard(0xa211) and c:GetControler()==tp and c:GetReasonPlayer()==1-tp
 end
 function c28016.scon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c28016.filter,1,nil,tp)

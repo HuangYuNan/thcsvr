@@ -15,7 +15,8 @@ function c4031201.filter(c)
 	return c:IsSetCard(0x403) and c:IsAbleToDeckAsCost() and c:IsType(TYPE_MONSTER)
 end
 function c4031201.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c4031201.filter,tp,LOCATION_REMOVED,0,5,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c4031201.filter,tp,LOCATION_REMOVED,0,5,nil)
+		and Duel.GetLocationCountFromEx(tp)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,c4031201.filter,tp,LOCATION_REMOVED,0,5,5,nil)
 	Duel.SendtoDeck(g,nil,5,REASON_COST)
