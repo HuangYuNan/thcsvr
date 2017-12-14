@@ -743,3 +743,18 @@ function Nef.AddSummonMusic(c,desc,stype)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+
+function Nef.AddLinkProcedureWithDesc(c,f,min,max,gf,desc)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetRange(LOCATION_EXTRA)
+	e1:SetDescription(desc)
+	if max==nil then max=99 end
+	e1:SetCondition(Auxiliary.LinkCondition(f,min,max,gf))
+	e1:SetOperation(Auxiliary.LinkOperation(f,min,max,gf))
+	e1:SetValue(SUMMON_TYPE_LINK)
+	c:RegisterEffect(e1)
+	return e1
+end

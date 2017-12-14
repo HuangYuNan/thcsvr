@@ -1,5 +1,4 @@
- 
---兔符「开运大纹」
+ --兔符「开运大纹」
 function c21045.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
