@@ -642,6 +642,17 @@ function Nef.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,...)
 	c:RegisterEffect(e1)
 	return e1
 end
+function Nef.XyzProcedureCustomTuneMagicianFilter(c,te)
+	local f=te:GetValue()
+	return f(te,c)
+end
+function Nef.XyzProcedureCustomTuneMagicianCheck(c,g)
+	local eset={c:IsHasEffect(EFFECT_TUNE_MAGICIAN_X)}
+	for _,te in ipairs(eset) do
+		if g:IsExists(Nef.XyzProcedureCustomTuneMagicianFilter,1,c,te) then return true end
+	end
+	return false
+end
 function Nef.XyzProcedureCustomFilter(c,xyzcard,func,ext_params)
 	if c:IsLocation(LOCATION_ONFIELD+LOCATION_REMOVED) and c:IsFacedown() then return false end
 	return c:IsCanBeXyzMaterial(xyzcard) and (not func or func(c,xyzcard,table.unpack(ext_params)))
