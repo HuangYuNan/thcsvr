@@ -503,7 +503,7 @@ end
 function Nef.CheckGroupRecursive(c,sg,g,f,min,max,ext_params)
 	sg:AddCard(c)
 	local ct=sg:GetCount()
-	local res=(ct>=min and f(sg,table.unpack(ext_params)))
+	local res=(ct>=min and ct<=max and f(sg,table.unpack(ext_params)))
 		or (ct<max and g:IsExists(Nef.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
 	sg:RemoveCard(c)
 	return res
@@ -516,7 +516,7 @@ function Nef.CheckGroup(g,f,cg,min,max,...)
 	local sg=Group.CreateGroup()
 	if cg then sg:Merge(cg) end
 	local ct=sg:GetCount()
-	if ct>=min and ct<max and f(sg,...) then return true end
+	if ct>=min and ct<=max and f(sg,...) then return true end
 	return g:IsExists(Nef.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
 end
 function Nef.SelectGroup(tp,desc,g,f,cg,min,max,...)
@@ -524,27 +524,62 @@ function Nef.SelectGroup(tp,desc,g,f,cg,min,max,...)
 	local max=max or g:GetCount()
 	local ext_params={...}
 	local sg=Group.CreateGroup()
-	if cg then
-		sg:Merge(cg)
-	end
+	local cg=cg or Group.CreateGroup()
+	sg:Merge(cg)
 	local ct=sg:GetCount()
 	local ag=g:Filter(Nef.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 	while ct<max and ag:GetCount()>0 do
-		local minc=1
-		local finish=(ct>=min and f(sg,...))
-		if finish then
-			minc=0
-			if not Duel.SelectYesNo(tp,210) then break end
-		end
+		local finish=(ct>=min and ct<=max and f(sg,...))
+		local seg=sg:Clone()
+		local dmin=min-cg:GetCount()
+		local dmax=math.min(max-cg:GetCount(),g:GetCount())
+		seg:Sub(cg)
 		Duel.Hint(HINT_SELECTMSG,tp,desc)
-		local tg=ag:Select(tp,minc,1,nil)
-		if tg:GetCount()==0 then break end
-		sg:Merge(tg)
+		local tc=ag:SelectUnselect(seg,tp,finish,finish,dmin,dmax)
+		if not tc then break end
+		if sg:IsContains(tc) then
+			sg:RemoveCard(tc)
+		else
+			sg:AddCard(tc)
+		end
 		ct=sg:GetCount()
 		ag=g:Filter(Nef.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
 	end
 	return sg
 end
+function Nef.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
+	local min=min or 1
+	local max=max or g:GetCount()
+	local ext_params={...}
+	local sg=Group.CreateGroup()
+	local cg=cg or Group.CreateGroup()
+	sg:Merge(cg)
+	local ct=sg:GetCount()
+	local ag=g:Filter(Nef.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
+	while ct<max and ag:GetCount()>0 do
+		local finish=(ct>=min and ct<=max and f(sg,...))
+		local cancel=finish or ct==0
+		local seg=sg:Clone()
+		local dmin=min-cg:GetCount()
+		local dmax=math.min(max-cg:GetCount(),g:GetCount())
+		seg:Sub(cg)
+		Duel.Hint(HINT_SELECTMSG,tp,desc)
+		local tc=ag:SelectUnselect(seg,tp,finish,cancel,dmin,dmax)
+		if not tc then
+			if not finish then return end
+			break
+		end
+		if sg:IsContains(tc) then
+			sg:RemoveCard(tc)
+		else
+			sg:AddCard(tc)
+		end
+		ct=sg:GetCount()
+		ag=g:Filter(Nef.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
+	end
+	return sg
+end
+
 function Nef.OverlayCard(c,tc,xm,nchk)
 	if not nchk and (not c:IsLocation(LOCATION_MZONE) or c:IsFacedown() or not c:IsType(TYPE_XYZ) or tc:IsType(TYPE_TOKEN)) then return end
 	if tc:IsStatus(STATUS_LEAVE_CONFIRMED) then
@@ -586,14 +621,14 @@ end
 function Nef.CheckFieldFilter(g,tp,c,f,...)
 	return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and (not f or f(g,...))
 end
-function Nef.AddXyzProcedureCustom(c,func,gf,minc,maxc,...)
+function Nef.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,...)
 	local ext_params={...}
 	if c.xyz_filter==nil then
 		local code=c:GetOriginalCode()
 		local mt=_G["c" .. code]
 		mt.xyz_filter=func or aux.TRUE
 		mt.xyz_count=minc
-	end
+	end	
 	local maxc=maxc or minc
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -601,7 +636,8 @@ function Nef.AddXyzProcedureCustom(c,func,gf,minc,maxc,...)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetCondition(Nef.XyzProcedureCustomCondition(func,gf,minc,maxc,ext_params))
-	e1:SetOperation(Nef.XyzProcedureCustomOperation(func,gf,minc,maxc,ext_params))
+	e1:SetTarget(Nef.XyzProcedureCustomTarget(func,gf,minc,maxc,ext_params))
+	e1:SetOperation(Nef.XyzProcedureCustomOperation(xm))
 	e1:SetValue(SUMMON_TYPE_XYZ)
 	c:RegisterEffect(e1)
 	return e1
@@ -627,11 +663,18 @@ function Nef.XyzProcedureCustomCondition(func,gf,minct,maxct,ext_params)
 		else
 			mg=Duel.GetMatchingGroup(Nef.XyzProcedureCustomFilter,tp,LOCATION_MZONE,0,nil,c,func,ext_params)
 		end
-		return maxc>=minc and Nef.CheckGroup(mg,Nef.CheckFieldFilter,nil,minc,maxc,tp,c,gf,c)
+		local sg=Group.CreateGroup()
+		local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
+		for _,te in ipairs(ce) do
+			local tc=te:GetHandler()
+			if not mg:IsContains(tc) then return false end
+			sg:AddCard(tc)
+		end
+		return maxc>=minc and Nef.CheckGroup(mg,Nef.CheckFieldFilter,sg,minc,maxc,tp,c,Nef.XyzProcedureCustomCheck,c,tp,gf)
 	end
 end
-function Nef.XyzProcedureCustomOperation(func,gf,minct,maxct,ext_params)
-	return function(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
+function Nef.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,og,min,max)
 		local g=nil
 		if og and not min then
 			g=og
@@ -648,10 +691,26 @@ function Nef.XyzProcedureCustomOperation(func,gf,minct,maxct,ext_params)
 				minc=math.max(minc,min)
 				maxc=math.min(maxc,max)
 			end
-			g=Nef.SelectGroup(tp,HINTMSG_XMATERIAL,mg,Nef.CheckFieldFilter,nil,minc,maxc,tp,c,gf,c)
+			local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
+			for _,te in ipairs(ce) do
+				local tc=te:GetHandler()
+				sg:AddCard(tc)
+			end
+			g=Nef.SelectGroupWithCancel(tp,HINTMSG_XMATERIAL,mg,Nef.CheckFieldFilter,sg,minc,maxc,tp,c,Nef.XyzProcedureCustomCheck,c,tp,gf)
 		end
+		if g then
+			g:KeepAlive()
+			e:SetLabelObject(g)
+			return true
+		else return false end
+	end
+end
+function Nef.XyzProcedureCustomOperation(xm)
+	return function(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
+		local g=e:GetLabelObject()
 		c:SetMaterial(g)
-		Nef.OverlayGroup(c,g,false,true)
+		Nef.OverlayGroup(c,g,xm,true)
+		g:DeleteGroup()
 	end
 end
 
