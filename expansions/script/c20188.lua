@@ -23,7 +23,7 @@ function c20188.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c20188.cfilter(c)
-	return c:IsSetCard(0x201) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return ((c:IsSetCard(0x201) and c:IsType(TYPE_SPELL+TYPE_TRAP)) or (c:IsSetCard(0x713) and c:IsRace(RACE_WARRIOR))) and c:IsAbleToGraveAsCost()
 end
 function c20188.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c20188.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

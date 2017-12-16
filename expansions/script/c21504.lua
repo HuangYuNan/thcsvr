@@ -5,5 +5,5 @@ function c21504.initial_effect(c)
 	aux.AddLinkProcedure(c,c21504.matfilter,1)
 end
 function c21504.matfilter(c)
-	return not c:IsLinkType(TYPE_TOKEN)
+	return not c:IsLinkType(TYPE_TOKEN) and c:GetDefense()>=1000
 end

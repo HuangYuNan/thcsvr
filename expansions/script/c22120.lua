@@ -19,15 +19,17 @@ end
 function c22120.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and c:IsSetCard(0x813)
 end
+function c22120.cfilter(c)
+	return (c:IsSetCard(0x815) or c:IsSetCard(0x814)) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+end
 function c22120.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c22120.costfilter,tp,LOCATION_GRAVE,0,nil)
-	-- if chk==0 then return g:GetClassCount(Card.GetCode)>=2 end
-	if chk==0 then return g:GetClassCount(Card.GetCode)>=1 end
+	local num=Duel.GetMatchingGroupCount(c22120.cfilter,tp,LOCATION_DECK,0,nil)
+	if chk==0 then return g:GetClassCount(Card.GetCode)>=1 and num>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=g:Select(tp,1,1,nil)
 	g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
-	--if Duel.SelectYesNo(tp,aux.Stringid(22120,0)) then
-	if g:GetClassCount(Card.GetCode)>=1 and Duel.SelectYesNo(tp,aux.Stringid(22120,0)) then
+	if g:GetClassCount(Card.GetCode)>=1 and num>1 and Duel.SelectYesNo(tp,aux.Stringid(22120,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g2=g:Select(tp,1,1,nil)
 		e:SetLabel(2)
