@@ -43,7 +43,7 @@ function c1156019.con1(e)
 end
 --
 function c1156019.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0) and re:IsHasType(EFFECT_TYPE_ACTIONS) and Duel.GetTurnPlayer() ~=tp and Duel.IsPlayerCanSpecialSummonMonster(tp,1156020,0,0x4011,0,0,1,RACE_INSECT,ATTRIBUTE_DARK) and e:GetHandler():GetSequence()>=5 end
+	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0) and (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsHasType(EFFECT_TYPE_FLIP) or re:IsHasType(EFFECT_TYPE_IGNITION) or re:IsHasType(EFFECT_TYPE_QUICK_F) or re:IsHasType(EFFECT_TYPE_QUICK_O) or re:IsHasType(EFFECT_TYPE_TRIGGER_F) or re:IsHasType(EFFECT_TYPE_TRIGGER_O)) and Duel.GetTurnPlayer() ~=tp and Duel.IsPlayerCanSpecialSummonMonster(tp,1156020,0,0x4011,0,0,1,RACE_INSECT,ATTRIBUTE_DARK) and e:GetHandler():GetSequence()>=5 end
 end
 --
 function c1156019.op2(e,tp,eg,ep,ev,re,r,rp)
@@ -77,7 +77,7 @@ function c1156019.op2(e,tp,eg,ep,ev,re,r,rp)
 			token:RegisterEffect(e2_2,true) 
 		end
 	elseif op==1 then 
-		if Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP)~=0 then	   
+		if Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP)~=0 then	  
 			local e2_1=Effect.CreateEffect(e:GetHandler())
 			e2_1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 			e2_1:SetType(EFFECT_TYPE_SINGLE)

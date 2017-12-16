@@ -4,6 +4,7 @@ function c20090.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,20090)
 	e1:SetOperation(c20090.activate)
 	c:RegisterEffect(e1)
 	--to deck top

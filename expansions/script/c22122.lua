@@ -121,6 +121,6 @@ function c22122.op2(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetValue(1)
 			rg:RegisterEffect(e2)
 		end
-		Duel.Damage(1-tp,800,REASON_EFFECT)
+		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
 end
