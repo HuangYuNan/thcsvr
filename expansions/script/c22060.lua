@@ -1,5 +1,4 @@
- 
---红魔 恶魔之妹
+ --红魔 恶魔之妹
 function c22060.initial_effect(c)
 	--Race
 	local e2=Effect.CreateEffect(c)

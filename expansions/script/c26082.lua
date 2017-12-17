@@ -35,9 +35,12 @@ end
 function c26082.mfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end
+function c26082.tfilter(c)
+	return c:IsLocation(LOCATION_ONFIELD) and c:IsType(TYPE_MONSTER)
+end
 function c26082.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local mg1=Duel.GetMatchingGroup(Card.IsReleasable,tp,LOCATION_MZONE,0,nil)
+		local mg1=Duel.GetRitualMaterial(tp):Filter(c26082.tfilter,nil)
 		local mg2=Duel.GetMatchingGroup(c26082.mfilter,tp,LOCATION_HAND,0,nil)
 		mg1:Merge(mg2)
 		return Duel.IsExistingMatchingCard(c26082.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,mg1)
@@ -45,7 +48,7 @@ function c26082.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function c26082.activate(e,tp,eg,ep,ev,re,r,rp)
-	local mg1=Duel.GetMatchingGroup(Card.IsReleasable,tp,LOCATION_MZONE,0,nil)
+	local mg1=Duel.GetRitualMaterial(tp):Filter(c26082.tfilter,nil)
 	local mg2=Duel.GetMatchingGroup(c26082.mfilter,tp,LOCATION_HAND,0,nil)
 	mg1:Merge(mg2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

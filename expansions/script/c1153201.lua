@@ -36,8 +36,8 @@ function c1153201.initial_effect(c)
 --
 	if not c1153201.gchk then
 		c1153201.gchk=true
-		c1153201[0]=2
-		c1153201[1]=2
+		c1153201[0]=3
+		c1153201[1]=3
 		local e5=Effect.GlobalEffect()
 		e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e5:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -46,6 +46,15 @@ function c1153201.initial_effect(c)
 		Duel.RegisterEffect(e5,0)
 	end
 --
+	--maintain
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e5:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e5:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetCountLimit(1)
+	e5:SetOperation(c1153201.mtop)
+	c:RegisterEffect(e5)
 end
 --
 function c1153201.cfilter1(c)
@@ -70,7 +79,7 @@ end
 --
 function c1153201.op5(e,tp,eg,ep,ev,re,r,rp)
 	if c1153201[rp]<=1 then
-		c1153201[rp]=2
+		c1153201[rp]=3
 		Duel.RaiseEvent(eg,EVENT_CUSTOM+1153201,re,r,rp,ep,ev)
 	else 
 		c1153201[rp]=c1153201[rp]-1 
@@ -162,6 +171,14 @@ function c1153201.op4(e,tp,eg,ep,ev,re,r,rp)
 			end
 			tc=g:GetNext()
 		end
+	end
+end
+function c1153201.mtop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetTurnPlayer()~=tp then return end
+	if Duel.GetLP(tp)>1000 and Duel.SelectYesNo(tp,aux.Stringid(1153201,0)) then
+		Duel.PayLPCost(tp,1000)
+	else
+		Duel.Destroy(e:GetHandler(),REASON_RULE)
 	end
 end
 

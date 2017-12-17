@@ -31,7 +31,7 @@ function c23504.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c23504.matfilter(c)
-	return not c:IsLinkType(TYPE_TOKEN)
+	return not c:IsLinkType(TYPE_TOKEN) and c:GetSequence()<5
 end
 function c23504.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHandAsCost,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end

@@ -54,5 +54,5 @@ function c22507.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22507.tgtg(e,c)
-	return e:GetHandler():GetLinkedGroup():IsContains(c) or (c:IsRace(RACE_FIEND) and c:GetPreviousLocation()==LOCATION_DECK)
+	return rp~=e:GetHandlerPlayer() and (e:GetHandler():GetLinkedGroup():IsContains(c) or (c:IsRace(RACE_FIEND) and c:GetPreviousLocation()==LOCATION_DECK))
 end
