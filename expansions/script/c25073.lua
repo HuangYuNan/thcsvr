@@ -14,6 +14,9 @@ end
 function c25073.spfilter(c)
 	return c:IsSetCard(0x740) and c:IsAbleToRemoveAsCost()
 end
+function c25073.spfilter2(c,tc)
+	return c:GetCode()~=tc:GetCode() and c:IsSetCard(0x740) and c:IsAbleToRemoveAsCost()
+end
 function c25073.cfilter(c)
 	return c:IsReleasable() and c:IsType(TYPE_MONSTER)
 end
@@ -23,8 +26,9 @@ function c25073.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>1 and rg:GetCount()>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=Duel.SelectMatchingCard(tp,c25073.spfilter,tp,0x16,0,1,1,nil)
+	local tc=g1:GetFirst()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,c25073.spfilter,tp,0x16,0,1,1,g1:GetFirst())
+	local g2=Duel.SelectMatchingCard(tp,c25073.spfilter2,tp,0x16,0,1,1,nil,tc)
 	g1:Merge(g2)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 	Duel.Release(rg,REASON_COST)
