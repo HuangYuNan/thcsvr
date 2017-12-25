@@ -21,6 +21,8 @@ static const struct luaL_Reg cardlib[] = {
 	//modded
 	{ "SetEntityCode", scriptlib::card_set_entity_code },
 	{ "SetCardData", scriptlib::card_set_card_data },
+	{ "GetLinkMarker", scriptlib::card_get_link_marker },
+	{ "GetOriginalLinkMarker", scriptlib::card_get_origin_link_marker },
 	
 	{ "GetCode", scriptlib::card_get_code },
 	{ "GetOriginalCode", scriptlib::card_get_origin_code },
@@ -419,6 +421,7 @@ static const struct luaL_Reg duellib[] = {
 	{ "SetChainLimitTillChainEnd", scriptlib::duel_set_chain_limit_p },
 	{ "GetChainMaterial", scriptlib::duel_get_chain_material },
 	{ "ConfirmDecktop", scriptlib::duel_confirm_decktop },
+	{ "ConfirmExtratop", scriptlib::duel_confirm_extratop },
 	{ "ConfirmCards", scriptlib::duel_confirm_cards },
 	{ "SortDecktop", scriptlib::duel_sort_decktop },
 	{ "CheckEvent", scriptlib::duel_check_event },
@@ -442,6 +445,7 @@ static const struct luaL_Reg duellib[] = {
 	{ "DiscardHand", scriptlib::duel_discard_hand },
 	{ "DisableShuffleCheck", scriptlib::duel_disable_shuffle_check },
 	{ "ShuffleDeck", scriptlib::duel_shuffle_deck },
+	{ "ShuffleExtra", scriptlib::duel_shuffle_extra },
 	{ "ShuffleHand", scriptlib::duel_shuffle_hand },
 	{ "ShuffleSetCard", scriptlib::duel_shuffle_setcard },
 	{ "ChangeAttacker", scriptlib::duel_change_attacker },
@@ -485,6 +489,7 @@ static const struct luaL_Reg duellib[] = {
 	{ "GetFieldGroup", scriptlib::duel_get_field_group },
 	{ "GetFieldGroupCount", scriptlib::duel_get_field_group_count },
 	{ "GetDecktopGroup", scriptlib::duel_get_decktop_group },
+	{ "GetExtraTopGroup", scriptlib::duel_get_extratop_group },
 	{ "GetMatchingGroup", scriptlib::duel_get_matching_group },
 	{ "GetMatchingGroupCount", scriptlib::duel_get_matching_count },
 	{ "GetFirstMatchingCard", scriptlib::duel_get_first_matching_card },
@@ -608,12 +613,14 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	set_duel_info(lua_state, pd);
 	//Initial
 	luaL_openlibs(lua_state);
+	/*
 	lua_pushnil(lua_state);
 	lua_setglobal(lua_state, "file");
 	lua_pushnil(lua_state);
 	lua_setglobal(lua_state, "io");
 	lua_pushnil(lua_state);
 	lua_setglobal(lua_state, "os");
+	*/
 	lua_getglobal(lua_state, "bit32");
 	lua_setglobal(lua_state, "bit");
 	//open all libs
@@ -639,6 +646,16 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	//extra scripts
 	load_script((char*) "./script/constant.lua");
 	load_script((char*) "./script/utility.lua");
+	//load kpro constant
+	lua_pushinteger(lua_state, EFFECT_CHANGE_LINK_MARKER_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_CHANGE_LINK_MARKER_KOISHI");
+	lua_pushinteger(lua_state, EFFECT_ADD_LINK_MARKER_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_ADD_LINK_MARKER_KOISHI");
+	lua_pushinteger(lua_state, EFFECT_REMOVE_LINK_MARKER_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_REMOVE_LINK_MARKER_KOISHI");
+	lua_pushinteger(lua_state, EFFECT_CANNOT_LOSE_KOISHI);
+	lua_setglobal(lua_state, "EFFECT_CANNOT_LOSE_KOISHI");
+	//nef
 	load_script((char*) "./expansions/script/nef/afi.lua");
 	load_script((char*) "./expansions/script/nef/cardList.lua");
 	load_script((char*) "./expansions/script/nef/nef.lua");
@@ -647,7 +664,8 @@ interpreter::interpreter(duel* pd): coroutines(256) {
 	load_script((char*) "./expansions/script/nef/fus.lua");
 	load_script((char*) "./expansions/script/nef/msc.lua");
 	load_script((char*) "./expansions/script/nef/uds.lua");
-	
+	//load init.lua by MLD
+	load_script((char*) "./expansions/script/init.lua");
 }
 interpreter::~interpreter() {
 	lua_close(lua_state);
