@@ -65,10 +65,10 @@ function c61221.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c61221.adcon(e)
-	return e:GetHandler():GetOverlayCount()>=1
+	return e:GetHandler():GetOverlayGroup():FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)>=1
 end
 function c61221.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetHandler():GetOverlayCount()>=2
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetHandler():GetOverlayGroup():FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)>=2
 end
 function c61221.drtarg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -81,7 +81,8 @@ function c61221.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function c61221.tgcon(e)
-	return e:GetHandler():GetOverlayCount()>=3 and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
+	return e:GetHandler():GetOverlayGroup():FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)>=3
+		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function c61221.disop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then return end
@@ -91,7 +92,7 @@ function c61221.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c61221.atkcon(e)
-	return e:GetHandler():GetOverlayCount()>=4
+	return e:GetHandler():GetOverlayGroup():FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)>=4
 end
 function c61221.atkval(e,c)
 	local dc=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
@@ -122,7 +123,7 @@ function c61221.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if perg then 
 		perg:DeleteGroup() 
 	end
-	local nowg = e:GetHandler():GetOverlayGroup()
+	local nowg = e:GetHandler():GetOverlayGroup():Filter(Card.IsAttribute,nil,ATTRIBUTE_WATER)
 	nowg:KeepAlive()
 	e:SetLabelObject(nowg)
 	return false 

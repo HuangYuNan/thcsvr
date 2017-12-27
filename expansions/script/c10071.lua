@@ -4,7 +4,7 @@ function c10071.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,10071+EFFECT_COUNT_CODE_DUEL)
+	--e1:SetCountLimit(1,10071+EFFECT_COUNT_CODE_DUEL)
 	e1:SetHintTiming(0,TIMING_DRAW_PHASE)
 	c:RegisterEffect(e1)
 	--cannot activate
@@ -31,6 +31,12 @@ function c10071.initial_effect(c)
 	e4:SetCondition(c10071.condition)
 	e4:SetOperation(c10071.op)
 	c:RegisterEffect(e4)
+	--cant to hand
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_CANNOT_TO_HAND)
+	e5:SetRange(LOCATION_SZONE)
+	c:RegisterEffect(e5)
 end
 function c10071.aclimit(e,re,tp)
 	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL) then return false end

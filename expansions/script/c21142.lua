@@ -36,11 +36,11 @@ function c21142.initial_effect(c)
 end
 function c21142.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x208) and c:GetOriginalLevel()==2 and bit.band(c:GetOriginalType(),TYPE_TOKEN)~=TYPE_TOKEN
-		and (c:IsLocation(LOCATION_MZONE) or c:IsLocation(LOCATION_PZONE)) and Duel.GetLocationCountFromEx(tp, tp, c)>0
+		and (c:IsLocation(LOCATION_MZONE) or c:IsLocation(LOCATION_PZONE))
 end
 function c21142.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return Duel.GetLocationCountFromEx(c:GetControler())>0
 		and Duel.IsExistingMatchingCard(c21142.spfilter,c:GetControler(),LOCATION_ONFIELD,0,2,nil)
 end
 function c21142.spop(e,tp,eg,ep,ev,re,r,rp,c)

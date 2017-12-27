@@ -1,5 +1,4 @@
- 
---幻想乡
+ --幻想乡
 function c10000.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -13,7 +12,7 @@ function c10000.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x208))
-	e2:SetValue(600)
+	e2:SetValue(1000)
 	c:RegisterEffect(e2)
 	--Destroy replace
 	local e3=Effect.CreateEffect(c)
