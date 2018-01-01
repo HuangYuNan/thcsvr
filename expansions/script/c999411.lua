@@ -25,7 +25,7 @@ function M.initial_effect(c)
 	e2:SetCondition(M.condition)
 	e2:SetTarget(M.target)
 	e2:SetOperation(M.activate)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1, EFFECT_COUNT_CODE_SINGLE)
 	c:RegisterEffect(e2)
 	--Activate and use effect
 	local e3=e2:Clone()

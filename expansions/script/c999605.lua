@@ -1,6 +1,6 @@
 --守符『灵摆防御』
-local M = c999604
-local Mid = 999604
+local M = c999605
+local Mid = 999605
 function M.initial_effect(c)
 	--summon
 	local e1 = Effect.CreateEffect(c)

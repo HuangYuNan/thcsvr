@@ -1,5 +1,4 @@
- 
---梦幻馆的女仆 梦月
+ --梦幻馆的女仆 梦月
 function c14016.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x208),1)
@@ -30,7 +29,7 @@ function c14016.initial_effect(c)
 	--negate
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(14016,2))
-	e3:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
+	e3:SetCategory(CATEGORY_DISABLE+CATEGORY_RECOVER)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)

@@ -38,6 +38,13 @@ function c999303.initial_effect(c)
 	e5:SetOperation(c999303.regop)
 	c:RegisterEffect(e5)
 	e5:SetLabelObject(e4)
+
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e6:SetCode(EVENT_LEAVE_FIELD)
+	e6:SetOperation(c999303.checkop)
+	c:RegisterEffect(e6)
 end
 c999303.DescSetName=0xa2
 function c999303.filter(c)
@@ -78,37 +85,41 @@ function c999303.costchange(e,re,rp,val)
 	return val
 end
 
-function c999303.valcheck(e,c)
-	local g=c:GetMaterial()
+function c999303.valcheck(e, c)
 	e:SetLabel(0)
+	local g = c:GetMaterial()
 	local count = 0
-	local tc=g:GetFirst()
+	local tc = g:GetFirst()
 	while tc do
-		if tc:GetOriginalCode()==999301 then
+		if tc:GetOriginalCode() == 999301 then
 			e:SetLabel(e:GetLabel()+1)
-		elseif tc:GetOriginalCode()==999302 then
+		elseif tc:GetOriginalCode() == 999302 then
 			e:SetLabel(e:GetLabel()+2)
 		end
 
 		if tc:IsRace(RACE_PLANT) and not tc:IsType(TYPE_TUNER) then count = count + 1 end
-		tc=g:GetNext()
+		tc = g:GetNext()
 	end
 	e:GetLabelObject():SetLabel(count)
 end
 
 function c999303.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
-		and e:GetLabelObject():GetLabel()~=0
+	return e:GetHandler():GetSummonType() == SUMMON_TYPE_SYNCHRO
+		and e:GetLabelObject():GetLabel() ~= 0
 end
 
 function c999303.regop(e,tp,eg,ep,ev,re,r,rp)
-	local att=e:GetLabelObject():GetLabel()
-	local c=e:GetHandler()
-	if bit.band(att,1)~=0 then
+	local att = e:GetLabelObject():GetLabel()
+	local c = e:GetHandler()
+	if bit.band(att, 1) ~= 0 then
 		c:CopyEffect(999301, RESET_EVENT+0x1fe0000, 1)
 	end
-	if bit.band(att,2)~=0 then
+	if bit.band(att, 2) ~= 0 then
 		c:CopyEffect(999302, RESET_EVENT+0x1fe0000, 1)
 	end
 	e:SetLabel(0)
+end
+
+function c999303.checkop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():SetMaterial(Group.CreateGroup())
 end

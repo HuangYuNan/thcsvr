@@ -2,17 +2,18 @@
 function c1156019.initial_effect(c)
 --
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,c1156019.lkcheck,2,2)
+	aux.AddLinkProcedure(c,c1156019.lkcheck,1,1)
+--
+	c:SetSPSummonOnce(1156019)
 --
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_DAMAGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c1156019.con1)
-	e1:SetValue(aux.imval1)
+	e1:SetOperation(c1156019.op1)
 	c:RegisterEffect(e1)
--- 
+--
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -26,6 +27,7 @@ function c1156019.initial_effect(c)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1)
 	e3:SetTarget(c1156019.tg3)
 	c:RegisterEffect(e3)
 --
@@ -35,15 +37,8 @@ function c1156019.lkcheck(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_INSECT) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 --
-function c1156019.cfilter1(c)
-	return c:IsCode(24063) and c:IsFaceup()
-end
-function c1156019.con1(e)
-	return e:GetHandler():GetLinkedGroup():FilterCount(c1156019.cfilter1,nil)>0
-end
---
 function c1156019.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0) and (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsHasType(EFFECT_TYPE_FLIP) or re:IsHasType(EFFECT_TYPE_IGNITION) or re:IsHasType(EFFECT_TYPE_QUICK_F) or re:IsHasType(EFFECT_TYPE_QUICK_O) or re:IsHasType(EFFECT_TYPE_TRIGGER_F) or re:IsHasType(EFFECT_TYPE_TRIGGER_O)) and Duel.GetTurnPlayer() ~=tp and Duel.IsPlayerCanSpecialSummonMonster(tp,1156020,0,0x4011,0,0,1,RACE_INSECT,ATTRIBUTE_DARK) and e:GetHandler():GetSequence()>=5 end
+	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0) and (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsHasType(EFFECT_TYPE_FLIP) or re:IsHasType(EFFECT_TYPE_IGNITION) or re:IsHasType(EFFECT_TYPE_QUICK_F) or re:IsHasType(EFFECT_TYPE_QUICK_O) or re:IsHasType(EFFECT_TYPE_TRIGGER_F) or re:IsHasType(EFFECT_TYPE_TRIGGER_O)) and Duel.IsPlayerCanSpecialSummonMonster(tp,24063,0,0x4011,0,0,1,RACE_INSECT,ATTRIBUTE_DARK) and e:GetHandler():GetSequence()>=5 end
 end
 --
 function c1156019.op2(e,tp,eg,ep,ev,re,r,rp)
@@ -77,7 +72,7 @@ function c1156019.op2(e,tp,eg,ep,ev,re,r,rp)
 			token:RegisterEffect(e2_2,true) 
 		end
 	elseif op==1 then 
-		if Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP)~=0 then	  
+		if Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP)~=0 then   
 			local e2_1=Effect.CreateEffect(e:GetHandler())
 			e2_1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 			e2_1:SetType(EFFECT_TYPE_SINGLE)
@@ -96,15 +91,12 @@ function c1156019.op2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --
-function c1156019.cfilter3_1(c)
-	return c:IsCode(24063) and c:IsFaceup()
-end
 function c1156019.tfilter3_2(c)
 	return c:IsFaceup() and c:IsCode(24063) and c:IsReleasable()
 end
 function c1156019.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return e:GetHandler():GetLinkedGroup():FilterCount(c1156019.cfilter3_1,nil)>0 and Duel.IsExistingMatchingCard(c1156019.tfilter3_2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c1156019.tfilter3_2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	if Duel.SelectYesNo(tp,aux.Stringid(1156019,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(1156019,1))
 		local g=Duel.SelectMatchingCard(tp,c1156019.tfilter3_2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
@@ -115,6 +107,25 @@ function c1156019.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 	else
 		return false
+	end
+end
+--
+function c1156019.con1(e,tp,eg,ep,ev,re,r,rp)
+	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:GetHandler():IsSetCard(0x164)
+end
+--
+function c1156019.op1(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,1156019)
+	local Lp=Duel.GetLP(1-tp)
+	Duel.SetLP(1-tp,Lp-300)
+	local c=e:GetHandler()
+	if c:IsFaceup() then
+		local e1_1=Effect.CreateEffect(c)
+		e1_1:SetType(EFFECT_TYPE_SINGLE)
+		e1_1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1_1:SetValue(300)
+		e1_1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e1_1)
 	end
 end
 --

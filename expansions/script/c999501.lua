@@ -109,7 +109,6 @@ function M.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c = e:GetHandler()
 	if chk == 0 then return c:IsAbleToDeckAsCost() end
 	Duel.SendtoDeck(c, nil, 2, REASON_COST)
-	
 end
 
 function M.drfilter(c)

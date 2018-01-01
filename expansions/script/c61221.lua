@@ -81,8 +81,10 @@ function c61221.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function c61221.tgcon(e)
-	return e:GetHandler():GetOverlayGroup():FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)>=3
-		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
+	local eo=e:GetHandler():GetOverlayGroup()
+	local p1=eo:IsExists(Card.IsCode,1,nil,60105) or (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return eo:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)>=3
+		and p1 and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function c61221.disop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then return end

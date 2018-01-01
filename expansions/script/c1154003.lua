@@ -16,11 +16,10 @@ function c1154003.initial_effect(c)
 	c:RegisterEffect(e1)
 --
 	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC_G)
 	e2:SetRange(LOCATION_ONFIELD)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1,1154004)
 	e2:SetCondition(c1154003.con2)
 	e2:SetOperation(c1154003.op2)
 	c:RegisterEffect(e2)
@@ -34,12 +33,12 @@ function c1154003.initial_effect(c)
 	e3:SetCondition(c1154003.con3)
 	c:RegisterEffect(e3)
 --
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
-	e4:SetValue(c1154003.val4)
-	e4:SetCondition(c1154003.con3)  
-	c:RegisterEffect(e4)
+--	local e4=Effect.CreateEffect(c)
+--	e4:SetType(EFFECT_TYPE_SINGLE)
+--	e4:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+--	e4:SetValue(c1154003.val4)
+--	e4:SetCondition(c1154003.con3)  
+--	c:RegisterEffect(e4)
 --
 end
 --
@@ -173,8 +172,8 @@ function c1154003.con3(e)
 	return e:GetHandler():GetFlagEffect(1154003)==0
 end
 --
-function c1154003.val4(e,c)
-	if not c then return false end
-	return not c:IsSetCard(0x813)
-end
+--function c1154003.val4(e,c)
+--	if not c then return false end
+--	return not c:IsSetCard(0x813)
+--end
 --

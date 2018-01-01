@@ -27,7 +27,7 @@ function M.initial_effect(c)
 end
 
 function M.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xaa5)
+	return not c:IsType(TYPE_LINK) and c:IsFaceup() and c:IsSetCard(0xaa5)
 end
 
 function M.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

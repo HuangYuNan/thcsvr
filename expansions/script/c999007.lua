@@ -64,6 +64,7 @@ function M.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function M.spop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g = eg:Filter(M.spfliter, nil, tp)
 	if g:GetCount() ~= 1 then return end
 	local chkf = Duel.GetLocationCountFromEx(tp) > 0 and PLAYER_NONE or tp

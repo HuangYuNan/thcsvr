@@ -154,7 +154,7 @@ function M.tokenop(e,tp,eg,ep,ev,re,r,rp)
 		[1] = {25161, 0x208, 0x4011, 2000, 2000, 5, RACE_PLANT, ATTRIBUTE_LIGHT},
 		[2] = {25160, 0x208, 0x4011, 1000, 1000, 1, RACE_PLANT, ATTRIBUTE_LIGHT},
 		[3] = {999300, 0x208, 0x4011,   0,    0, 2, RACE_PLANT, ATTRIBUTE_EARTH},
-		[4] = {999999, 0x208, 0x4011, 900,  900, 9, RACE_WATER, ATTRIBUTE_WATER},
+		[4] = {999999, 0x208, 0x4011, 900,  900, 9, 0x40, 		ATTRIBUTE_WATER},
 	}
 	local ft = Duel.GetLocationCount(tp, LOCATION_MZONE)
 	local c = e:GetHandler()

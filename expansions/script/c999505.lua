@@ -32,7 +32,7 @@ function c999505.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function c999505.lvfilter(c,tp)
-	return c:IsSetCard(0x999) and c:GetControler()==tp and c:IsFaceup() and not c:IsType(TYPE_XYZ)
+	return c:IsSetCard(0x999) and not c:IsType(TYPE_LINK) and c:GetControler()==tp and c:IsFaceup() and not c:IsType(TYPE_XYZ)
 end
 
 function c999505.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

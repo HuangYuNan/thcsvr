@@ -78,8 +78,9 @@ function M.crossOp(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 	local tc = g:GetFirst()
 	while tc do 
 		local temp = Group.FromCards(c, tc)
-		if Duel.IsExistingMatchingCard(M.filter, tp, LOCATION_EXTRA, 0, 1, nil, c, temp) and 
-			Duel.IsExistingMatchingCard(M.filter, tp, LOCATION_EXTRA, 0, 1, nil, nil, temp) then
+		if Duel.GetLocationCountFromEx(tp, tp, temp) > 1
+			and Duel.IsExistingMatchingCard(M.filter, tp, LOCATION_EXTRA, 0, 1, nil, c, temp)
+			and Duel.IsExistingMatchingCard(M.filter, tp, LOCATION_EXTRA, 0, 1, nil, nil, temp) then
 			selg:AddCard(tc)
 		end 
 		tc = g:GetNext()

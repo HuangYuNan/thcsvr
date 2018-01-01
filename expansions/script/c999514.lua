@@ -61,7 +61,7 @@ end
 function M.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c = re:GetHandler()
 	if c:IsLocation(LOCATION_MZONE) and c:GetFlagEffect(Mid) == 0 then
-		c:RegisterFlagEffect(Mid, RESET_EVENT+0x1fe0000, 
+		c:RegisterFlagEffect(Mid, RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END, 
 			EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE, 1)
 	end
 end

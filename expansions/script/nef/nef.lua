@@ -828,3 +828,198 @@ function Nef.AddLinkProcedureWithDesc(c,f,min,max,gf,desc)
 	c:RegisterEffect(e1)
 	return e1
 end
+
+function Nef.DeepCopy(tbl)
+	local t = {}
+	for k, v in pairs(tbl) do
+		if type(v) == "table" then
+			t[k] = Nef.DeepCopy(v)
+		else
+			t[k] = v
+		end
+	end
+	return t
+end
+
+function Nef.GetAllArrow(c)
+	local res = {}
+	local list = {
+		LINK_MARKER_BOTTOM_LEFT,
+		LINK_MARKER_BOTTOM,
+		LINK_MARKER_BOTTOM_RIGHT,
+		LINK_MARKER_LEFT,
+		LINK_MARKER_RIGHT,
+		LINK_MARKER_TOP_LEFT,
+		LINK_MARKER_TOP,
+		LINK_MARKER_TOP_RIGHT,
+	}
+	for i = 1, #list do
+		if c:IsLinkMarker(list[i]) then
+			res[#res+1] = list[i]
+		end
+	end
+	return res
+end
+
+-- this group include cards in szone
+function Nef.GetLinkArrowGroup(c)
+	local g = Group.CreateGroup()
+	if c:IsOnField() then 
+		local tp = c:GetControler()
+		local loc = c:GetLocation()
+		local seq = c:GetSequence()
+
+		if c:IsLinkMarker(LINK_MARKER_TOP) then
+			local tc = Nef.getDir8CardByPos(tp, loc, seq)
+			if tc then g:AddCard(tc) end
+		end
+
+		if c:IsLinkMarker(LINK_MARKER_TOP_LEFT) then
+			local tc = Nef.getDir7CardByPos(tp, loc, seq)
+			if tc then g:AddCard(tc) end
+		end
+
+		if c:IsLinkMarker(LINK_MARKER_TOP_RIGHT) then
+			local tc = Nef.getDir9CardByPos(tp, loc, seq)
+			if tc then g:AddCard(tc) end
+		end
+
+		if c:IsLinkMarker(LINK_MARKER_LEFT) then
+			local tc = Nef.getDir4CardByPos(tp, loc, seq)
+			if tc then g:AddCard(tc) end
+		end
+
+		if c:IsLinkMarker(LINK_MARKER_RIGHT) then
+			local tc = Nef.getDir6CardByPos(tp, loc, seq)
+			if tc then g:AddCard(tc) end
+		end
+
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM) then
+			local tc = Nef.getDir2CardByPos(tp, loc, seq)
+			if tc then g:AddCard(tc) end
+		end
+
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) then
+			local tc = Nef.getDir1CardByPos(tp, loc, seq)
+			if tc then g:AddCard(tc) end
+		end
+
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) then
+			local tc = Nef.getDir3CardByPos(tp, loc, seq)
+			if tc then g:AddCard(tc) end
+		end
+	end
+	return g
+end
+
+function Nef.getDir8CardByPos(tp, loc, seq)
+	if loc == LOCATION_MZONE then
+		if seq == 1 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 5)
+		elseif seq == 3 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 6)
+		elseif seq == 5 then
+			return Duel.GetFieldCard(1-tp, LOCATION_MZONE, 3)
+		elseif seq == 6 then
+			return Duel.GetFieldCard(1-tp, LOCATION_MZONE, 1)
+		end
+	else
+		return Duel.GetFieldCard(tp, LOCATION_MZONE, seq)
+	end
+end
+
+function Nef.getDir7CardByPos(tp, loc, seq)
+	if loc == LOCATION_MZONE then
+		if seq == 2 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 5)
+		elseif seq == 4 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 6)
+		elseif seq == 5 then
+			return Duel.GetFieldCard(1-tp, LOCATION_MZONE, 4)
+		elseif seq == 6 then
+			return Duel.GetFieldCard(1-tp, LOCATION_MZONE, 2)
+		end
+	else
+		if seq > 0 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, seq-1)
+		end
+	end
+end
+
+function Nef.getDir9CardByPos(tp, loc, seq)
+	if loc == LOCATION_MZONE then
+		if seq == 0 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 5)
+		elseif seq == 2 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 6)
+		elseif seq == 5 then
+			return Duel.GetFieldCard(1-tp, LOCATION_MZONE, 2)
+		elseif seq == 6 then
+			return Duel.GetFieldCard(1-tp, LOCATION_MZONE, 4)
+		end
+	else
+		if seq < 4 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, seq+1)
+		end
+	end
+end
+
+function Nef.getDir4CardByPos(tp, loc, seq)
+	if loc == LOCATION_MZONE then
+		if 1 < seq and seq < 5 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, seq-1)
+		end
+	else
+		if 1 < seq and seq < 5 then
+			return Duel.GetFieldCard(tp, LOCATION_SZONE, seq-1)
+		end
+	end
+end
+
+function Nef.getDir6CardByPos(tp, loc, seq)
+	if loc == LOCATION_MZONE then
+		if 0 < seq and seq < 4 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, seq+1)
+		end
+	else
+		if 0 < seq and seq < 4 then
+			return Duel.GetFieldCard(tp, LOCATION_SZONE, seq+1)
+		end
+	end
+end
+
+function Nef.getDir2CardByPos(tp, loc, seq)
+	if loc == LOCATION_MZONE then
+		if seq == 5 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 1)
+		elseif seq == 6 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 3)
+		else
+			return Duel.GetFieldCard(tp, LOCATION_SZONE, seq)
+		end
+	end
+end
+
+function Nef.getDir1CardByPos(tp, loc, seq)
+	if loc == LOCATION_MZONE then
+		if seq == 5 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 0)
+		elseif seq == 6 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 2)
+		elseif seq > 0 then
+			return Duel.GetFieldCard(tp, LOCATION_SZONE, seq-1)
+		end
+	end
+end
+
+function Nef.getDir3CardByPos(tp, loc, seq)
+	if loc == LOCATION_MZONE then
+		if seq == 5 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 2)
+		elseif seq == 6 then
+			return Duel.GetFieldCard(tp, LOCATION_MZONE, 4)
+		elseif seq < 4 then
+			return Duel.GetFieldCard(tp, LOCATION_SZONE, seq+1)
+		end
+	end
+end

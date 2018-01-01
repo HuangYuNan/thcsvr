@@ -34,8 +34,8 @@ end
 function M.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk == 0 then return Duel.CheckReleaseGroup(tp, M.costfilter, 1, nil) end
 	local g = Duel.SelectReleaseGroup(tp,M.costfilter, 1, 1, nil)
-	Duel.Release(g, REASON_COST)
 	e:SetLabel(g:GetFirst():GetAttack())
+	Duel.Release(g, REASON_COST)
 end
 
 function M.con(e,tp,eg,ep,ev,re,r,rp)

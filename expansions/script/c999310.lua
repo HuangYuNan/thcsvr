@@ -75,7 +75,7 @@ function c999310.operation(e,tp,eg,ep,ev,re,r,rp)
 			local sg=Duel.GetMatchingGroup(c999310.extrafilter,tp,LOCATION_EXTRA,0,nil,g1,e,tp)
 			if not sg or sg:GetCount() == 0 or Duel.GetLocationCountFromEx(tp,tp,g1) == 0 then 
 				Duel.BreakEffect()
-				Duel.SendtoGrave(g1,REASON_EFFECT)
+				Duel.SendtoGrave(g1, REASON_EFFECT)
 				return 
 			end
 			Duel.BreakEffect()
@@ -86,8 +86,9 @@ function c999310.operation(e,tp,eg,ep,ev,re,r,rp)
 			elseif tc:IsType(TYPE_SYNCHRO) then
 				Duel.SynchroSummon(tp,tc,nil,g1)
 			elseif tc:IsType(TYPE_FUSION) then
-				Duel.SendtoGrave(g1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-				Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
+				if Duel.SendtoGrave(g1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION) > 1 then
+					Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
+				end
 			end
 		end
 	end
