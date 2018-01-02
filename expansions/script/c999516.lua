@@ -51,6 +51,7 @@ function M.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetTargetRange(LOCATION_MZONE, 0)
 	e3:SetTarget(M.limitTg)
 	e3:SetValue(1)
+	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3, tp)
 end
 
