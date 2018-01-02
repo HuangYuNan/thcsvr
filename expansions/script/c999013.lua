@@ -59,7 +59,7 @@ function M.gridcheck(c, fc, c2)
 	return Duel.GetLocationCountFromEx(tp, tp, Group.FromCards(c, c2), fc) > 0
 end
 
-function M.fusionfilter(c)
+function M.fusionfilter(c, tp)
 	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_PLANT) 
 		and Duel.IsExistingMatchingCard(M.CheckMaterialSingle, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, 1, nil, c)
 end
@@ -67,16 +67,16 @@ end
 --[[
 	fg:所有植物族融合怪兽
 ]] 
-function M.matfilter1(c, fg)
+function M.matfilter1(c, fg, tp)
 	local g1 = Duel.GetMatchingGroup(M.fmatcheck, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, nil, c)
-	return fg:IsExists(M.matfilter2, 1, c, g1, c:GetCode())
+	return fg:IsExists(M.matfilter2, 1, c, g1, c:GetCode(), tp)
 end
 
 --[[
 	g1:		第1只融合怪兽的所有可用素材组
 	code：	第1只融合怪兽的卡密
 ]] 
-function M.matfilter2(c, g1, code)
+function M.matfilter2(c, g1, code, tp)
 	if c:IsCode(code) then return false end
 	local g2 = Duel.GetMatchingGroup(M.fmatcheck2, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, nil, c, g1)
 	if g2:GetCount() == 0 then return false end
@@ -88,22 +88,22 @@ function M.samefilter(c, g)
 	return g:IsContains(c)
 end
 
-function M.lkcon(e,c)
+function M.lkcon(e, c)
 	if c == nil then return true end
 	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 	local tp = c:GetControler()
-	local mg = Duel.GetMatchingGroup(M.fusionfilter, tp, LOCATION_EXTRA, 0, nil)
-	return mg:IsExists(M.matfilter1, 1, nil, mg)
+	local mg = Duel.GetMatchingGroup(M.fusionfilter, tp, LOCATION_EXTRA, 0, nil, tp)
+	return mg:IsExists(M.matfilter1, 1, nil, mg, tp)
 end
 
 function M.lkop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg = Duel.GetMatchingGroup(M.fusionfilter, tp, LOCATION_EXTRA, 0, nil)
+	local mg = Duel.GetMatchingGroup(M.fusionfilter, tp, LOCATION_EXTRA, 0, nil, tp)
 	Duel.Hint(HINT_SELECTMSG, tp, HINTMSG_CONFIRM)
 
-	local fc1 = mg:FilterSelect(tp, M.matfilter1, 1, 1, nil, mg):GetFirst()
+	local fc1 = mg:FilterSelect(tp, M.matfilter1, 1, 1, nil, mg, tp):GetFirst()
 	local matg1 = Duel.GetMatchingGroup(M.fmatcheck, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, nil, fc1)
 
-	local fc2 = mg:FilterSelect(tp, M.matfilter2, 1, 1, fc1, matg1, fc1:GetCode()):GetFirst()
+	local fc2 = mg:FilterSelect(tp, M.matfilter2, 1, 1, fc1, matg1, fc1:GetCode(), tp):GetFirst()
 	local matg2 = Duel.GetMatchingGroup(M.fmatcheck2, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, nil, fc2, matg1)
 
 	Duel.ConfirmCards(1-tp, Group.FromCards(fc1, fc2))

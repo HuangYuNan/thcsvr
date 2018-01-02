@@ -100,7 +100,7 @@ function c999304.xyzop(e,tp,eg,ep,ev,re,r,rp,c)
 	local tokeng = mat:Filter(c999304.tokenfilter, nil)
 	if tokeng:GetCount() > 0 then
 		mat:Remove(c999304.tokenfilter, nil)
-		Duel.Release(tokeng, REASON_EFFECT)
+		Duel.Release(tokeng, REASON_RULE)
 	end
 
 	if mat:GetCount() > 0 then
