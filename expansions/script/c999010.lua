@@ -79,6 +79,7 @@ end
 
 function M.rmfliter(c, race)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(race) and c:IsAbleToRemove()
+		and c:IsLocation(LOCATION_MZONE) and c:IsFaceup()
 end
 
 function M.rmtg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -121,6 +122,7 @@ function M.rmop2(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 
 	local g = eg:Filter(M.rmfliter, nil, tc:GetRace())
+	g = g:Filter(Card.IsRelateToEffect, nil, e)
 	if g:GetCount() > 0 then
 		Duel.Remove(g, POS_FACEUP, REASON_EFFECT)
 	end
