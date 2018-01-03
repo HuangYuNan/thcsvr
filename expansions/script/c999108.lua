@@ -68,7 +68,7 @@ function M.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk == 0 then
 		if not eg or eg:GetCount() ~= 1 then return false end
 		local tc = eg:GetFirst()
-		if not tc:IsOnField() or tc:IsControler(e:GetHandler():GetControler()) then return false end
+		if not tc:IsOnField() or not tc:IsControler(e:GetHandler():GetControler()) then return false end
 
 		local pp, pn = Afi.AFIFindLastMI(tc)
 		pn = M.seq2col(pn)
