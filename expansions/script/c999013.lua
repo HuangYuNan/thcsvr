@@ -61,14 +61,14 @@ end
 
 function M.fusionfilter(c, tp)
 	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_PLANT) 
-		and Duel.IsExistingMatchingCard(M.CheckMaterialSingle, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, 1, nil, c)
+		and Duel.IsExistingMatchingCard(M.CheckMaterialSingle, tp, LOCATION_HAND+LOCATION_MZONE, 0, 1, nil, c)
 end
 
 --[[
 	fg:所有植物族融合怪兽
 ]] 
 function M.matfilter1(c, fg, tp)
-	local g1 = Duel.GetMatchingGroup(M.fmatcheck, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, nil, c)
+	local g1 = Duel.GetMatchingGroup(M.fmatcheck, tp, LOCATION_HAND+LOCATION_MZONE, 0, nil, c)
 	return fg:IsExists(M.matfilter2, 1, c, g1, c:GetCode(), tp)
 end
 
@@ -78,7 +78,7 @@ end
 ]] 
 function M.matfilter2(c, g1, code, tp)
 	if c:IsCode(code) then return false end
-	local g2 = Duel.GetMatchingGroup(M.fmatcheck2, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, nil, c, g1)
+	local g2 = Duel.GetMatchingGroup(M.fmatcheck2, tp, LOCATION_HAND+LOCATION_MZONE, 0, nil, c, g1)
 	if g2:GetCount() == 0 then return false end
 	g2:Merge(g1)
 	return g2:GetCount() > 1
@@ -101,16 +101,16 @@ function M.lkop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG, tp, HINTMSG_CONFIRM)
 
 	local fc1 = mg:FilterSelect(tp, M.matfilter1, 1, 1, nil, mg, tp):GetFirst()
-	local matg1 = Duel.GetMatchingGroup(M.fmatcheck, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, nil, fc1)
+	local matg1 = Duel.GetMatchingGroup(M.fmatcheck, tp, LOCATION_HAND+LOCATION_MZONE, 0, nil, fc1)
 
 	local fc2 = mg:FilterSelect(tp, M.matfilter2, 1, 1, fc1, matg1, fc1:GetCode(), tp):GetFirst()
-	local matg2 = Duel.GetMatchingGroup(M.fmatcheck2, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, nil, fc2, matg1)
+	local matg2 = Duel.GetMatchingGroup(M.fmatcheck2, tp, LOCATION_HAND+LOCATION_MZONE, 0, nil, fc2, matg1)
 
 	Duel.ConfirmCards(1-tp, Group.FromCards(fc1, fc2))
 	--
 
 	-- 排除原先matg1中的不可用素材
-	matg1 = Duel.GetMatchingGroup(M.fmatcheck2, tp, LOCATION_HAND+LOCATION_ONFIELD, 0, nil, fc1, matg2)
+	matg1 = Duel.GetMatchingGroup(M.fmatcheck2, tp, LOCATION_HAND+LOCATION_MZONE, 0, nil, fc1, matg2)
 
 	-- 对两组素材中共有的卡进行处理
 	local same = matg1:Filter(M.samefilter, nil, matg2)
