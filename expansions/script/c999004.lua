@@ -26,7 +26,7 @@ end
 
 function M.filter(c, e, tp, mg, chkf)
 	return c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e, SUMMON_TYPE_FUSION, tp, false, false) 
-		and c:CheckFusionMaterial(mg, nil, chkf) and Duel.GetLocationCountFromEx(tp, tp, mg, c) > 0
+		and c:CheckFusionMaterial(mg, e:GetHandler(), chkf) and Duel.GetLocationCountFromEx(tp, tp, mg, c) > 0
 end
 
 function M.target(e,tp,eg,ep,ev,re,r,rp,chk)
