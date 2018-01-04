@@ -52,7 +52,7 @@ function M.tdTg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local allg = Duel.GetMatchingGroup(M.tdTgFilter, tp, LOCATION_GRAVE, 0, nil)
 	local count = allg:GetCount()
 	if chk == 0 then 
-		return allg:FilterCount(Card.IsAbleToDeck, nil) == count
+		return count > 0 and allg:FilterCount(Card.IsAbleToDeck, nil) == count
 	end
 	Duel.SendtoDeck(allg, nil, 2, REASON_COST)
 
