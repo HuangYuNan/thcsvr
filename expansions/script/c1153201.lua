@@ -78,7 +78,7 @@ function c1153201.op5(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --
-function c1153301.filter4(c)
+function c1153201.filter4(c)
 	return c:IsFaceup()
 end
 function c1153201.tfilter4(c,e)

@@ -1,5 +1,4 @@
- 
---人符「现世斩」
+ --人符「现世斩」
 function c20170.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

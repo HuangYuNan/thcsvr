@@ -9,9 +9,10 @@ function c20161.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_ONFIELD)
+	e3:SetRange(LOCATION_FZONE)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e3:SetCountLimit(1)
+	e3:SetValue(c20161.valcon)
 	c:RegisterEffect(e3)
 	--special summon
 	local e4=Effect.CreateEffect(c)
@@ -19,7 +20,7 @@ function c20161.initial_effect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_CHAIN_UNIQUE)
-	e4:SetRange(LOCATION_SZONE)
+	e4:SetRange(LOCATION_FZONE)
 	e4:SetCode(EVENT_RECOVER)
 	e4:SetCountLimit(1)
 	e4:SetTarget(c20161.target)
@@ -102,3 +103,8 @@ function c20161.cop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+0x1fe0000)
 	c:GetReasonCard():RegisterEffect(e1)
 end
+--
+function c20161.valcon(e,re,r,rp)
+	return bit.band(r,REASON_EFFECT)~=0
+end
+--

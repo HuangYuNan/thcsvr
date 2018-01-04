@@ -4,6 +4,7 @@ function c10071.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(c10071.con1)
 	--e1:SetCountLimit(1,10071+EFFECT_COUNT_CODE_DUEL)
 	e1:SetHintTiming(0,TIMING_DRAW_PHASE)
 	c:RegisterEffect(e1)
@@ -38,6 +39,11 @@ function c10071.initial_effect(c)
 	e5:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e5)
 end
+--
+function c10071.con1(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnCount()>2
+end
+--
 function c10071.aclimit(e,re,tp)
 	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL) then return false end
 	local c=re:GetHandler()
@@ -50,8 +56,11 @@ function c10071.aclimset(e,tp,eg,ep,ev,re,r,rp)
 		tc=eg:GetNext()
 	end
 end
+function c10071.cfilter4(c)
+	return c:IsSetCard(0x242) and c:IsType(TYPE_MONSTER)
+end
 function c10071.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,27004)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(c10071.cfilter4,tp,LOCATION_GRAVE,0,1,nil)
 end
 function c10071.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,800,REASON_EFFECT)
