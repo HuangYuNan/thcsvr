@@ -41,7 +41,7 @@ end
 function M.spcon(e,c)
 	if c == nil then return true end
 	return Duel.GetLocationCount(c:GetControler(), LOCATION_MZONE) > 0
-		and Duel.IsExistingMatchingCard(M.spfilter, tp, LOCATION_GRAVE, 0, 1, nil)
+		and Duel.IsExistingMatchingCard(M.spfilter, c:GetControler(), LOCATION_GRAVE, 0, 1, nil)
 end
 function M.spfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xaa6)
@@ -62,7 +62,7 @@ function M.tdTg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0, CATEGORY_RECOVER, nil, 0, tp, heal)
 end
 function M.tdTgFilter(c)
-	return not c:IsCode(0xaa6) and c:IsType(TYPE_MONSTER)
+	return not c:IsCode(999001) and c:IsType(TYPE_MONSTER)
 end
 
 function M.tdOp(e,tp,eg,ep,ev,re,r,rp)
