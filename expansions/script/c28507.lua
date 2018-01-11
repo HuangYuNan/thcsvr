@@ -93,8 +93,8 @@ function c28507.smcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c28507.smfilter,tp,LOCATION_MZONE,0,3,nil)
 end
 function c28507.retreg(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,2)
-	if g:GetFirst()==g:RandomSelect(tp,1):GetFirst() then
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,2,false)
+	if g:GetFirst()==g:RandomSelect(tp,1,false):GetFirst() then
 		Duel.Hint(11,0,aux.Stringid(28507,4))
 	end
 end

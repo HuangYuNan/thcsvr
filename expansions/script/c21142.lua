@@ -22,7 +22,7 @@ function c21142.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetTarget(c21142.postg)
 	e2:SetOperation(c21142.posop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(21142,3))

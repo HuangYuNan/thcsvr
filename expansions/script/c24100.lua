@@ -1,5 +1,4 @@
 --哈德曼的妖怪少女✿古明地恋
-require "expansions/script/nef/nef"
 function c24100.initial_effect(c)
 	--synchro summon
 	Nef.AddSynchroProcedureWithDesc(c,aux.FilterBoolFunction(Card.IsSetCard,0x514a),aux.NonTuner(nil),1,aux.Stringid(24100,0))
@@ -18,7 +17,7 @@ function c24100.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(24100,2))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	--e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCondition(c24100.spcon)
@@ -30,7 +29,7 @@ function c24100.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetDescription(aux.Stringid(24100,3))
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	--e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(c24100.dcon)

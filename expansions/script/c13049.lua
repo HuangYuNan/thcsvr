@@ -37,8 +37,8 @@ function c13049.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c13049.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	local g2=Duel.GetMatchingGroupCount(c13049.dfilter,tp,LOCATION_DECK,0,nil)
-	if Duel.Destroy(g,REASON_EFFECT) and g2>0 and Duel.SelectYesNo(tp,aux.Stringid(13049,0)) then
+	local g2=Duel.GetMatchingGroup(c13049.dfilter,tp,LOCATION_DECK,0,nil)
+	if Duel.Destroy(g,REASON_EFFECT) and g2:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13049,0)) then
 		sg2=Duel.SelectMatchingCard(tp,c13049.dfilter,tp,LOCATION_DECK,0,1,1,nil)
 		Duel.Destroy(sg2,REASON_EFFECT)
 	end

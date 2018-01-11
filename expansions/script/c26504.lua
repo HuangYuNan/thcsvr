@@ -25,8 +25,8 @@ function c26504.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c26504.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,4)
-	if g:GetFirst()==g:RandomSelect(tp,1):GetFirst() then
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,8,false)
+	if g:GetFirst()==g:RandomSelect(tp,1,false):GetFirst() then
 		Duel.Hint(11,0,aux.Stringid(26504,4))
 	end
 	if Duel.GetFlagEffect(tp,26504)==0 then

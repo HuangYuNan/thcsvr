@@ -28,6 +28,7 @@ function c20504.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_F)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_CHAINING)
+	e3:SetLabel(1)
 	e3:SetCondition(c20504.condition)
 	e3:SetTarget(c20504.target2)
 	e3:SetOperation(c20504.activate)
@@ -73,7 +74,7 @@ function c20504.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c20504.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER)
+	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and not (re:GetHandler():GetOriginalCode()==20504 and re:GetLabel()==1)
 end
 function c20504.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -99,8 +100,8 @@ function c20504.retreg(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	c:RegisterEffect(e2)
-		local fg=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3)
-		if fg:GetFirst()==fg:RandomSelect(tp,1):GetFirst() then
+		local fg=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3,false)
+		if fg:GetFirst()==fg:RandomSelect(tp,1,false):GetFirst() then
 			Duel.Hint(11,0,aux.Stringid(20504,4))
 		end
 end

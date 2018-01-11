@@ -52,5 +52,5 @@ function c10087.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c10087.value(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsRace,e:GetHandlerPlayer(),0,LOCATION_MZONE+LOCATION_GRAVE,nil,RACE_ZOMBIE+RACE_FIEND)*300
+	return Duel.GetMatchingGroupCount(Card.IsRace,e:GetHandlerPlayer(),0,LOCATION_MZONE+LOCATION_GRAVE,nil,RACE_ZOMBIE+RACE_FIEND)*400
 end

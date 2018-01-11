@@ -41,8 +41,8 @@ function c28501.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		local fg=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,10)
-		if fg:GetFirst()==fg:RandomSelect(tp,1):GetFirst() then
+		local fg=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,10,false)
+		if fg:GetFirst()==fg:RandomSelect(tp,1,false):GetFirst() then
 			Duel.Hint(11,0,aux.Stringid(28501,4))
 		end
 	end

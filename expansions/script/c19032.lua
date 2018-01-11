@@ -24,7 +24,7 @@ function c19032.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c19032.mfilter(c)
-	return c:IsSetCard(0x273) or (c:IsSetCard(0x3208) and c:GetAttack()<=2000)
+	return (c:IsSetCard(0x273) or (c:IsSetCard(0x3208) and c:GetAttack()<=2000)) and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function c19032.filter(c,e,tp)
 	return c:IsCode(19030) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
@@ -65,7 +65,7 @@ function c19032.rmfilter2(c)
 	return c:IsSetCard(0x3208) and c:IsAbleToRemove()
 end
 function c19032.futg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsAbleToRemove()
+	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and e:GetHandler():IsAbleToRemove()
 		and Duel.IsExistingMatchingCard(c19032.rmfilter1,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c19032.rmfilter2,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingMatchingCard(c19032.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

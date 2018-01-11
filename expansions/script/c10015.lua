@@ -39,7 +39,7 @@ function c10015.atkop(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e2)
 end
 function c10015.filter(c,e,tp)
-	return c:IsFaceup() and c:IsLevelAbove(8) and (not e or c:IsRelateToEffect(e))
+	return (not e or c:IsRelateToEffect(e))
 end
 function c10015.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c10015.filter,1,e:GetHandler(),nil,tp) end

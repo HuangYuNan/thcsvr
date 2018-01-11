@@ -42,16 +42,13 @@ aux.FilterBoolFunction(Card.IsFusionSetCard,0x260),
 aux.FilterBoolFunction(Card.IsFusionSetCard,0x251c),
 }
 
-
 function c19013.cgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION
 end
 
-
 function c19013.desfilter(c,atk)
 	return c:IsDestructable() and c:GetAttack()~=atk and c:IsFaceup()
 end
-
 
 function c19013.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local atk=e:GetHandler():GetAttack()
@@ -60,7 +57,6 @@ function c19013.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if ct>2 then ct=2 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,ct,0,0)
 end
-
 
 function c19013.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -72,12 +68,10 @@ function c19013.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-
 function c19013.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (Duel.GetAttacker()==c or Duel.GetAttackTarget()==c) and c:GetFlagEffect(19013)==0
 end
-
 
 function c19013.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_HAND,0,nil,TYPE_MONSTER)
@@ -89,11 +83,9 @@ function c19013.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterEffect(e1)
 end
 
-
 function c19013.filter(c)
 	return c:IsFaceup() and not c:IsForbidden()
 end
-
 
 function c19013.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(0x1c) and c19013.filter(chkc) end
@@ -101,7 +93,6 @@ function c19013.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,c19013.filter,tp,0x1c,0x1c,1,1,nil)
 end
-
 
 function c19013.cosop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

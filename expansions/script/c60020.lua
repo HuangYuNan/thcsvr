@@ -2,7 +2,7 @@
 function c60020.initial_effect(c)
 	--pendulum summon
 	local argTable = {1}
-	Nef.EnablePendulumAttributeSP(c,2,aux.TRUE,argTable,false)
+	Nef.EnablePendulumAttributeSP(c,3,aux.TRUE,argTable,false)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

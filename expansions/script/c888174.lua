@@ -1,5 +1,4 @@
- 
---七曜-金水符「水银之毒」
+ --七曜-金水符「水银之毒」
 function c888174.initial_effect(c)
 	--damage
 	local e4=Effect.CreateEffect(c)

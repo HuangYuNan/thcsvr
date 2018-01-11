@@ -1,5 +1,4 @@
- 
---白焰的呼唤
+ --白焰的呼唤
 function c60085.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -9,6 +8,16 @@ function c60085.initial_effect(c)
 	e1:SetTarget(c60085.target)
 	e1:SetOperation(c60085.activate)
 	c:RegisterEffect(e1)
+	-- act in hand
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
+	e2:SetCondition(c60085.handcon)
+	c:RegisterEffect(e2)
+end
+
+function c60085.handcon(e)
+	return Duel.GetTurnCount() == 1
 end
 function c60085.filter(c,e,tp)
 	return c:IsSetCard(0x191) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

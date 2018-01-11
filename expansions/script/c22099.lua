@@ -57,8 +57,8 @@ function c22099.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c22099.op(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3)
-	if g:RandomSelect(tp,1):IsContains(g:GetFirst()) then
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,5,false)
+	if g:RandomSelect(tp,1,false):IsContains(g:GetFirst()) then
 		Duel.Hint(11,0,aux.Stringid(22099,4))
 	end
 	local tc=Duel.GetFirstTarget()

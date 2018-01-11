@@ -30,8 +30,8 @@ function c10012.cgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
 function c10012.cgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
+	if chk==0 then return Duel.CheckLPCost(tp,500) end
+	Duel.PayLPCost(tp,500)
 end
 function c10012.cgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsFaceup() and chkc:GetLocation()==LOCATION_MZONE and chkc:IsControler(1-tp) end
@@ -56,5 +56,5 @@ function c10012.atkcon(e)
 		and (Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()) and Duel.GetAttackTarget()~=nil
 end
 function c10012.atkval(e,c)
-	return e:GetHandler():GetBattleTarget():GetLevel()*100
+	return e:GetHandler():GetBattleTarget():GetLevel()*200
 end

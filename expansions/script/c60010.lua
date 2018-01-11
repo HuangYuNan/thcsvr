@@ -32,7 +32,7 @@ function c60010.val(e,c)
 	return c:GetLevel()*100
 end
 function c60010.var(e,c)
-	return c:GetRank()*100
+	return c:GetRank()*200
 end
 function c60010.filter(c)
 	return c:IsFaceup() and not c:IsType(TYPE_XYZ) and c:IsSetCard(0x191)
