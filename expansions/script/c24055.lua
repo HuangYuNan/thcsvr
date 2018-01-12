@@ -11,7 +11,7 @@ function c24055.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c24055.filter(c)
-	return c:IsCode(24004) or c:IsCode(24044)
+	return c:IsSetCard(0x262)
 end
 function c24055.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,c24055.filter,1,nil) end

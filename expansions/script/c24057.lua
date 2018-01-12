@@ -47,7 +47,7 @@ function c24057.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
 	Duel.RegisterEffect(e1,tp)
 	local rt=e:GetLabelObject()
-	if rt:IsCode(24004) or rt:IsCode(24044) or rt:IsType(TYPE_TOKEN) then
+	if rt:IsSetCard(0x262) or rt:IsType(TYPE_TOKEN) then
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)

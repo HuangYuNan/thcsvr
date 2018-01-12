@@ -19,7 +19,7 @@ end
 c60105.DescSetName = 0x229
 function c60105.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
-	local ex=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
+	local ex=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
 	return ex
 end
 function c60105.cost(e,tp,eg,ep,ev,re,r,rp,chk)
