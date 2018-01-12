@@ -8,7 +8,7 @@ Uds.cardList = {}
 --rewrite
 function Auxiliary.PreloadUds()
 	Uds.regCardData()
-	Uds.regSelectCard()
+	--Uds.regSelectCard()
 end
 
 function Uds.regCardData()
