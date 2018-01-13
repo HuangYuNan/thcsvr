@@ -32,8 +32,8 @@ function c22510.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)+Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 end
 end
 function c22510.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,5,false)
-	if g:RandomSelect(tp,1,false):IsContains(g:GetFirst()) then
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,5,true)
+	if g:RandomSelect(tp,1,true):IsContains(g:GetFirst()) then
 		Duel.Hint(11,0,aux.Stringid(22510,4))
 	end
 	local c=e:GetHandler()

@@ -107,8 +107,8 @@ function c26116.pop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c26116.pfilter,tp,0,LOCATION_MZONE,nil,atk)
 	if g:GetCount()>0 then
 		Duel.Destroy(g,REASON_EFFECT)
-		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,4,false)
-		if g:RandomSelect(tp,1,false):IsContains(g:GetFirst()) then
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,4,true)
+		if g:RandomSelect(tp,1,true):IsContains(g:GetFirst()) then
 			Duel.Hint(11,0,aux.Stringid(26116,4))
 		end
 	end

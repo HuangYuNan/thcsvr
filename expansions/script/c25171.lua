@@ -44,7 +44,7 @@ function c25171.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if tg:GetCount()>0 then
 		Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
-		local bg=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,2,true)
+		local bg=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,5,true)
 		if bg:RandomSelect(tp,1,true):IsContains(bg:GetFirst()) then
 			Duel.Hint(11,0,aux.Stringid(25171,4))
 		end

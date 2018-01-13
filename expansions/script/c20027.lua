@@ -1,5 +1,4 @@
- 
---魂魄妖梦
+ --魂魄妖梦
 function c20027.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -99,7 +98,7 @@ function c20027.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c20027.op(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,20046,0x208,0x4011,100,0,1,RACE_FIEND,ATTRIBUTE_DARK) then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,20046,0x208,0x4011,100,0,1,RACE_ZOMBIE,ATTRIBUTE_WIND) then return end
 	local token=Duel.CreateToken(tp,20046)
 	Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 	Duel.SpecialSummonComplete()

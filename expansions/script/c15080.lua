@@ -65,5 +65,6 @@ function c15080.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) then
 		Duel.RegisterFlagEffect(tp,150000,RESET_PHASE+PHASE_END,0,1)
 		Duel.RegisterFlagEffect(tp,150000,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,150000,RESET_PHASE+PHASE_END,0,1)
 	end
 end

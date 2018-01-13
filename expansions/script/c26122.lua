@@ -82,8 +82,8 @@ function c26122.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_SET_DEFENSE)
 		e2:SetValue(tc:GetBaseDefense()*2)
 		tc:RegisterEffect(e2)
-		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,5,false)
-		if g:RandomSelect(tp,1,false):IsContains(g:GetFirst()) then
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,5,true)
+		if g:RandomSelect(tp,1,true):IsContains(g:GetFirst()) then
 			Duel.Hint(11,0,aux.Stringid(26122,4))
 		end
 	end

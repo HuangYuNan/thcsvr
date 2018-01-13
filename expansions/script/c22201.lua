@@ -32,7 +32,7 @@ function c22201.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function c22201.filter(c,e,tp)
-	return c:IsCode(22049) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
+	return c:IsCode(22049) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c22201.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
@@ -45,8 +45,8 @@ function c22201.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c22201.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.SpecialSummon(tc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)
-		tc:CompleteProcedure()
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		--tc:CompleteProcedure()
 	end
 end
 function c22201.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

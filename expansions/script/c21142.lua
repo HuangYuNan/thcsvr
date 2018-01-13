@@ -60,7 +60,7 @@ function c21142.sumop(e,tp,eg,ep,ev,re,r,rp)
 	else Duel.SendtoGrave(e:GetHandler(),REASON_RULE) end
 end
 function c21142.posfilter(c)
-	return c:IsFaceup() and c:IsCanTurnSet() and not c:IsLocation(LOCATION_PZONE)
+	return c:IsFaceup() and c:IsCanTurnSet() and not c:IsLocation(LOCATION_PZONE) and not c:IsLocation(LOCATION_FZONE)
 end
 function c21142.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local mct=Duel.GetMatchingGroup(c21142.posfilter,tp,0,LOCATION_ONFIELD,nil):Filter(Card.IsCanBeEffectTarget,nil,e):GetCount()
@@ -114,7 +114,7 @@ function c21142.fustg(e,tp,eg,ep,ev,re,r,rp,chk)
 				res=Duel.IsExistingMatchingCard(c21142.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,nil)
 			end
 		end
-		return res
+		return res and Duel.GetLocationCountFromEx(tp, tp, e:GetHandler())>0
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end

@@ -28,7 +28,7 @@ function c11010.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c11010.adval(e,c)
-	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)*700
+	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)*900
 end
 function c11010.spcon(e,c)
 	if c==nil then return true end

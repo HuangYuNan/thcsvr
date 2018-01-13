@@ -18,7 +18,7 @@ function c27041.filter(c)
 	return c:IsSetCard(0x208) or not c:IsType(TYPE_MONSTER)
 end
 function c27041.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD+LOCATION_HAND,2,e:GetHandler())
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,e:GetHandler())
 		and Duel.IsExistingMatchingCard(c27041.filter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,PLAYER_ALL,LOCATION_ONFIELD+LOCATION_HAND)
 end

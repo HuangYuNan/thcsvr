@@ -1,4 +1,3 @@
- 
 --因幡的欺诈师 帝
 function c21071.initial_effect(c)
 	--draw
@@ -40,7 +39,8 @@ function c21071.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		if tc:IsSetCard(0x161) or tc:IsSetCard(0x256) or tc:IsSetCard(0x257) then
-			if Duel.IsExistingMatchingCard(c21071.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) then
+			if Duel.IsExistingMatchingCard(c21071.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) 
+					and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local dg=Duel.SelectMatchingCard(tp,c21071.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 				Duel.SpecialSummon(dg,0,tp,tp,false,false,POS_FACEUP)

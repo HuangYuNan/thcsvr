@@ -86,7 +86,6 @@ function c10003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c10003.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)

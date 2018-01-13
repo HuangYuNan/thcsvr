@@ -1,5 +1,5 @@
 --
--- require "nef/nef"
+require "expansions/script/nef/nef"
 Uds={}
 local Udsflag = true
 Uds.dataList = {}
@@ -8,7 +8,7 @@ Uds.cardList = {}
 --rewrite
 function Auxiliary.PreloadUds()
 	Uds.regCardData()
-	--Uds.regSelectCard()
+	Uds.regSelectCard()
 end
 
 function Uds.regCardData()

@@ -100,8 +100,8 @@ function c20504.retreg(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	c:RegisterEffect(e2)
-		local fg=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3,false)
-		if fg:GetFirst()==fg:RandomSelect(tp,1,false):GetFirst() then
+		local fg=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3,true)
+		if fg:GetFirst()==fg:RandomSelect(tp,1,true):GetFirst() then
 			Duel.Hint(11,0,aux.Stringid(20504,4))
 		end
 end

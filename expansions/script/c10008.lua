@@ -1,5 +1,4 @@
- 
---茨华仙 茨木华扇
+ --茨华仙 茨木华扇
 function c10008.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()
@@ -44,7 +43,6 @@ function c10008.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c10008.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)

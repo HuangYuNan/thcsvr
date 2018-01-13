@@ -33,16 +33,9 @@ function c27082.cfilter(c)
 	return c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or (c:IsLocation(LOCATION_SZONE) and (c:GetSequence()==6 or c:GetSequence()==7)))
 end
 function c27082.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0
-		and Duel.IsExistingMatchingCard(c27082.cfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,2,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c27082.cfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,2,e:GetHandler()) end
 	local g=Duel.SelectMatchingCard(tp,c27082.cfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,2,2,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
-	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-	e:GetHandler():RegisterEffect(e1,true)
 end
 function c27082.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
