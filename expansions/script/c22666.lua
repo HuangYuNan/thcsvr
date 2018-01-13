@@ -24,7 +24,7 @@ function c22666.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(function(e)
-		return (Duel.GetAttacker()==e:GetHandler() and Duel.GetCurrentPhase() & (PHASE_DAMAGE_CAL | PHASE_DAMAGE))>0
+		return (Duel.GetAttacker()==e:GetHandler() and (Duel.GetCurrentPhase() & (PHASE_DAMAGE_CAL | PHASE_DAMAGE)))>0
 	end)
 	e1:SetValue(800)
 	c:RegisterEffect(e1)

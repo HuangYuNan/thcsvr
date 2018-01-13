@@ -33,7 +33,7 @@ function c22225.initial_effect(c)
 	Nef.RegisterBigFiendEffect(c,e1)
 end
 function c22225.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER)
+	return re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER) and ep==1-tp
 end
 function c22225.tgfilter(c)
 	return c:IsCode(22105) and c:IsAbleToGrave()
