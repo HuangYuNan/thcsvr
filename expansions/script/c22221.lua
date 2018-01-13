@@ -91,5 +91,5 @@ function c22221.thop(e,tp,eg,ep,ev,re,r,rp)
 	local sg2=g2:Select(tp,1,1,nil)
 	sg:Merge(sg2)
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,sg)
+	--Duel.ConfirmCards(1-tp,sg)
 end
