@@ -1023,3 +1023,18 @@ function Nef.getDir3CardByPos(tp, loc, seq)
 		end
 	end
 end
+function Nef.RegisterBigFiendEffect(c,e)
+	c:RegisterEffect(e)
+	local ex=e:Clone()
+	ex:SetRange(LOCATION_HAND)
+	local con=e:GetCondition()
+	ex:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
+		return (not con or con(e,tp,eg,ep,ev,re,r,rp)) and Duel.IsPlayerAffectedByEffect(tp,22211) and e:GetHandler():IsSetCard(0x222)
+	end)
+	if ex:IsHasType(EFFECT_TYPE_IGNITION) then
+		ex:SetType((ex:GetType() & ~EFFECT_TYPE_IGNITION) | EFFECT_TYPE_QUICK_O)
+		ex:SetCode(EVENT_FREE_CHAIN)
+		ex:SetHintTiming(0,0x1c0)
+	end
+	c:RegisterEffect(ex)	
+end
