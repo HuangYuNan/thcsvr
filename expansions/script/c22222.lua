@@ -46,7 +46,7 @@ function c22222.spfilter(c,e,tp)
 	return c:IsSetCard(0x20a2) and not c:IsCode(22222) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c22222.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsContains(e:GetHandler()) and rp~=tp and re:GetHandler():IsOnfield() and re:GetHandler():IsType(TYPE_MONSTER)
+	return eg:IsContains(e:GetHandler()) and rp~=tp and re:GetHandler():IsOnField() and re:GetHandler():IsType(TYPE_MONSTER)
 		and re:GetHandler():IsControlerCanBeChanged()
 end
 function c22222.spcon2(e,tp,eg,ep,ev,re,r,rp)
