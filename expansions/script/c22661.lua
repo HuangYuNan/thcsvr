@@ -26,7 +26,6 @@ function cm.initial_effect(c)
 	e2:SetCode(EVENT_CUSTOM+m)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(0x14000)
-	e2:SetCondition(cm.spcon)
 	e2:SetTarget(cm.sptg)
 	e2:SetOperation(cm.spop)
 	c:RegisterEffect(e2)
@@ -66,7 +65,7 @@ function cm.checkop(e,tp,eg,ep,ev,re,r,rp)
 		pf[tc:GetSummonPlayer()]=true
 		tc=eg:GetNext()
 	end
-	while p=0,1 do
+	for p=0,1 do
 		if pf[p] then
 			cm[p]=cm[p]+1
 			if cm[p]==6 then
