@@ -54,7 +54,7 @@ function c25046.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()==0 then return end
 	local dice=Duel.TossDice(tp,1)
 	if dice==1 or dice==4 then
-		Duel.Damage(1-tp,700,REASON_EFFECT)
+		Duel.Damage(1-tp,800,REASON_EFFECT)
 		local tc=g:GetFirst()
 		while tc do
 			local e1=Effect.CreateEffect(e:GetHandler())

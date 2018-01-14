@@ -39,6 +39,6 @@ function c25048.damop(e,tp,eg,ep,ev,re,r,rp)
 	if(ct<5) then
 		ct=ct+1
 		c:SetTurnCounter(ct)
-		Duel.Damage(1-tp,400,REASON_EFFECT)
+		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
 end

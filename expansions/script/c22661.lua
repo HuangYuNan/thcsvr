@@ -53,6 +53,9 @@ function cm.initial_effect(c)
 	e1:SetOperation(cm.operation1)
 	Nef.RegisterBigFiendEffect(c,e1)
 end
+function cm.tgfilter(c,tp)
+	return c:GetSummonPlayer()==tp
+end
 function cm.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnCount()~=cm[2] then
 		cm[0]=0
@@ -68,7 +71,7 @@ function cm.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for p=0,1 do
 		if pf[p] then
 			cm[p]=cm[p]+1
-			if cm[p]==6 then
+			if cm[p]==6 and eg:IsExists(cm.tgfilter,1,nil,1-tp) then
 				Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+m,e,0,0,0,0)
 			end
 		end
@@ -87,7 +90,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(-600)
+			e1:SetValue(-1800)
 			e1:SetReset(RESET_EVENT+0x1fe0000)
 			tc:RegisterEffect(e1)
 		end

@@ -1,5 +1,4 @@
- 
---斯卡雷特编年史
+ --斯卡雷特编年史
 function c22120.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -19,12 +18,12 @@ end
 function c22120.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and c:IsSetCard(0x813)
 end
-function c22120.cfilter(c)
+function c22120.filter(c)
 	return (c:IsSetCard(0x815) or c:IsSetCard(0x814)) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c22120.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(c22120.costfilter,tp,LOCATION_GRAVE,0,nil)
-	local num=Duel.GetMatchingGroupCount(c22120.cfilter,tp,LOCATION_DECK,0,nil)
+	local num=Duel.GetMatchingGroupCount(c22120.filter,tp,LOCATION_DECK,0,nil)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>=1 and num>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=g:Select(tp,1,1,nil)
@@ -36,9 +35,6 @@ function c22120.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		g1:Merge(g2)
 	else e:SetLabel(1) end
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
-end
-function c22120.filter(c)
-	return c:IsSetCard(0x812) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
 end
 function c22120.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22120.filter,tp,LOCATION_DECK,0,1,nil) end

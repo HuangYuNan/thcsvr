@@ -61,6 +61,7 @@ end
 function c22221.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c22221.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c22221.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -80,6 +81,7 @@ end
 function c22221.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22221.thfilter2,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingMatchingCard(c22221.thfilter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,0,0)
 end
 function c22221.thop(e,tp,eg,ep,ev,re,r,rp)

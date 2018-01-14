@@ -26,7 +26,7 @@ function c22666.initial_effect(c)
 	e1:SetCondition(function(e)
 		return Duel.GetAttacker()==e:GetHandler() and (Duel.GetCurrentPhase() & (PHASE_DAMAGE_CAL | PHASE_DAMAGE))>0
 	end)
-	e1:SetValue(800)
+	e1:SetValue(300)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(22666,0))
@@ -54,7 +54,7 @@ function c22666.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c22666.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
+	if not c:IsRelateToEffect(e) or (c:IsLocation(LOCATION_MZONE) and c:IsFacedown()) then return end
 	local g=Duel.GetMatchingGroup(c22666.filter,tp,0,LOCATION_MZONE,c,c:GetAttack())
 	Duel.Destroy(g,REASON_EFFECT)
 end

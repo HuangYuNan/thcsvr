@@ -66,18 +66,20 @@ function c22662.tpfilter(c,tp)
 end
 function c22662.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local dmg=400
+	if e:GetHandler():GetFlagEffect(22662)>0 then dmg=600 end
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(-300)
+		e1:SetValue(-dmg)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffect(e2)
 	end
-	Duel.SetLP(1-tp,Duel.GetLP(1-tp)-300)
+	Duel.SetLP(1-tp,Duel.GetLP(1-tp)-dmg)
 end
 function c22662.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -89,16 +91,17 @@ function c22662.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,22665,0x222,0x4011,1800,1100,7,RACE_FIEND,ATTRIBUTE_DARK) then return end
 	local token=Duel.CreateToken(tp,22665)
 	if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)>0 then
-		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		for tc in aux.Next(g) do
-			local atk=tc:GetTextAttack()*1.5-tc:GetAttack()
-			if atk<=0 then atk=0 end
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(atk)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1)
-		end
+		--local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+		-- for tc in aux.Next(g) do
+		-- 	local atk=tc:GetTextAttack()*1.5-tc:GetAttack()
+		-- 	if atk<=0 then atk=0 end
+		-- 	local e1=Effect.CreateEffect(e:GetHandler())
+		-- 	e1:SetType(EFFECT_TYPE_SINGLE)
+		-- 	e1:SetCode(EFFECT_UPDATE_ATTACK)
+		-- 	e1:SetValue(atk)
+		-- 	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		-- 	tc:RegisterEffect(e1)
+		-- end
+		e:GetHandler():RegisterFlagEffect(22662,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1)
 	end
 end
