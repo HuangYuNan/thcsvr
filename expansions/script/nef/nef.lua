@@ -653,6 +653,10 @@ function Nef.XyzProcedureCustomTuneMagicianCheck(c,g)
 	end
 	return false
 end
+function Nef.XyzProcedureCustomCheck(g,xyzc,tp,gf)
+	if g:IsExists(Nef.XyzProcedureCustomTuneMagicianCheck,1,nil,g) then return false end
+	return not gf or gf(g,xyzc,tp)
+end
 function Nef.XyzProcedureCustomFilter(c,xyzcard,func,ext_params)
 	if c:IsLocation(LOCATION_ONFIELD+LOCATION_REMOVED) and c:IsFacedown() then return false end
 	return c:IsCanBeXyzMaterial(xyzcard) and (not func or func(c,xyzcard,table.unpack(ext_params)))
