@@ -23,11 +23,14 @@ function c22201.initial_effect(c)
 	e2:SetOperation(c22201.thop)
 	c:RegisterEffect(e2)
 end
+function c22201.cfilter(c,tp)
+	return c:IsSetCard(0x111) and Duel.GetLocationCountFromEx(tp, tp, c)>0
+end
 function c22201.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,1,nil,0x111)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c22201.cfilter,1,nil,tp)
 		and Duel.CheckLPCost(tp,1000) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,nil,0x111)
+	local g=Duel.SelectReleaseGroup(tp,c22201.cfilter,1,1,nil,tp)
 	Duel.Release(g,REASON_COST)
 	Duel.PayLPCost(tp,1000)
 end

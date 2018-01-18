@@ -3,7 +3,7 @@
 function c20016.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()
-	Nef.AddXyzProcedureCustom(c,c20016.mfilter,c20016.xyzcheck,2,3)
+	Nef.AddXyzProcedureCustom(c,c20016.mfilter,c20016.xyzcheck,1,2)
 	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -21,7 +21,7 @@ function c20016.mfilter(c,xyzc)
 	return c:IsXyzLevel(xyzc,3)
 end
 function c20016.xyzcheck(g,xyzc)
-	return g:GetCount()==3 or g:IsExists(c20016.xyzfilter,2,nil)
+	return g:GetCount()==2 or g:IsExists(c20016.xyzfilter,1,nil)
 end
 function c20016.xyzfilter(c)
 	return c:IsSetCard(0x123) or c:IsCode(20013)

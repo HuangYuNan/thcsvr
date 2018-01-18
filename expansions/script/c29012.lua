@@ -33,7 +33,7 @@ function c29012.initial_effect(c)
 	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e6:SetTargetRange(1,0)
 	e6:SetTarget(c29012.sumlimit)
-	c:RegisterEffect(e6)
+	--c:RegisterEffect(e6)
 end
 
 c29012.DescSetName=0x826

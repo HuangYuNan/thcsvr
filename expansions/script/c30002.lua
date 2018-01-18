@@ -1,4 +1,3 @@
- 
 --萨菲丽丝
 function c30002.initial_effect(c)
 	--dark synchro summon
@@ -69,6 +68,9 @@ end
 function c30002.synfilter3(c,lv)
 	return c:GetLevel()==lv
 end
+function c30002.exlfilter(c,tp)
+	return Duel.GetLocationCountFromEx(tp, tp, c)>0
+end
 function c30002.syncon(e,c,tuner)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -76,27 +78,38 @@ function c30002.syncon(e,c,tuner)
 	local g1=Duel.GetMatchingGroup(c30002.matfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
 	local g2=Duel.GetMatchingGroup(c30002.matfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
 	local lv=c:GetLevel()
-	return g2:IsExists(c30002.synfilter1,1,nil,lv,g1,g2)
+	return g2:IsExists(c30002.synfilter1,1,nil,lv,g1,g2) and (g1:IsExists(c30002.exlfilter,1,nil,tp) or g2:IsExists(c30002.exlfilter,1,nil,tp))
 end
 function c30002.synop(e,tp,eg,ep,ev,re,r,rp,c,tuner)
 	local g=Group.CreateGroup()
 	local g1=Duel.GetMatchingGroup(c30002.matfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
 	local g2=Duel.GetMatchingGroup(c30002.matfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c)
 	local lv=c:GetLevel()
+	local lv1=0
+	if g1:FilterCount(c30002.exlfilter,nil,tp)==0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
+		local m3=g2:Filter(c30002.exlfilter,nil,tp):FilterSelect(tp,c30002.synfilter1,1,1,nil,lv,g1,g2)
+		local mt1=m3:GetFirst()
+		g:AddCard(mt1)
+		lv1=mt1:GetLevel()
+	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 		local m3=g2:FilterSelect(tp,c30002.synfilter1,1,1,nil,lv,g1,g2)
 		local mt1=m3:GetFirst()
 		g:AddCard(mt1)
-		local lv1=mt1:GetLevel()
+		lv1=mt1:GetLevel()
+	end
+	if g2:FilterCount(c30002.exlfilter,nil,tp)==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-		if mt1:GetFlagEffect(30000)==0 then	
+		local t1=g1:Filter(c30002.exlfilter,nil,tp):FilterSelect(tp,c30002.synfilter3,1,1,nil,lv+lv1)
+		g:Merge(t1)
+		c:SetMaterial(g)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 		local t1=g1:FilterSelect(tp,c30002.synfilter3,1,1,nil,lv+lv1)
 		g:Merge(t1)
-		else 
-		local t1=g1:FilterSelect(tp,c30002.synfilter3,1,1,nil,lv-lv1)
-		g:Merge(t1)
-		end			
-	c:SetMaterial(g)
+		c:SetMaterial(g)
+	end
 	Duel.SendtoGrave(g,REASON_MATERIAL+REASON_SYNCHRO+REASON_RULE)
 end
 function c30002.val(e,c)

@@ -47,6 +47,10 @@ function c14063.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstMatchingCard(c14063.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if tc then
+			local mg=c:GetOverlayGroup()
+			if mg:GetCount()~=0 then
+				Duel.Overlay(tc,mg)
+			end
 		local cg=Group.FromCards(c)
 		tc:SetMaterial(cg)
 		Duel.Overlay(tc,cg)
