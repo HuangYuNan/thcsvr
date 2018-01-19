@@ -32,7 +32,7 @@ function c22513.matfilter(c)
 	return not c:IsLinkType(TYPE_TOKEN)
 end
 function c22513.lkfilter(c,lc,tp)
-	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and c:IsType(TYPE_EFFECT) and c:GetBaseAttack()<=1000 and Duel.GetLocationCountFromEx(tp,tp,c)>0
+	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and c:IsType(TYPE_EFFECT) and c:GetBaseAttack()<=1000 and Duel.GetLocationCountFromEx(tp,tp,c,lc)>0
 end
 function c22513.lkcon(e,c)
 	if c==nil then return true end
@@ -42,7 +42,7 @@ function c22513.lkcon(e,c)
 	return mg:GetCount()>0
 end
 function c22513.lkop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(c22513.lkfilter,tp,LOCATION_MZONE,0,nil,c)
+	local mg=Duel.GetMatchingGroup(c22513.lkfilter,tp,LOCATION_MZONE,0,nil,c,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
 	local sg=mg:Select(tp,1,1,nil)
 	c:SetMaterial(sg)
