@@ -116,15 +116,17 @@ function c13078.afilter(c,atk)
 end
 function c13078.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
-	local atk=e:GetHandler():GetAttack()*3.14
+	local atk=c:GetAttack()*3.14
+	if chk==0 then return Duel.IsExistingMatchingCard(c13078.afilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,atk) end
 	local sg=Duel.GetMatchingGroup(c13078.afilter,tp,LOCATION_MZONE,LOCATION_MZONE,c,atk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,sg,sg:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,1-tp,sg:GetCount()*1024)
 	Duel.SetChainLimit(aux.FALSE)
 end
 function c13078.operation(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(c13078.afilter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler(),e:GetHandler():GetAttack())
+	local c=e:GetHandler()
+	local atk=c:GetAttack()*3.14
+	local sg=Duel.GetMatchingGroup(c13078.afilter,tp,LOCATION_MZONE,LOCATION_MZONE,c,atk)
 	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup()
 	local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
