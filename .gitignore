@@ -31,7 +31,6 @@ premake5.exe
 /irrlicht-1.8.4
 /irrlicht
 /lua-5.3.4
-/expansions/pics
 /pics
 /premake5
 /lua
