@@ -18,13 +18,14 @@ function c888174.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function c888174.operation(e,tp,eg,ep,ev,re,r,rp)
-	local e2=Effect.CreateEffect(e:GetHandler())
+	local e2=Effect.GlobalEffect()
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetReset(RESET_PHASE+PHASE_END,8)
 	e2:SetCondition(c888174.damcon)
 	e2:SetOperation(c888174.damop)
+	e2:SetOwnerPlayer(tp)
 	Duel.RegisterEffect(e2,tp)
 end
 function c888174.damcon(e,tp,eg,ep,ev,re,r,rp)
