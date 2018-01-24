@@ -73,7 +73,7 @@ function c31027.arcanareg(c,e,coin)
 		Duel.SetLP(1-p,lp-500)
 		local g=Duel.SelectMatchingCard(p,Card.IsAbleToGrave,p,0,LOCATION_ONFIELD,1,1,nil)
 		if g:GetCount()>0 then
-			Duel.SendtoGrave(g,REASON_EFFECT)
+			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end
 	end
 end

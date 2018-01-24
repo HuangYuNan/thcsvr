@@ -22,7 +22,7 @@ function c24047.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c24047.cfilter(c)
-	return c:IsFaceup() and (c:IsCode(24004) or c:IsCode(24044) or c:IsCode(1156019)) 
+	return c:IsFaceup() and c:IsSetCard(0x262)
 end
 function c24047.atg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c24047.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
@@ -30,6 +30,7 @@ function c24047.atg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c24047.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>=2 and Duel.IsChainDisablable(0) and Duel.SelectYesNo(1-tp,aux.Stringid(24047,0)) then
+		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(1-tp,aux.TRUE,tp,0,LOCATION_HAND,2,2,nil)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	else

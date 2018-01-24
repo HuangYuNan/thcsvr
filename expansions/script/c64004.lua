@@ -64,6 +64,6 @@ function c64004.op2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
-		tc:RegisterEffect(e1)	
+		--tc:RegisterEffect(e1)
 	end
 end

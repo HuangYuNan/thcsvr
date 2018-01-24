@@ -1,4 +1,3 @@
- 
 --暗精灵-蕾斯提亚
 function c40019.initial_effect(c)
 	c:SetUniqueOnField(1,0,40019)
@@ -9,7 +8,7 @@ function c40019.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_DESTROY)
-	e1:SetRange(LOCATION_HAND)
+	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
 	e1:SetCondition(c40019.spcon)
 	e1:SetTarget(c40019.sptg)
 	e1:SetOperation(c40019.spop)

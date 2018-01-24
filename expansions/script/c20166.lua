@@ -1,5 +1,4 @@
- 
---告春精✿莉莉布莱克
+ --告春精✿莉莉布莱克
 function c20166.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -13,10 +12,10 @@ function c20166.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c20166.cfilter(c)
-	return (c:IsCode(20013) or c:IsCode(20163) or c:IsCode(5519829)) and c:IsFaceup() and c:IsType(TYPE_TUNER)
+	return c:IsSetCard(0x123) and c:IsFaceup() and c:IsType(TYPE_TUNER)
 end
 function c20166.filter(c)
-	return (c:IsCode(20013) or c:IsSetCard(0x123)) and c:IsFaceup()
+	return c:IsSetCard(0x123) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsFaceup()
 end
 function c20166.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,20166)==0 and Duel.CheckLPCost(tp,600)

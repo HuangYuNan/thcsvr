@@ -1,5 +1,4 @@
- 
---告春精✿莉莉霍瓦特
+ --告春精✿莉莉霍瓦特
 function c20163.initial_effect(c)
 	--recover
 	local e1=Effect.CreateEffect(c)

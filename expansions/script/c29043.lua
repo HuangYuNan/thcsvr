@@ -1,4 +1,3 @@
- 
 --响符「平安的残响」
 function c29043.initial_effect(c)
 	--Activate
@@ -22,6 +21,18 @@ function c29043.initial_effect(c)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetValue(-500)
 	c:RegisterEffect(e3)
+	--act in hand
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
+	e2:SetCondition(c29043.handcon)
+	c:RegisterEffect(e2)
+end
+function c29043.cfilter(c)
+	return c:IsFaceup() and c:GetOriginalCode()==(29030)
+end
+function c29043.handcon(e)
+	return Duel.GetMatchingGroupCount(c29043.cfilter,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)>0
 end
 function c29043.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

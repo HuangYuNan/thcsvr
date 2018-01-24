@@ -1,4 +1,3 @@
- 
 --小槌「你给我变大吧」
 function c29042.initial_effect(c)
 	--Activate
@@ -16,6 +15,18 @@ function c29042.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
+	--act in hand
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_TRAP_ACT_IN_HAND)
+	e4:SetCondition(c29042.handcon)
+	c:RegisterEffect(e4)
+end
+function c29042.cfilter(c)
+	return c:IsFaceup() and c:GetOriginalCode()==(29030)
+end
+function c29042.handcon(e)
+	return Duel.GetMatchingGroupCount(c29042.cfilter,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)>0
 end
 function c29042.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)

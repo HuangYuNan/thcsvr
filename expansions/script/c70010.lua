@@ -1,5 +1,4 @@
- 
---BlackHeart
+ --BlackHeart
 function c70010.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,4,2,c70010.ovfilter,aux.Stringid(70010,0))
@@ -56,15 +55,15 @@ function c70010.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	tc:RegisterEffect(e1)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function c70010.filter(c,atk)
-	return c:IsFaceup() and c:GetAttack()>atk
+function c70010.filter(c)
+	return c:IsFaceup()
 end
 function c70010.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c70010.filter(chkc,c:GetAttack()) end
-	if chk==0 then return Duel.IsExistingTarget(c70010.filter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack()) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c70010.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c70010.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,c70010.filter,tp,0,LOCATION_MZONE,1,1,nil,c:GetAttack())
+	local g=Duel.SelectTarget(tp,c70010.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,1,0,0)
 end
 function c70010.operation(e,tp,eg,ep,ev,re,r,rp)

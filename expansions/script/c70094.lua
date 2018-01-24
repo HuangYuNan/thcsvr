@@ -1,5 +1,4 @@
- 
---最终一战！？
+ --最终一战！？
 function c70094.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -23,7 +22,7 @@ function c70094.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c70094.spfilter(c,e,tp)
-	return c:IsSetCard(0x1149) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x2149) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c70094.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

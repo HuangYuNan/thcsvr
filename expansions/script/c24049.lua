@@ -31,6 +31,7 @@ function c24049.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c24049.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>=3 and Duel.IsChainDisablable(0) and Duel.SelectYesNo(1-tp,aux.Stringid(24049,0)) then
+		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(1-tp,aux.TRUE,tp,0,LOCATION_HAND,3,3,nil)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	else

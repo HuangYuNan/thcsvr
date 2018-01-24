@@ -1,5 +1,4 @@
- 
---七曜-水符「水母公主」
+ --七曜-水符「水母公主」
 function c888137.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -33,8 +32,8 @@ function c888137.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,1600,REASON_EFFECT)
 end
 function c888137.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,2800) end
-	Duel.PayLPCost(tp,2800) 
+	if chk==0 then return Duel.CheckLPCost(tp,2400) end
+	Duel.PayLPCost(tp,2400) 
 end
 function c888137.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

@@ -1,4 +1,3 @@
- 
 --梦幻的打击乐手✿堀川雷鼓
 function c29024.initial_effect(c)
 	--synchro summon
@@ -46,7 +45,7 @@ function c29024.operation(e,tp,eg,ep,ev,re,r,rp)
 	e5:SetReset(RESET_EVENT+0xff0000+RESET_PHASE+PHASE_END)
 	e5:SetCondition(c29024.rdcon)
 	e5:SetOperation(c29024.rdop)
-	c:RegisterEffect(e5)
+	--c:RegisterEffect(e5)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		if tc:GetControler()~=tp then

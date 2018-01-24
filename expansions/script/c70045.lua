@@ -1,5 +1,4 @@
- 
---WhiteSisterRom
+ --WhiteSisterRom
 function c70045.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,3,2,c70045.ovfilter,aux.Stringid(70045,0))
@@ -42,7 +41,7 @@ function c70045.value(e,c)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x149) and not c:IsReason(REASON_REPLACE) and c:IsControler(e:GetHandlerPlayer())
 end
 function c70045.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x149) and c:GetDefense()>=1000
+	return c:IsFaceup() and c:IsSetCard(0x149) and c:GetDefense()>=500
 end
 function c70045.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) and Duel.IsExistingMatchingCard(c70045.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
@@ -52,7 +51,7 @@ function c70045.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_DEFENSE)
 	e1:SetReset(RESET_EVENT+0x1ff0000)
-	e1:SetValue(-1000)
+	e1:SetValue(-500)
 	tc:RegisterEffect(e1)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end

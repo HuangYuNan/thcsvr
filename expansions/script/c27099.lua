@@ -13,9 +13,9 @@ function c27099.cfilter(c)
 	return c:IsSetCard(0x194) and (c:IsFaceup() or not c:IsPublic())
 end
 function c27099.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c27099.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c27099.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=Duel.SelectMatchingCard(tp,c27099.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c27099.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
 	local dif=Duel.GetLP(1-tp)-Duel.GetLP(tp)
 	local cd=Duel.GetFlagEffect(tp,27501)==0 and 500 or 200

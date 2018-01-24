@@ -1,5 +1,4 @@
- 
---しろかみ 绝对零度的死神
+ --しろかみ 绝对零度的死神
 function c60075.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x191),1)
@@ -39,6 +38,10 @@ end
 function c60075.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+		if tc:IsType(TYPE_LINK) then
+			Duel.Destroy(tc,REASON_EFFECT)
+		else
+			Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+		end
 	end
 end

@@ -33,7 +33,8 @@ function c22211.filter(c,e,tp)
 	return c:IsSetCard(0x222) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c22211.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c22211.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+		and Duel.IsExistingMatchingCard(c22211.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK+LOCATION_HAND)
 end
 function c22211.operation(e,tp,eg,ep,ev,re,r,rp)

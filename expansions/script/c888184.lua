@@ -37,7 +37,7 @@ function c888184.operation(e,tp,eg,ep,ev,re,r,rp)
 			local fg=g:Select(tp,ft,ft,nil)
 			c888184.st(fg,tp)
 		end
-		Duel.Recover(tp,1000,REASON_EFFECT)
+		Duel.Recover(tp,ft*1000,REASON_EFFECT)
 	end
 end
 function c888184.st(g,tp)

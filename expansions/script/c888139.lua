@@ -1,5 +1,4 @@
- 
---七曜-金符「金属疲劳上级」
+ --七曜-金符「金属疲劳上级」
 function c888139.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -39,6 +38,7 @@ function c888139.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	local def=tc:GetBaseDefense()
+	local def2=tc:GetLink()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -47,5 +47,8 @@ function c888139.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(-def/2)
 		tc:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetValue(-def2*500)
+		tc:RegisterEffect(e2)
 	end
 end

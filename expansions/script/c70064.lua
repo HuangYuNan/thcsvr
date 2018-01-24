@@ -37,7 +37,7 @@ function c70064.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsSetCard(0x149) and tc:IsType(TYPE_MONSTER) or tc:IsCode(70064) then
 		if Duel.IsExistingMatchingCard(c70064.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) then
 			--Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-			local dg=Duel.SelectMatchingCard(tp,c70064.xyzfilter,tp,0,LOCATION_MZONE,1,1,nil)
+			local dg=Duel.SelectMatchingCard(tp,c70064.xyzfilter,tp,0,LOCATION_ONFIELD,1,5,nil)
 			local g=Duel.SelectMatchingCard(tp,c70064.filter,tp,LOCATION_MZONE,0,1,1,nil)
 			Duel.Overlay(g:GetFirst(),dg)
 		end

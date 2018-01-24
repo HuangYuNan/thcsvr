@@ -15,7 +15,6 @@ function c60085.initial_effect(c)
 	e2:SetCondition(c60085.handcon)
 	c:RegisterEffect(e2)
 end
-
 function c60085.handcon(e)
 	return Duel.GetTurnCount() == 1
 end
@@ -55,14 +54,17 @@ function c60085.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_DRAW)
+	e2:SetCode(EVENT_TO_HAND)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	e2:SetCondition(c60085.condition)
 	e2:SetOperation(c60085.operation)
 	Duel.RegisterEffect(e2,tp)
 end
+function c60085.cfilter(c,tp)
+	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK)
+end
 function c60085.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return eg:IsExists(c60085.cfilter,1,nil,1-tp)
 end
 function c60085.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,1500,REASON_EFFECT)

@@ -66,8 +66,8 @@ function c22662.tpfilter(c,tp)
 end
 function c22662.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	local dmg=400
-	if e:GetHandler():GetFlagEffect(22662)>0 then dmg=600 end
+	local dmg=300
+	if e:GetHandler():GetFlagEffect(22662)>0 then dmg=300 end
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

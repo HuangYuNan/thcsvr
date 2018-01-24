@@ -1,4 +1,3 @@
- require "expansions/script/nef/nef"
 --春之妖精 莉莉布莱克
 function c20016.initial_effect(c)
 	--xyz summon

@@ -1,7 +1,7 @@
 --彼岸散华✿小町&亚玛萨那度
 function c25504.initial_effect(c)
 	--link summon
-	Nef.AddLinkProcedureWithDesc(c,aux.FilterBoolFunction(Card.IsType,TYPE_LINK),2,2,nil,aux.Stringid(25504,0))
+	Nef.AddLinkProcedureWithDesc(c,aux.FilterBoolFunction(Card.IsType,TYPE_LINK),2,6,nil,aux.Stringid(25504,0))
 	c:EnableReviveLimit()
 	--link summon
 	local e0=Effect.CreateEffect(c)

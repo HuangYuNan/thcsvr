@@ -92,14 +92,14 @@ function c31021.cfilter(c,tp)
 	return c:IsControler(tp)
 end
 function c31021.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c31021.cfilter,1,nil,tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>2
+	return eg:IsExists(c31021.cfilter,1,nil,tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>3
 end
 function c31021.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c31021.cfilter,1,nil,tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>2 and
+	return eg:IsExists(c31021.cfilter,1,nil,tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>3 and
 		bit.band(e:GetHandler():GetPreviousLocation(),LOCATION_ONFIELD)~=0
 end
 function c31021.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)-2
+	local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)-3
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_HAND,0,ct,ct,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)

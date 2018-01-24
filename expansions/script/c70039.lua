@@ -1,5 +1,4 @@
- 
---BlackSister
+ --BlackSister
 function c70039.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,3,2,c70039.ovfilter,aux.Stringid(70039,0))
@@ -45,8 +44,8 @@ function c70039.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x149) and c:GetDefense()>=1000
 end
 function c70039.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) and Duel.IsExistingMatchingCard(c70039.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
-	g=Duel.SelectMatchingCard(tp,c70039.cfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) and Duel.IsExistingMatchingCard(c70039.cfilter,tp,LOCATION_MZONE,0,1,nil) end
+	g=Duel.SelectMatchingCard(tp,c70039.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	tc=g:GetFirst()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

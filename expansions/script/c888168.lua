@@ -1,5 +1,4 @@
- 
---七曜-火土符「环状熔岩带」
+ --七曜-火土符「环状熔岩带」
 function c888168.initial_effect(c)
 	--d&d
 	local e4=Effect.CreateEffect(c)
@@ -30,11 +29,10 @@ function c888168.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(800)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetCode(EVENT_CHAIN_SOLVING)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+		e2:SetValue(c888168.mamoval)
 		e2:SetReset(RESET_EVENT+0x1fe0000)
-		e2:SetOperation(c888168.dmop1)
 		tc:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -45,13 +43,8 @@ function c888168.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e3)
 	end
 end
-function c888168.dmop1(e,tp,eg,ep,ev,re,r,rp)
-	if ep==tp then return end
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if g and g:IsContains(e:GetHandler()) then
-		Duel.Damage(1-tp,2500,REASON_EFFECT)
-	end
+function c888168.mamoval(e,re,rp)
+	return rp~=e:GetHandlerPlayer()
 end
 function c888168.dmop2(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp then return end

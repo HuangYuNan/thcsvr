@@ -1,5 +1,4 @@
- 
---七曜-金土符「元素收割者」
+ --七曜-金土符「元素收割者」
 function c888175.initial_effect(c)
 	--atsdad
 	local e4=Effect.CreateEffect(c)
@@ -53,7 +52,7 @@ function c888175.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetReset(RESET_EVENT+0x1fe0000)
-			e1:SetValue(ct*100)
+			e1:SetValue(ct*200)
 			sc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)

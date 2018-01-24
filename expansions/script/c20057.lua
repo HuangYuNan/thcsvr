@@ -1,5 +1,4 @@
- 
---春之倒影
+ --春之倒影
 function c20057.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -12,7 +11,7 @@ function c20057.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c20057.filter1(c,e,tp)
-	return (c:IsCode(20013) or c:IsCode(20016) or c:IsSetCard(0x123)) and c:IsFaceup() and Duel.GetLocationCountFromEx(tp,tp,c)>0
+	return c:IsSetCard(0x123) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsFaceup() and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function c20057.filter2(c,e,tp)
 	return c:IsCode(20016) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)

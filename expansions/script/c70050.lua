@@ -49,7 +49,7 @@ function c70050.discon(e,tp,eg,ep,ev,re,r,rp)
 		and ep~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function c70050.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x149) and c:GetDefense()>=2000
+	return c:IsFaceup() and c:IsSetCard(0x149) and c:GetDefense()>=1000
 end
 function c70050.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) and Duel.IsExistingMatchingCard(c70050.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
@@ -59,7 +59,7 @@ function c70050.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_DEFENSE)
 	e1:SetReset(RESET_EVENT+0x1ff0000)
-	e1:SetValue(-2000)
+	e1:SetValue(-1000)
 	tc:RegisterEffect(e1)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end

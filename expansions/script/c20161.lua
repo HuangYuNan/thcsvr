@@ -28,7 +28,7 @@ function c20161.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c20161.spfilter(c,e,tp)
-	return (c:IsCode(20013) or c:IsCode(20016) or c:IsSetCard(0x123)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x123) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c20161.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ((Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingMatchingCard(c20161.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)) or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c20161.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp))) end
@@ -107,4 +107,3 @@ end
 function c20161.valcon(e,re,r,rp)
 	return bit.band(r,REASON_EFFECT)~=0
 end
---

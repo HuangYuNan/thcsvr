@@ -1,5 +1,4 @@
- 
---七曜-火符「火神的光辉」
+ --七曜-火符「火神的光辉」
 function c888151.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -17,7 +16,8 @@ function c888151.initial_effect(c)
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(888151,1))
 	e5:SetCategory(CATEGORY_DESTROY)
-	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetType(EFFECT_TYPE_QUICK_O)
+	e5:SetCode(EVENT_FREE_CHAIN)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetCountLimit(1)

@@ -1,5 +1,4 @@
- 
---七曜-金符「银龙」
+ --七曜-金符「银龙」
 function c888154.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,7 +10,7 @@ function c888154.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
-	e4:SetValue(600)
+	e4:SetValue(700)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_UPDATE_ATTACK)
@@ -54,7 +53,7 @@ function c888154.operation(e,tp,eg,ep,ev,re,r,rp)
 						e2:SetValue(0)
 					e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 				tc:RegisterEffect(e2)
-			local s=math.ceil(ad/1500)
+			local s=math.ceil(ad/1400)
 		local g=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,0,LOCATION_ONFIELD,s,s,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end

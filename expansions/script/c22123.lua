@@ -5,198 +5,87 @@ function c22123.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(c22123.condition)
 	e1:SetTarget(c22123.target)
 	e1:SetOperation(c22123.operation)
 	c:RegisterEffect(e1)
 end
-function c22123.cfilter(c)
+--
+function c22123.tfilter0(c)
 	return c:IsSetCard(0x814) and c:IsFaceup()
 end
-function c22123.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(c22123.cfilter,tp,LOCATION_MZONE,0,nil)==1
+function c22123.tfilter1(c)
+	return c:GetSequence()>4 
+end
+function c22123.check1(c)
+	return c:IsType(TYPE_MONSTER)
+end
+function c22123.check2(c,g1,g2,tp)
+	return (g1:IsContains(c) and c:GetControler()==tp)
+		or (g2:IsContains(c) and c:IsLocation(LOCATION_MZONE) and (c:GetControler()==tp or c:GetSequence()>4))
+end
+function c22123.check3(c,g1,g2,tp)
+	return (g2:IsContains(c) and c:IsLocation(LOCATION_MZONE) and c:GetControler()==tp and not g1:IsContains(c))
+		or (g1:IsContains(c) and c:IsLocation(LOCATION_MZONE) and c:GetControler()==tp)
 end
 function c22123.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local z=Duel.GetMatchingGroup(c22123.cfilter,tp,LOCATION_MZONE,0,nil)
-	local tc=z:GetFirst()
+	if chk==0 then return Duel.GetMatchingGroupCount(c22123.tfilter0,tp,LOCATION_MZONE,0,nil)==1 end
+	local gn=Group.CreateGroup()
+	local tc=Duel.GetMatchingGroup(c22123.tfilter0,tp,LOCATION_MZONE,0,nil):GetFirst()
 	local seq=tc:GetSequence()
-	local g=Group.CreateGroup()
-	if seq==1 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1))
+	if seq>4 then
+		local g1=tc:GetColumnGroup()
+		local g2=Duel.GetMatchingGroup(c22123.tfilter1,tp,0,LOCATION_MZONE,0,nil)
+		if g2:GetCount()>0 then
+			g1:Merge(g2)
 		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1))
+		if g1:GetCount()>0 then
+			gn=g1:Filter(c22123.check1,tc)
 		end
-		if Duel.GetFieldCard(tp,LOCATION_SZONE,seq) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,seq))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,5) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,5))
-		end
-	elseif seq==3 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_SZONE,seq) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,seq))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,6) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,6))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,5) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,5))
-		end
-	elseif seq<4 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_SZONE,seq) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,seq))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq))
-		end
-	elseif seq==4 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_SZONE,seq) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,seq))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq))
-		end
-	elseif seq==5 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,6) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,6))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,5) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,5))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,1))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,3) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,3))
-		end
-	elseif seq==6 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,5) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,5))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,6) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,6))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,3) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,3))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,1) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,1))
+	else
+		if seq==1 or seq==3 then
+			local g1=tc:GetColumnGroup()
+			local g2=tc:GetColumnGroup(1,1)
+			gn=g2:Filter(c22123.check2,tc,g1,g2,tp)
+		else
+			local g1=tc:GetColumnGroup()
+			local g2=tc:GetColumnGroup(1,1)
+			gn=g2:Filter(c22123.check3,tc,g1,g2,tp)
 		end
 	end
-	if g:IsContains(e:GetHandler()) then
-		g:RemoveCard(e:GetHandler()) end
 	Duel.SetTargetCard(tc)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
-	local h=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,g:GetCount()-h)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,gn,gn:GetCount(),0,0)
 end
+--
 function c22123.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
+	local gn=Group.CreateGroup()
+	local tc=Duel.GetMatchingGroup(c22123.tfilter0,tp,LOCATION_MZONE,0,nil):GetFirst()
 	local seq=tc:GetSequence()
-	local g=Group.CreateGroup()
-	if seq==1 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1))
+	if seq>4 then
+		local g1=tc:GetColumnGroup()
+		local g2=Duel.GetMatchingGroup(c22123.tfilter1,tp,0,LOCATION_MZONE,0,nil)
+		if g2:GetCount()>0 then
+			g1:Merge(g2)
 		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1))
+		if g1:GetCount()>0 then
+			gn=g1:Filter(c22123.check1,tc)
 		end
-		if Duel.GetFieldCard(tp,LOCATION_SZONE,seq) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,seq))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,5) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,5))
-		end
-	elseif seq==3 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_SZONE,seq) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,seq))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,6) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,6))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,5) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,5))
-		end
-	elseif seq<4 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq+1))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_SZONE,seq) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,seq))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq))
-		end
-	elseif seq==4 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_SZONE,seq) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,seq))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq))
-		end
-	elseif seq==5 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,6) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,6))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,5) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,5))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,1) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,1))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,3) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,3))
-		end
-	elseif seq==6 then
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,5) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,5))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,6) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,6))
-		end
-		if Duel.GetFieldCard(tp,LOCATION_MZONE,3) then
-			g:AddCard(Duel.GetFieldCard(tp,LOCATION_MZONE,3))
-		end
-		if Duel.GetFieldCard(1-tp,LOCATION_MZONE,1) then
-			g:AddCard(Duel.GetFieldCard(1-tp,LOCATION_MZONE,1))
+	else
+		if seq==1 or seq==3 then
+			local g1=tc:GetColumnGroup()
+			local g2=tc:GetColumnGroup(1,1)
+			gn=g2:Filter(c22123.check2,tc,g1,g2,tp)
+		else
+			local g1=tc:GetColumnGroup()
+			local g2=tc:GetColumnGroup(1,1)
+			gn=g2:Filter(c22123.check3,tc,g1,g2,tp)
 		end
 	end
-	if g:IsContains(e:GetHandler()) then
-		g:RemoveCard(e:GetHandler()) end
-	Duel.Destroy(g,REASON_EFFECT)
-	local h=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	if h<g:GetCount() then
-		Duel.Draw(tp,g:GetCount()-h,REASON_EFFECT)
+	if gn:GetCount()>0 and Duel.Destroy(gn,REASON_EFFECT)~=0 then
+		local h=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+		if h<gn:GetCount() then
+			Duel.Draw(tp,gn:GetCount()-h,REASON_EFFECT)
+		end
 	end
 end

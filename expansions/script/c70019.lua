@@ -1,5 +1,4 @@
- 
---Vert
+ --Vert
 function c70019.initial_effect(c)
 	--return hand
 	local e1=Effect.CreateEffect(c)
@@ -13,13 +12,13 @@ function c70019.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c70019.cfilter(c)
-	return c:IsSetCard(0x149) and c:IsAbleToHand()
+	return c:IsSetCard(0x1149) and c:IsAbleToHand()
 end
 function c70019.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c70019.cfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c70019.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingTarget(c70019.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,c70019.cfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,c70019.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c70019.thop(e,tp,eg,ep,ev,re,r,rp)

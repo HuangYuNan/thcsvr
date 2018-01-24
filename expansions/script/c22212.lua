@@ -48,7 +48,7 @@ function c22212.filter(c)
 	return c:IsSetCard(0x221) and c:IsAbleToHand()
 end
 function c22212.filter2(c)
-	return c:IsFaceup() and not c:IsRace(RACE_FIEND) 
+	return c:IsFaceup() and not c:IsRace(RACE_FIEND+RACE_SPELLCASTER) 
 end
 function c22212.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22212.filter,tp,LOCATION_DECK,0,1,nil)

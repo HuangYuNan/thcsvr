@@ -73,9 +73,9 @@ function c24080.damop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		--if ct>7 then ct=7 end
 		if Duel.GetCurrentPhase()==PHASE_MAIN2 then
-			Duel.Damage(1-tp,ct*100,REASON_EFFECT)
+			Duel.Damage(1-tp,ct*200,REASON_EFFECT)
 		else
-			Duel.Damage(1-tp,ct*500,REASON_EFFECT)
+			Duel.Damage(1-tp,ct*800,REASON_EFFECT)
 		end
 	end
 end

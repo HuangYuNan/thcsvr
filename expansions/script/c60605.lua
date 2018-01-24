@@ -19,7 +19,7 @@ function c60605.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetDescription(aux.Stringid(60605,1))
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,60605+EFFECT_COUNT_CODE_DUEL)
+	e2:SetCountLimit(1,60605)
 	e2:SetCost(c60605.drcost)
 	e2:SetTarget(c60605.drtg)
 	e2:SetOperation(c60605.drop)
@@ -29,7 +29,7 @@ c60605.DescSetName = 0x229
 function c60605.umbfilter(c,e,tp)
 	local code=c:GetOriginalCode()
 	local mt=_G["c" .. code]
-	return c:GetAttack()==400 and c:GetDefense()==1000 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetAttack()==400 and c:IsAttribute(ATTRIBUTE_WATER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetCode())
 end
 function c60605.cfilter(c,tp)

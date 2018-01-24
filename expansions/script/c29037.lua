@@ -1,4 +1,3 @@
- 
 --飞头「倍增之头」
 function c29037.initial_effect(c)
 	--Activate
@@ -10,6 +9,18 @@ function c29037.initial_effect(c)
 	e1:SetTarget(c29037.target)
 	e1:SetOperation(c29037.activate)
 	c:RegisterEffect(e1)
+	--act in hand
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
+	e2:SetCondition(c29037.handcon)
+	c:RegisterEffect(e2)
+end
+function c29037.cfilter(c)
+	return c:IsFaceup() and c:GetOriginalCode()==(29030)
+end
+function c29037.handcon(e)
+	return Duel.GetMatchingGroupCount(c29037.cfilter,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)>0
 end
 function c29037.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()

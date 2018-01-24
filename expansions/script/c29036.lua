@@ -1,4 +1,3 @@
- 
 --一寸之壁
 function c29036.initial_effect(c)
 	--Activate
@@ -15,6 +14,12 @@ function c29036.initial_effect(c)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetCondition(c29036.handcon)
 	c:RegisterEffect(e2)
+end
+function c29036.cfilter(c)
+	return c:IsFaceup() and c:GetOriginalCode()==(29030)
+end
+function c29036.handcon(e)
+	return Duel.GetMatchingGroupCount(c29036.cfilter,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)>0
 end
 function c29036.filter(c)
 	return c:IsSetCard(0x259) and c:IsAbleToHand()
@@ -39,10 +44,4 @@ function c29036.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(0)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end
-function c29036.cfilter(c)
-	return c:IsFaceup() and c:GetOriginalCode()==(29030)
-end
-function c29036.handcon(e)
-	return Duel.GetMatchingGroupCount(c29036.cfilter,e:GetHandler():GetControler(),LOCATION_SZONE,0,nil)>0
 end
