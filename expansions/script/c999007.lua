@@ -55,6 +55,7 @@ function M.matfilter(c, mc, fc, chkf)
 end
 
 function M.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if not e:GetHandler():IsOnField() then return false end
 	if chk==0 then 
 		local chkf = Duel.GetLocationCountFromEx(tp) > 0 and PLAYER_NONE or tp
 		local g = eg:Filter(M.spfliter, nil, tp)
