@@ -1,5 +1,5 @@
---华胥的亡灵✿西行寺幽幽子
-function c200320000.initial_effect(c)
+--AI_华胥的亡灵
+function c2003200.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -93,15 +93,12 @@ function c2003200.retop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end
-function c2003200.sfilter(c)
-	return c:IsType(TYPE_MONSTER)
-end
 function c2003200.stg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and c2003200.sfilter(chkc) end
+	if chkc then return chkc:IsOnField() end
 	if chk==0 then return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) 
-		and Duel.IsExistingTarget(c2003200.sfilter,tp,0,LOCATION_ONFIELD,1,e:GetHandler()) end
+		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,c2003200.sfilter,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 end
 function c2003200.sop(e,tp,eg,ep,ev,re,r,rp)

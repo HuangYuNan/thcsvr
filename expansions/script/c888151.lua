@@ -32,7 +32,7 @@ function c888151.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,1000,REASON_BATTLE)
 end
 function c888151.filter(c)
-	return c:IsDestructable()
+	return c:IsDestructable() and c:IsFaceup()
 end
 function c888151.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c888151.filter(chkc) end

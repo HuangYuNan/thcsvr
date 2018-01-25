@@ -25,9 +25,10 @@ function c11036.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c11036.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetChainLimit(aux.FALSE)
+	--Duel.SetChainLimit(aux.FALSE)
 end
 function c11036.operation(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
 	--cannot act
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -35,7 +36,7 @@ function c11036.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(c11036.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE+ph)
 	Duel.RegisterEffect(e1,tp)
 end
 function c11036.aclimit(e,re,tp)

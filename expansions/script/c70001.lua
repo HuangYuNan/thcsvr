@@ -1,5 +1,4 @@
- 
---Neptune
+ --Neptune
 function c70001.initial_effect(c)
 	--negate
 	local e1=Effect.CreateEffect(c)

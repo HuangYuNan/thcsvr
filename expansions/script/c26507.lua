@@ -88,7 +88,7 @@ end
 function c26507.fusop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local mg1=Fus.GetFusionMaterial(tp,LOCATION_MZONE,nil,nil,nil,e)
-	local sg1=Duel.GetMatchingGroup(c26125.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil)
+	local sg1=Duel.GetMatchingGroup(c26507.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil)
 	if sg1:GetCount()>0 then
 		local sg=sg1:Clone()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

@@ -1,3 +1,4 @@
+ 
 --七曜-金水符「水银之毒」
 function c22174.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -69,14 +70,13 @@ function c22174.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function c22174.operation(e,tp,eg,ep,ev,re,r,rp)
-	local e2=Effect.GlobalEffect()
+	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetReset(RESET_PHASE+PHASE_END,8)
 	e2:SetCondition(c22174.damcon)
 	e2:SetOperation(c22174.damop)
-	e2:SetOwnerPlayer(tp)
 	Duel.RegisterEffect(e2,tp)
 end
 function c22174.damcon(e,tp,eg,ep,ev,re,r,rp)

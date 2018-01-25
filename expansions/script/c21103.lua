@@ -1,4 +1,3 @@
- 
 --永夜返 -上弦月-
 function c21103.initial_effect(c)
 	--Activate
@@ -62,6 +61,7 @@ function c21103.operation(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp then return end
 	local tempe = e:GetLabelObject()
 	local gc=tempe:GetLabel()
+	if gc==0 then return end
 	tempe:SetLabel(gc-1)
 end
 function c21103.discon(e,tp,eg,ep,ev,re,r,rp)
