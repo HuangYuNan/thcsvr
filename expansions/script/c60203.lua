@@ -52,7 +52,7 @@ function c60203.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c60203.drcon1(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsAttribute(ATTRIBUTE_WATER)
+	return re:GetHandler():IsAttribute(ATTRIBUTE_WATER) and ep==tp
 end
 function c60203.drop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)

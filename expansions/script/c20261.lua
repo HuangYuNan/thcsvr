@@ -49,30 +49,30 @@ function c20261.filter1(c)
 	return c:IsSetCard(0x123) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsAbleToGrave()
 end
 function c20261.filter(c)
-	return c:IsSetCard(0x999)
+	return c:IsSetCard(0x999) and c:IsType(TYPE_MONSTER)
 end
 function c20261.cfilter(c)
 	return c:IsType(TYPE_XYZ) and c:IsFaceup()
 end
-function c20261.filter2(c)
-	return c:IsSetCard(0x999) and Duel.IsExistingMatchingCard(c20261.cfilter,tp,LOCATION_MZONE,0,1,nil)
+function c20261.filter2(c,tp)
+	return c:IsSetCard(0x999) and Duel.IsExistingMatchingCard(c20261.cfilter,tp,LOCATION_MZONE,0,1,nil) and c:IsType(TYPE_MONSTER)
 end
 function c20261.filter3(c,e,tp)
 	return c:IsSetCard(0x999) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c20261.filter4(c)
-	return c:IsSetCard(0x999) and c:IsAbleToDeck()
+	return c:IsSetCard(0x999) and c:IsAbleToDeck() and c:IsType(TYPE_MONSTER)
 end
 function c20261.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsSetCard(0x999) end
-	if chk==0 then return Duel.IsExistingTarget(c20261.filter2,tp,LOCATION_GRAVE,0,1,nil) 
+	if chk==0 then return Duel.IsExistingTarget(c20261.filter2,tp,LOCATION_GRAVE,0,1,nil,tp) 
 		or Duel.IsExistingTarget(c20261.filter3,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		or Duel.IsExistingTarget(c20261.filter4,tp,LOCATION_GRAVE,0,1,nil) end
 	--Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c20261.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	local t={}
 	local p=1
-	if Duel.IsExistingMatchingCard(c20261.filter2,tp,LOCATION_GRAVE,0,1,nil) then t[p]=aux.Stringid(20261,2) p=p+1 end
+	if Duel.IsExistingMatchingCard(c20261.filter2,tp,LOCATION_GRAVE,0,1,nil,tp) then t[p]=aux.Stringid(20261,2) p=p+1 end
 	if Duel.IsExistingMatchingCard(c20261.filter3,tp,LOCATION_GRAVE,0,1,nil,e,tp) then t[p]=aux.Stringid(20261,3) p=p+1 end
 	if Duel.IsExistingMatchingCard(c20261.filter4,tp,LOCATION_GRAVE,0,1,nil) then t[p]=aux.Stringid(20261,4) p=p+1 end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(20261,5))
