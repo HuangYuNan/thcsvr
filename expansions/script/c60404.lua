@@ -48,7 +48,6 @@ function c60404.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c60404.filter,tp,0,LOCATION_MZONE,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c60404.filter,tp,0,LOCATION_MZONE,2,2,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,2,0,0)
 end
 function c60404.cfilter(c,e,tp)
 	return c:IsFaceup() and c:IsRelateToEffect(e) and c:IsControler(1-tp)

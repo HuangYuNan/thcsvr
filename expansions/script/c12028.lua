@@ -24,7 +24,7 @@ function c12028.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c12028.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep~=tp and e:GetHandler():GetOverlayCount()>0
 end
 function c12028.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

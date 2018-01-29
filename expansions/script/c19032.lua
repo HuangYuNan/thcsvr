@@ -23,7 +23,7 @@ function c19032.initial_effect(c)
 	e4:SetOperation(c19032.fuop)
 	c:RegisterEffect(e4)
 end
-function c19032.mfilter(c)
+function c19032.mfilter(c,tp)
 	return (c:IsSetCard(0x273) or (c:IsSetCard(0x3208) and c:GetAttack()<=2000)) and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function c19032.filter(c,e,tp)
@@ -31,11 +31,11 @@ function c19032.filter(c,e,tp)
 end
 function c19032.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 and not Duel.IsExistingMatchingCard(c19032.mfilter,tp,LOCATION_MZONE,0,1,nil) then
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 and not Duel.IsExistingMatchingCard(c19032.mfilter,tp,LOCATION_MZONE,0,1,nil,tp) then
 			return false
 		else return
 			Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-			and Duel.IsExistingMatchingCard(c19032.mfilter,tp,0x6,0,1,nil)
+			and Duel.IsExistingMatchingCard(c19032.mfilter,tp,0x6,0,1,nil,tp)
 			and Duel.IsExistingMatchingCard(c19032.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 		end
 	end
@@ -44,9 +44,9 @@ function c19032.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c19032.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<0 then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 and not Duel.IsExistingMatchingCard(c19032.mfilter,tp,LOCATION_MZONE,0,1,nil) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 and not Duel.IsExistingMatchingCard(c19032.mfilter,tp,LOCATION_MZONE,0,1,nil,tp) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local mg=Duel.SelectMatchingCard(tp,c19032.mfilter,tp,0x6,0,1,1,nil)
+	local mg=Duel.SelectMatchingCard(tp,c19032.mfilter,tp,0x6,0,1,1,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c19032.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
