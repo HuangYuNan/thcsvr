@@ -71,9 +71,10 @@ end
 function c20056.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCountFromEx(tp)<3-Duel.GetMatchingGroupCount(c20056.filter,tp,LOCATION_GRAVE,0,nil,e,tp) then return end
 	local mc=Duel.GetLocationCountFromEx(tp)
+	if mc>3 then mc=3 end
 	local gc=3-mc
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c20056.filter,tp,LOCATION_EXTRA,0,mc,mc,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c20056.filter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,mc,mc,nil,e,tp)
 	local dg=Duel.SelectMatchingCard(tp,c20056.filter,tp,LOCATION_GRAVE,0,gc,gc,nil,e,tp)
 	g:Merge(dg)
 	if g:GetCount()>2 then

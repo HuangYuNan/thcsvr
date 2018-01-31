@@ -40,24 +40,46 @@ aux.FilterBoolFunction(Card.IsFusionType,TYPE_FLIP),
 function c26078.ffilter(c)
 	return c:IsFusionSetCard(0x229)
 end
-function c26078.spfilter1(c,tp)
-	return c:IsSetCard(0x229) and c:IsCanBeFusionMaterial() and Duel.CheckReleaseGroup(tp,c26078.spfilter2,1,c) and Duel.GetLocationCountFromEx(tp,tp,c)>0
+function c26078.spfilter1(c)
+	return c:IsSetCard(0x229) and c:IsCanBeFusionMaterial() and Duel.CheckReleaseGroup(tp,c26078.spfilter2,1,c)
 end
 function c26078.spfilter2(c)
-	return c:IsType(TYPE_FLIP) and c:IsCanBeFusionMaterial() and Duel.GetLocationCountFromEx(tp,tp,c)>0
+	return c:IsType(TYPE_FLIP) and c:IsCanBeFusionMaterial()
+end
+function c26078.exfilter(c,tp)
+	return Duel.GetLocationCountFromEx( tp, tp, c)>0
 end
 function c26078.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCountFromEx(tp)>-2
-		and Duel.CheckReleaseGroup(tp,c26078.spfilter1,1,nil,tp)
+	local g=Duel.GetMatchingGroup(c26078.spfilter1,tp,LOCATION_MZONE,0,nil)
+	local g2=Duel.GetMatchingGroup(c26078.spfilter2,tp,LOCATION_MZONE,0,nil)
+	g:Merge(g2)
+	return g:FilterCount(c26078.exfilter,nil,tp)>0 and Duel.CheckReleaseGroup(tp,c26078.spfilter1,1,nil)
 end
 function c26078.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g1=Duel.SelectReleaseGroup(tp,c26078.spfilter1,1,1,nil,tp)
-	local g2=Duel.SelectReleaseGroup(tp,c26078.spfilter2,1,1,g1:GetFirst())
-	g1:Merge(g2)
-	c:SetMaterial(g1)
-	Duel.Release(g1,REASON_COST)
+	local g0=Duel.GetReleaseGroup(tp)
+	local g1=g0:Filter(c26078.spfilter1,nil)
+	local g2=g0:Filter(c26078.spfilter2,nil)
+	local rg1=nil
+	local rg2=nil
+	if Duel.GetLocationCountFromEx(tp)<=0 then
+		local exg1=g1:Filter(c26078.exfilter,nil,tp)
+		local exg2=g2:Filter(c26078.exfilter,nil,tp)
+		if g1:GetCount()>0 then
+			rg1=exg1:Select(tp,1,1,nil)
+			rg2=g2:Select(tp,1,1,rg1)
+		else
+			rg1=exg2:Select(tp,1,1,nil)
+			rg2=g1:Select(tp,1,1,rg1)
+		end
+	else
+		rg1=Duel.SelectReleaseGroup(tp,c26078.spfilter1,1,1,nil)
+		rg2=Duel.SelectReleaseGroup(tp,c26078.spfilter2,1,1,rg1)
+	end
+	rg1:Merge(rg2)
+	c:SetMaterial(rg1)
+	Duel.Release(rg1,REASON_COST)
 end
 function c26078.filter(c)
 	return c:IsDestructable() and c:IsFacedown()
