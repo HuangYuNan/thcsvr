@@ -75,7 +75,7 @@ function c20056.activate(e,tp,eg,ep,ev,re,r,rp)
 	local gc=3-mc
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c20056.filter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,mc,mc,nil,e,tp)
-	local dg=Duel.SelectMatchingCard(tp,c20056.filter,tp,LOCATION_GRAVE,0,gc,gc,nil,e,tp)
+	local dg=Duel.SelectMatchingCard(tp,c20056.filter,tp,LOCATION_GRAVE,0,gc,gc,g,e,tp)
 	g:Merge(dg)
 	if g:GetCount()>2 then
 		local tc=g:GetFirst()

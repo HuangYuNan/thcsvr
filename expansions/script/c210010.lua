@@ -52,9 +52,11 @@ function c210010.scon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c210010.stg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	e:SetLabel(e:GetHandler():GetLocation())
 end
 function c210010.sop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or not e:GetHandler():IsRelateToEffect(e) then return end
+	local lc=e:GetLabel()
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or lc~=e:GetHandler():GetLocation() then return end
 	local c=e:GetHandler()
 	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	local e1=Effect.CreateEffect(e:GetHandler())
