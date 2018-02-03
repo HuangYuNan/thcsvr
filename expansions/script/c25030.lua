@@ -1,4 +1,3 @@
- 
 --虹光折射
 function c25030.initial_effect(c)
 	--Activate
@@ -50,7 +49,7 @@ function c25030.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c25030.shcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return bit.band(r,0x41)==0x41 and rp~=tp and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_EFFECT) and rp~=tp and c:GetPreviousControler()==tp
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function c25030.filter(c)

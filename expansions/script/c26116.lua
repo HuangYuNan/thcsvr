@@ -71,7 +71,7 @@ function c26116.scfilter(c)
 	return c:GetOriginalAttribute()==ATTRIBUTE_FIRE 
 end
 function c26116.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c26116.scfilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(c26116.scfilter,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler())
 end
 function c26116.splimit(e,c,tp,sumtp,sumpos)
 	return bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM

@@ -57,9 +57,6 @@ end
 function c60203.drop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
-function c60203.exfilter(c)
-	return c:IsFaceup() and not c:IsDisabled()
-end
 function c60203.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToDeckAsCost() end
@@ -69,7 +66,7 @@ function c60203.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function c60203.smfilter(c)
-	return c:IsAttribute(ATTRIBUTE_WATER)
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:GetAttack()==400
 end
 function c60203.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,60203)==0 then
