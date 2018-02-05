@@ -36,3 +36,5 @@ premake5.exe
 /lua
 
 /data
+
+/expansions/AI.cdb
