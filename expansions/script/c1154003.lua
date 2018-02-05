@@ -63,7 +63,7 @@ function c1154003.op1(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(tc,tp,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tc)
 		else
-			if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1154004,0,0x4011,500,500,1,RACE_ZOMBIE,ATTRIBUTE_DARK) then
+			if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1154004,0x813,0x4011,500,500,1,RACE_ZOMBIE,ATTRIBUTE_DARK) then
 				local token=Duel.CreateToken(tp,1154004)
 				Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP)
 				local e1_1=Effect.CreateEffect(e:GetHandler())

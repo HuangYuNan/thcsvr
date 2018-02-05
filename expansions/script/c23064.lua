@@ -37,11 +37,14 @@ function c23064.initial_effect(c)
 end
 function c23064.matfilter1(c,syncard,tp)
 	return c:IsType(TYPE_TUNER) and c:IsCanBeSynchroMaterial(syncard)
-		and (  (c:IsFaceup() and Duel.GetLocationCountFromEx(tp,tp,c,syncard)>0) or c:IsLocation(LOCATION_HAND)  )
+		and (  c:IsFaceup() or c:IsLocation(LOCATION_HAND)  )
 end
 function c23064.matfilter2(c,syncard,tp)	
 	return c:IsCanBeSynchroMaterial(syncard) and not c:IsType(TYPE_TUNER) and c:IsSetCard(0x113)
-		and (  (c:IsFaceup() and Duel.GetLocationCountFromEx(tp,tp,c,syncard)>0) or c:IsLocation(LOCATION_HAND)  )
+		and (  c:IsFaceup() or c:IsLocation(LOCATION_HAND)  )
+end
+function c23064.exfilter(c,syncard,tp)	
+	return Duel.GetLocationCountFromEx(tp,tp,c,syncard)>0
 end
 function c23064.synfilter1(c,lv,g1,g2)
 	local tlv=c:GetLevel()	
@@ -53,7 +56,6 @@ end
 function c23064.syncon(e,c,tuner)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	if Duel.GetLocationCountFromEx(tp)<-1 then return false end
 	local g1=Duel.GetMatchingGroup(c23064.matfilter1,tp,0x6,0,nil,c,tp)
 	local g2=Duel.GetMatchingGroup(c23064.matfilter2,tp,0x6,0,nil,c,tp)
 	local lv=c:GetLevel()
@@ -64,6 +66,7 @@ function c23064.syncon(e,c,tuner)
 		m=m+1 end
 	if m > 2 then m = 2 end
 	return Duel.GetLocationCountFromEx(tp)>m-2 and g1:IsExists(c23064.synfilter1,1,nil,lv,g1,g2)
+		and (g1:IsExists(c23064.exfilter,1,nil,c,tp) or g2:IsExists(c23064.exfilter,1,nil,c,tp))
 end
 function c23064.synop(e,tp,eg,ep,ev,re,r,rp,c,tuner)
 	local g=Group.CreateGroup()
