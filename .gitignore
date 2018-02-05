@@ -38,3 +38,5 @@ premake5.exe
 /data
 
 /expansions/AI.cdb
+/expansions/pics/2003200.jpg
+/expansions/script/c2003200.lua

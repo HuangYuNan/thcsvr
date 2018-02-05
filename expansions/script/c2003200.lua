@@ -1,4 +1,4 @@
---AI_华胥的亡灵
+--华胥的亡灵✿西行寺幽幽子
 function c2003200.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
@@ -44,6 +44,60 @@ function c2003200.initial_effect(c)
 	e5:SetTarget(c2003200.tg)
 	e5:SetOperation(c2003200.op)
 	c:RegisterEffect(e5)
+	--&#65;&#84;&#75;&#32;&#85;&#80;
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD)
+	e6:SetProperty(0x40400)
+	e6:SetCode(EFFECT_SET_BASE_ATTACK)
+	e6:SetRange(0xfb)
+	e6:SetTargetRange(LOCATION_MZONE,0)
+	e6:SetTarget(aux.TargetBoolFunction(Card.IsCode,20504))
+	e6:SetValue(3000)
+	c:RegisterEffect(e6)
+	---
+		local e8=Effect.CreateEffect(c)
+		e8:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+		e8:SetProperty(0x40400)
+		e8:SetRange(0xff)
+		e8:SetCountLimit(1,2003202)
+		e8:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e8:SetCondition(c2003200.addcon)
+		e8:SetOperation(c2003200.addcount)
+		c:RegisterEffect(e8)
+	if c2003200.counter==nil then
+		c2003200.counter=true
+		local e7=Effect.CreateEffect(c)
+		e7:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+		e7:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+		e7:SetCountLimit(1,2003201+EFFECT_COUNT_CODE_DUEL)
+		e7:SetOperation(c2003200.resetcount)
+		Duel.RegisterEffect(e7,0)
+	end
+end
+function c2003200.resetcount(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandler():GetControler(),0xff,0,3,nil,2003200) then
+		Duel.RegisterFlagEffect(e:GetHandler():GetControler(),2003200,0,0,0)
+	end
+end
+function c2003200.addcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,2003200)>0
+end
+function c2003200.addcount(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLP(tp) <Duel.GetLP(1-tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+		Duel.Hint(HINT_CARD,0,2003202)
+		local yukari=Duel.CreateToken(tp,10113)
+		Duel.MoveToField(yukari,tp,tp,LOCATION_SZONE,POS_FACEDOWN,true)
+	end
+	if Duel.GetFieldGroupCount(tp,0xe,0) <Duel.GetFieldGroupCount(tp,0,0xe) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+		Duel.Hint(HINT_CARD,0,2003203)
+		local seiga=Duel.CreateToken(tp,27029)
+		Duel.MoveToField(seiga,tp,tp,LOCATION_SZONE,POS_FACEDOWN,true)
+	end
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+		Duel.Hint(HINT_CARD,0,2003201)
+		local youmu=Duel.CreateToken(tp,20170)
+		Duel.MoveToField(youmu,tp,tp,LOCATION_SZONE,POS_FACEDOWN,true)
+	end
 end
 function c2003200.spcon(e,c)
 	if c==nil then return true end
@@ -93,12 +147,15 @@ function c2003200.retop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end
+function c2003200.sfilter(c)
+	return c:IsType(TYPE_MONSTER)
+end
 function c2003200.stg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() end
+	if chkc then return chkc:IsOnField() and c2003200.sfilter(chkc) end
 	if chk==0 then return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) 
-		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,e:GetHandler()) end
+		and Duel.IsExistingTarget(c2003200.sfilter,tp,0,LOCATION_ONFIELD,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,c2003200.sfilter,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 end
 function c2003200.sop(e,tp,eg,ep,ev,re,r,rp)
