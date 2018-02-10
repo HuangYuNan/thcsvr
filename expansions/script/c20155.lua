@@ -1,4 +1,3 @@
- 
 --歌莉娅 启动!!
 function c20155.initial_effect(c)
 	--Activate
@@ -14,7 +13,7 @@ end
 function c20155.tfilter(c)
 	return c:IsCode(20073)
 end
-function c20155.cfilter(c)
+function c20155.cfilter(c,tp)
 	return Duel.GetLocationCountFromEx(tp,tp,c)>0 and c:IsCode(20073)
 end
 function c20155.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -24,7 +23,7 @@ function c20155.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,nil,20073)
 		Duel.Release(g,REASON_COST)
 	else
-		local g=Duel.SelectReleaseGroup(tp,c20155.cfilter,1,1,nil)
+		local g=Duel.SelectReleaseGroup(tp,c20155.cfilter,1,1,nil,tp)
 		Duel.Release(g,REASON_COST)
 	end
 end
