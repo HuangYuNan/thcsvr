@@ -32,9 +32,12 @@ function c12028.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_DRAW)
 	e1:SetReset(RESET_PHASE+PHASE_END,2)
-	e1:SetCondition(c12028.condition)
+	e1:SetCondition(c12028.con)
 	e1:SetOperation(c12028.op)
 	Duel.RegisterEffect(e1,tp)
+end
+function c12028.con(e,tp,eg,ep,ev,re,r,rp)
+	return ep~=tp
 end
 function c12028.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,900,REASON_EFFECT)
