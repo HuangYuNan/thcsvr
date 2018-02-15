@@ -97,19 +97,19 @@ function M.mvop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(1)
 		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		local e3 = e2:Clone()
-		e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-		tc:RegisterEffect(e3)
 	end
 
 	if diff > 1 then
-		Duel.Draw(tp, 1, REASON_EFFECT)
+		local e3 = Effect.CreateEffect(e:GetHandler())
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e3:SetValue(1)
+		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e3)
 	end
 
 	if diff > 2 then
-		local sg = Duel.GetFieldGroup(tp, 0, LOCATION_HAND)
-		local dg = sg:RandomSelect(tp, 1)
-		Duel.SendtoGrave(dg, REASON_EFFECT+REASON_DISCARD)
+		Duel.Draw(tp, 1, REASON_EFFECT)
 	end
 
 	if diff > 3 then
