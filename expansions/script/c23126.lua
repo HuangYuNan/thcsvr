@@ -36,6 +36,10 @@ function c23126.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c23126.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,5,true)
+	if g:RandomSelect(tp,1,true):IsContains(g:GetFirst()) then
+		Duel.Hint(11,0,aux.Stringid(23126,4))
+	end
 end
 function c23126.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
@@ -47,11 +51,14 @@ function c23126.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		e1:SetValue(-1000)
 		tc:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		tc:RegisterEffect(e2)
 		tc=g:GetNext()
 	end
 end
 function c23126.filter(c)
-	return (c:IsSetCard(0x824) or c:IsSetCard(0x825)) and c:IsAbleToHand()
+	return (c:IsSetCard(0x824) or c:IsSetCard(0x224)) and c:IsAbleToHand()
 end
 function c23126.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c23126.filter,tp,LOCATION_DECK,0,1,nil) end

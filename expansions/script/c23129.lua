@@ -44,6 +44,10 @@ function c23129.operation(e,tp,eg,ep,ev,re,r,rp)
 	-- local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE+LOCATION_REMOVED)
 	local ct=Duel.Destroy(g,REASON_EFFECT)
 	if ct>0 then
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,5,true)
+		if g:RandomSelect(tp,1,true):IsContains(g:GetFirst()) then
+			Duel.Hint(11,0,aux.Stringid(23129,4))
+		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

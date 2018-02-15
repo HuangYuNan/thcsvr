@@ -1,4 +1,3 @@
- 
 --红魔-小恶魔
 function c22015.initial_effect(c)
 	--draw

@@ -79,19 +79,19 @@ end
 function c10501.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end
-function c10501.filter(c)
+function c10501.filter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and c:IsAbleToHand()
 end
 function c10501.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local mg=e:GetHandler():GetMaterial()
-	if chk==0 then return mg:IsExists(c10501.filter,1,nil) end
+	if chk==0 then return mg:IsExists(c10501.filter,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 end
 function c10501.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local mg=e:GetHandler():GetMaterial()
-	local sg=mg:FilterSelect(tp,c10501.filter,1,1,nil)
+	local sg=mg:FilterSelect(tp,c10501.filter,1,1,nil,tp)
 	if sg:GetCount()>0 then
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)

@@ -36,7 +36,7 @@ function c27148.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c27148.filter,tp,0,LOCATION_MZONE,tc)
 	if tc:IsRelateToEffect(e) and g:GetCount()>0 then
 		if Duel.Destroy(g,REASON_EFFECT)>0 then
-			Duel.Damage(1-tp,tc:GetAttack()/2,REASON_EFFECT)
+			Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)
 		end
 	end
 end

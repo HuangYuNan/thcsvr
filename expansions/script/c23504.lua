@@ -52,7 +52,7 @@ function c23504.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c23504.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,23504)>1
+	return Duel.GetFlagEffect(e:GetHandlerPlayer(),23504)>1
 end
 function c23504.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_SZONE) and chkc:IsFacedown() end
