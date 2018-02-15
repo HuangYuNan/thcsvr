@@ -64,10 +64,10 @@ function c60218.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,2,REASON_COST)
 end
 function c60218.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,4) end
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) end
 end
 function c60218.drop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardDeck(tp,4,REASON_EFFECT)<4 then return end
+	if Duel.DiscardDeck(tp,2,REASON_EFFECT)<2 then return end
 	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_SZONE,nil)
 	if g:GetCount()>0 then
 		Duel.ConfirmCards(1-tp,g)
