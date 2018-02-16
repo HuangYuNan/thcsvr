@@ -72,15 +72,17 @@ function c22516.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone(tp)
 	local g=Duel.GetMatchingGroup(c22516.spfilter,tp,LOCATION_HAND,0,nil,e,tp,zone)
 	local lv=0
-	while zone~=0 and g:GetCount()>0 do
-		local sg=g:Select(tp,1,1,nil)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP,zone)
-		g:RemoveCard(sg:GetFirst())
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sg=g:Select(tp,1,3,nil)
+	local tc=sg:GetFirst()
+	while zone~=0 and g:GetCount()>0 and tc do
+		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 		Duel.BreakEffect()
 		zone=e:GetHandler():GetLinkedZone(tp)
-		lv=lv+sg:GetFirst():GetLevel()
+		lv=lv+tc:GetLevel()
+		tc=sg:GetNext()
 	end
+	Duel.SpecialSummonComplete()
 	if lv==16 then
 		Duel.Draw(tp,3,REASON_EFFECT)
 		local ug=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,1,true)
