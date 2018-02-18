@@ -65,7 +65,7 @@ function c23253.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local sg=g:Select(tp,1,1,nil)
-			Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)
 		end
 	end
 end
