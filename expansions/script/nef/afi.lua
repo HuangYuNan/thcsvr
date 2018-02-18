@@ -39,7 +39,7 @@ end
 
 function Afi.AdjustFieldInfoCheck(e,tp,eg,ep,ev,re,r,rp)
 	--define
-	local g = Duel.GetMatchingGroup(Card.IsFaceup, tp, LOCATION_MZONE, LOCATION_MZONE, nil)
+	local g = Duel.GetMatchingGroup(aux.TRUE, tp, LOCATION_MZONE, LOCATION_MZONE, nil)
 	local preg = e:GetLabelObject()
 
 	if g:GetCount()>0 then
