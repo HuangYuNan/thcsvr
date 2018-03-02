@@ -11,7 +11,6 @@ function c28050.initial_effect(c)
 	e1:SetOperation(c28050.op1)
 	c:RegisterEffect(e1)
 end
---
 function c28050.cfilter1_1(c)
 	return c:IsSetCard(0xc211) and Duel.CheckReleaseGroup(tp,c28050.cfilter1_2,1,c)
 end
@@ -27,7 +26,6 @@ function c28050.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	g1:Merge(g2)
 	Duel.Release(g1,REASON_COST)
 end
---
 function c28050.tfilter1(c)
 	return c:IsAbleToRemove()
 end
@@ -35,7 +33,7 @@ function c28050.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 		and Duel.IsExistingMatchingCard(c28050.tfilter1,tp,LOCATION_HAND+LOCATION_ONFIELD,LOCATION_HAND+LOCATION_ONFIELD,1,c) end
-	local sg=Duel.GetMatchingGroup(c28050.tfilter1,tp,LOCATION_HAND+LOCATION_ONFIELD,LOCATION_HAND+LOCATION_ONFIELD,nil)
+	local sg=Duel.GetMatchingGroup(c28050.tfilter1,tp,LOCATION_HAND+LOCATION_ONFIELD,LOCATION_HAND+LOCATION_ONFIELD,c)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,sg,sg:GetCount(),0,0)
 end
@@ -98,5 +96,4 @@ function c28050.op1_1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	Duel.SendtoHand(tc,nil,REASON_EFFECT)
 end
---
 
