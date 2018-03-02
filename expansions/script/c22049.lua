@@ -57,6 +57,10 @@ function c22049.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+		local ug=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3,true)
+		if ug:RandomSelect(tp,1,true):IsContains(ug:GetFirst()) then
+			Duel.Hint(11,0,aux.Stringid(22049,4))
+		end
 	end
 end
 function c22049.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
