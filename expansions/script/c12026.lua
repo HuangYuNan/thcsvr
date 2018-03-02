@@ -89,7 +89,7 @@ function c12026.returng(e,tp,eg,ep,ev,re,r,rp)
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESET_EVENT+0x1fe0000)
 			e2:SetValue(1500)
 			e:GetHandler():RegisterEffect(e2)
 		end

@@ -1,4 +1,4 @@
- --秘封 玛艾里贝莉·哈恩
+--秘封 玛艾里贝莉·哈恩
 function c28016.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
@@ -89,9 +89,9 @@ function c28016.rfilter(c)
 	return c:IsSetCard(0x211) and c:IsAbleToRemoveAsCost()
 end
 function c28016.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c28016.rfilter,tp,LOCATION_GRAVE,0,8,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c28016.rfilter,tp,LOCATION_GRAVE,0,9,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c28016.rfilter,tp,LOCATION_GRAVE,0,8,8,nil)
+	local g=Duel.SelectMatchingCard(tp,c28016.rfilter,tp,LOCATION_GRAVE,0,9,9,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c28016.stg(e,tp,eg,ep,ev,re,r,rp,chk)

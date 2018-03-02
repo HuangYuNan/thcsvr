@@ -35,19 +35,8 @@ function c24117.cfilter(c)
 end
 function c24117.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local dis=false
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.IsChainDisablable(0) then
-		local g=Duel.GetMatchingGroup(c24117.cfilter,tp,0,LOCATION_HAND,nil)
-		if g:GetCount()>0 and Duel.SelectYesNo(1-tp,aux.Stringid(24031,1)) then
-			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
-			local sg=g:Select(1-tp,1,1,nil)
-			Duel.SendtoGrave(sg,REASON_EFFECT)
-			dis=true
-		end
-	end
-	local tc=Duel.GetFirstTarget()
-	if not dis and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -55,18 +44,15 @@ function c24117.filter1(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function c24117.filter2(c,e,tp,lv)
-	return c:IsSetCard(0x115) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(lv)
+	return c:IsSetCard(0x115) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(lv) and (Duel.GetLocationCountFromEx(tp)>0 or c:IsLocation(LOCATION_DECK))
 end
 function c24117.filter3(c)
 	return c:IsSetCard(0x625) and c:GetLevel()==1 and c:IsType(TYPE_MONSTER)
 end
 function c24117.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		--local lv=
-		--Duel.GetMatchingGroupCount(c24117.filter1,tp,LOCATION_GRAVE,0,nil)+Duel.GetMatchingGroupCount(c24117.filter3,tp,LOCATION_GRAVE,0,nil)
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c24117.filter1,tp,LOCATION_GRAVE,0,1,nil) end
-		--and Duel.IsExistingMatchingCard(c24117.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,lv) 
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,nil,0,0)
 end
 function c24117.activate2(e,tp,eg,ep,ev,re,r,rp)
@@ -77,7 +63,7 @@ function c24117.activate2(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		local lv=g:GetCount()+g:FilterCount(c24117.filter3,nil)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=Duel.SelectMatchingCard(tp,c24117.filter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,lv)
+		local sg=Duel.SelectMatchingCard(tp,c24117.filter2,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e,tp,lv)
 		if sg:GetCount()>0 then
 			Duel.BreakEffect()
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)

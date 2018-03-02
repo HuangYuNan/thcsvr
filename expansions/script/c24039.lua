@@ -1,4 +1,3 @@
- 
 --废狱「被厌恶者的Philosophy」
 function c24039.initial_effect(c)
 	--Activate
@@ -6,16 +5,9 @@ function c24039.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCategory(CATEGORY_HANDES)
-	e1:SetCondition(c24039.condition)
 	e1:SetTarget(c24039.target)
 	e1:SetOperation(c24039.operation)
 	c:RegisterEffect(e1)
-end
-function c24039.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x625)
-end
-function c24039.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c24039.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c24039.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end

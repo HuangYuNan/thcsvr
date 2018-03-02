@@ -1,4 +1,3 @@
- 
 --地底之都 -废狱-
 function c24031.initial_effect(c)
 	--Activate
@@ -25,7 +24,7 @@ function c24031.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCountLimit(1)
+	--e4:SetCountLimit(1)
 	e4:SetCost(c24031.cost)
 	e4:SetTarget(c24031.target)
 	e4:SetOperation(c24031.activate)

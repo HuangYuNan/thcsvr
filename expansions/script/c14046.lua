@@ -29,7 +29,7 @@ function c14046.filter1(c)
 	return c:IsSetCard(0x138) and c:IsAbleToHand()
 end
 function c14046.filter2(c)
-	return c:IsCode(14035) and c:IsAbleToHand()
+	return c:IsSetCard(0x138) and c:IsAbleToHand() and c:IsType(TYPE_SPELL)
 end
 function c14046.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c14046.filter1,tp,LOCATION_DECK,0,1,nil) end

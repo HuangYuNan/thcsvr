@@ -72,5 +72,5 @@ end
 function c14064.atkval(e,c)
 	local g1=Duel.GetMatchingGroup(c14064.atkfilter1,c:GetControler(),LOCATION_GRAVE,0,nil)
 	local g2=Duel.GetMatchingGroup(c14064.atkfilter2,c:GetControler(),LOCATION_GRAVE,0,nil)
-	return g2:GetSum(Card.GetLevel)*200+g1:GetSum(Card.GetRank)*200
+	return g2:GetSum(Card.GetLevel)*200+g1:GetSum(Card.GetRank)*300
 end

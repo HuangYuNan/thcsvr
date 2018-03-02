@@ -55,7 +55,7 @@ end
 function c24042.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
-		if tc:IsLevelAbove(5) then
+		if tc:IsLevelAbove(6) then
 			c24042[tc:GetSummonPlayer()]=false
 		end
 		tc=eg:GetNext()
@@ -78,7 +78,7 @@ function c24042.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function c24042.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLevelAbove(5)
+	return c:IsLevelAbove(6)
 end
 function c24042.thfilter(c)
 	return c:IsSetCard(0x625) and c:IsAbleToHand() and c:IsLevelBelow(4)
@@ -99,7 +99,7 @@ function c24042.scop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c24042.cfilter(c)
-	return c:IsAttackAbove(2300) and c:IsSetCard(0x625) and c:IsAbleToDeckAsCost()
+	return c:IsAttackAbove(2000) and c:IsSetCard(0x625) and c:IsAbleToDeckAsCost()
 end
 function c24042.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c24042.cfilter,tp,LOCATION_GRAVE,0,1,nil) end

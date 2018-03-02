@@ -76,8 +76,8 @@ function c22218.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c22218.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if not Duel.IsPlayerCanDiscardDeck(tp,1) then return false end
-		local g=Duel.GetDecktopGroup(tp,1)
+		if not Duel.IsPlayerCanDiscardDeck(tp,2) then return false end
+		local g=Duel.GetDecktopGroup(tp,2)
 		return g:FilterCount(Card.IsAbleToHand,nil)>0
 	end
 end
@@ -86,9 +86,9 @@ function c22218.thfilter(c)
 end
 function c22218.acop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
-	Duel.ConfirmDecktop(tp,1)
-	local g=Duel.GetDecktopGroup(tp,1)
+	if not Duel.IsPlayerCanDiscardDeck(tp,2) then return end
+	Duel.ConfirmDecktop(tp,2)
+	local g=Duel.GetDecktopGroup(tp,2)
 	local hg=g:Filter(c22218.thfilter,nil)
 	g:Sub(hg)
 	if hg:GetCount()~=0 then

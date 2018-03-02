@@ -19,7 +19,7 @@ function c13055.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c13055.filter(c)
-	return c:IsLevelAbove(7) and c:IsSetCard(0x208) and c:IsDestructable()
+	return c:IsLevelAbove(6) and c:IsSetCard(0x208) and c:IsDestructable()
 end
 function c13055.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc~=e:GetHandler() end
@@ -42,7 +42,7 @@ function c13055.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function c13055.thop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetTurnCount()*200
+	local ct=Duel.GetTurnCount()*400
 	local lp=Duel.GetLP(1-tp)
 	if ct>=lp then ct=lp-100 end
 	Duel.SetLP(1-tp,lp-ct)

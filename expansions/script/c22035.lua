@@ -1,4 +1,3 @@
- 
 --Lost·露米娅
 function c22035.initial_effect(c)
 	c:EnableReviveLimit()
@@ -54,7 +53,7 @@ function c22035.indcon(e)
 	return Duel.IsExistingMatchingCard(c22035.mikofilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function c22035.filter(c)
-	return c:IsCode(22001) and c:IsAbleToHand() and not c:IsHasEffect(EFFECT_NECRO_VALLEY)
+	return c:IsSetCard(0x110) and c:IsAbleToHand() and not c:IsHasEffect(EFFECT_NECRO_VALLEY)
 end
 function c22035.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

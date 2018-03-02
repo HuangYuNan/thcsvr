@@ -12,14 +12,10 @@ function c23013.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CHAIN_UNIQUE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_DECK)
-	e2:SetCondition(c23013.spcon)
 	e2:SetCost(c23013.cost)
 	e2:SetTarget(c23013.sptg)
 	e2:SetOperation(c23013.spop)
 	c:RegisterEffect(e2)
-end
-function c23013.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) or e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
 end
 function c23013.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,23013)==0 end

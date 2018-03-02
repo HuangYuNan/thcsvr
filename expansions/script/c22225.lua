@@ -34,7 +34,7 @@ function c22225.initial_effect(c)
 	Nef.RegisterBigFiendEffect(c,e1)
 end
 function c22225.cfilter(c)
-	return c:IsCode(0x813) and c:IsFaceup()
+	return c:IsSetCard(0x813) and c:IsFaceup()
 end
 function c22225.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER) and ep==1-tp and Duel.IsExistingMatchingCard(c22225.cfilter,tp,LOCATION_MZONE,0,1,nil)

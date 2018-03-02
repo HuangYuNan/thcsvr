@@ -50,7 +50,7 @@ function c15099.filter(c,tp)
 	return c:GetSummonPlayer()~=tp
 end
 function c15099.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(1-tp,15099)==2 and eg:IsExists(c15099.filter,1,nil,tp)
+	return Duel.GetFlagEffect(1-tp,15099)>=2 and eg:IsExists(c15099.filter,1,nil,tp)
 end
 function c15099.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end

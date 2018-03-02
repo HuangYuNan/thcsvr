@@ -49,6 +49,14 @@ function c14022.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,c14022.costfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
+function c14022.st(c,e,tp)
+	if Duel.GetFlagEffect(tp,14022)==0 then
+		Duel.RegisterFlagEffect(tp,14022,0,0,0)
+		c:CancelToGrave()
+		Duel.ChangePosition(c,POS_FACEDOWN)
+		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
+	end
+end
 function c14022.fifilter(c)
 	return c:IsCode(14035) and c:IsAbleToHand()
 end
@@ -63,6 +71,7 @@ function c14022.fiop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
+	c14022.st(e:GetHandler(),e,tp)
 end
 function c14022.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
@@ -73,6 +82,7 @@ end
 function c14022.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
+	c14022.st(e:GetHandler(),e,tp)
 end
 function c14022.thfilter(c)
 	return c:IsFaceup() and c:IsAbleToHand()
@@ -90,6 +100,7 @@ function c14022.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c14022.thfilter,tp,0,LOCATION_MZONE,nil)
 	local tg=g:GetMaxGroup(c14022.tgfilter)
 	Duel.SendtoHand(tg,nil,REASON_EFFECT)
+	c14022.st(e:GetHandler(),e,tp)
 end
 function c14022.spfilter(c,e,tp)
 	return c:IsSetCard(0x112) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -107,6 +118,7 @@ function c14022.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
+	c14022.st(e:GetHandler(),e,tp)
 end
 function c14022.refilter(c)
 	return c:IsSetCard(0x208) and c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
@@ -122,4 +134,5 @@ function c14022.reop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
+	c14022.st(e:GetHandler(),e,tp)
 end

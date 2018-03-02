@@ -1,4 +1,3 @@
- 
 --开海「海水分开之日」
 function c23037.initial_effect(c)
 	--Activate
@@ -23,7 +22,7 @@ function c23037.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(g,nil,1,REASON_COST)
 end
 function c23037.filter(c)
-	return c:IsFaceup() and c:IsAbleToRemove()
+	return c:IsAbleToRemove()
 end
 function c23037.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and c23037.filter(chkc) end

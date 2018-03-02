@@ -1,4 +1,3 @@
- 
 --大钟婆之火
 function c23060.initial_effect(c)
 	--handes
@@ -20,9 +19,9 @@ function c23060.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
 end
 function c23060.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c23060.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c23060.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,c23060.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c23060.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.SendtoDeck(g,nil,1,REASON_COST)
 end

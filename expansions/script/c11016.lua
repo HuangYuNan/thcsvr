@@ -1,4 +1,3 @@
- 
 --地狱之月 菊理
 function c11016.initial_effect(c)
 	--synchro summon
@@ -41,7 +40,7 @@ function c11016.initial_effect(c)
 end
 function c11016.condition(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return Duel.IsChainNegatable(ev) and e:GetHandler():GetAttack()>=1200 and re:GetHandler()~=e:GetHandler()
+	return Duel.IsChainNegatable(ev) and e:GetHandler():GetAttack()>=600 and re:GetHandler()~=e:GetHandler()
 end
 function c11016.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -57,7 +56,7 @@ function c11016.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c11016.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and c:GetAttack()>=1200 then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and c:GetAttack()>=600 then
 		Duel.NegateActivation(ev)
 		if re:GetHandler():IsRelateToEffect(re) then
 			Duel.Destroy(eg,REASON_EFFECT)
@@ -67,7 +66,7 @@ function c11016.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetReset(RESET_EVENT+0x1ff0000)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(-1200)
+		e1:SetValue(-600)
 		c:RegisterEffect(e1)
 	end
 end

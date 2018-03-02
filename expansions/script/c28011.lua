@@ -1,4 +1,4 @@
- --秘封 宇佐见莲子
+--秘封 宇佐见莲子
 function c28011.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
@@ -94,9 +94,9 @@ function c28011.costfilter(c)
 	return c:IsSetCard(0x211) and c:IsAbleToGraveAsCost() and c:IsFaceup()
 end
 function c28011.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c28011.costfilter,tp,LOCATION_REMOVED,0,8,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c28011.costfilter,tp,LOCATION_REMOVED,0,9,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c28011.costfilter,tp,LOCATION_REMOVED,0,8,8,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c28011.costfilter,tp,LOCATION_REMOVED,0,9,9,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c28011.stg(e,tp,eg,ep,ev,re,r,rp,chk)

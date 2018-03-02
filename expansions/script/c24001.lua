@@ -1,5 +1,4 @@
- 
----废狱-可怕的水井妖怪·琪斯美
+--废狱-可怕的水井妖怪·琪斯美
 function c24001.initial_effect(c)
     --search
 	local e2=Effect.CreateEffect(c)
@@ -11,6 +10,12 @@ function c24001.initial_effect(c)
 	e2:SetTarget(c24001.tg)
 	e2:SetOperation(c24001.op)
 	c:RegisterEffect(e2)
+	local e3=e2:Clone()
+	e3:SetCode(EVENT_FLIP)
+	c:RegisterEffect(e3)
+	local e4=e2:Clone()
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e4)
 end
 function c24001.filter(c)
 	return c:IsSetCard(0x625) and c:IsAbleToHand() and c:IsLevelBelow(4)

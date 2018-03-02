@@ -46,7 +46,7 @@ function c14061.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c14061.filter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA
+	return not c:IsCode(fffffc)
 end
 function c14061.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c14061.filter(chkc) and chkc:IsControler(1-tp) end

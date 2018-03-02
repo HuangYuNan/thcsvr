@@ -1,4 +1,3 @@
- 
 --幻世「The·World」
 function c22116.initial_effect(c)
 	--Activate
@@ -27,7 +26,7 @@ function c22116.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c22116.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_MAIN1
 end
 function c22116.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 and Duel.GetCurrentPhase()==PHASE_MAIN1 end
+	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 and Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0 and Duel.GetCurrentPhase()==PHASE_MAIN1 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BP)
@@ -42,6 +41,9 @@ function c22116.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
+	local e3=e2:Clone()
+	e3:SetCode(EFFECT_CANNOT_SUMMON)
+	Duel.RegisterEffect(e3,tp)
 end
 function c22116.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

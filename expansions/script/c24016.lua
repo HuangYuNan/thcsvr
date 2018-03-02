@@ -1,5 +1,4 @@
- 
----废狱-地狱的轮祸·火焰猫磷
+--废狱-地狱的轮祸·火焰猫磷
 function c24016.initial_effect(c)
 	--synchro summon
 	local e1=Effect.CreateEffect(c)
@@ -13,7 +12,7 @@ function c24016.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e2:SetRange(LOCATION_HAND)
+	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
 	e2:SetCondition(c24016.spcon)
 	e2:SetOperation(c24016.spop)
 	c:RegisterEffect(e2)

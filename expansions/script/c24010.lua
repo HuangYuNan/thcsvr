@@ -1,5 +1,4 @@
- 
----废狱-力鬼王·星熊勇仪
+--废狱-力鬼王·星熊勇仪
 function c24010.initial_effect(c)
     --sum limit
 	local e1=Effect.CreateEffect(c)
@@ -12,7 +11,7 @@ function c24010.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+	e3:SetCode(EFFECT_MUST_ATTACK)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetTarget(c24010.antarget)
 	c:RegisterEffect(e3)

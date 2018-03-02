@@ -64,7 +64,7 @@ function c15053.imop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c15053.efilter(e,re)
-	return re:IsActiveType(TYPE_SPELL)
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function c15053.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fa=Duel.GetFlagEffect(tp,15000)

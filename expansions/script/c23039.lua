@@ -1,4 +1,3 @@
- 
 --风神之神德
 function c23039.initial_effect(c)
 	--Activate
@@ -7,14 +6,10 @@ function c23039.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(c23039.condition)
 	e1:SetCost(c23039.cost)
 	e1:SetTarget(c23039.target)
 	e1:SetOperation(c23039.activate)
 	c:RegisterEffect(e1)
-end
-function c23039.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
 end
 function c23039.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_MZONE,0,1,nil) end

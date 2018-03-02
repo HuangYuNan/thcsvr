@@ -22,7 +22,7 @@ function c24007.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c24007.filter(c)
-	return c:IsFaceup() and not c:IsType(TYPE_TUNER) and not c:IsType(TYPE_SYNCHRO) and c:IsSetCard(0x625)
+	return c:IsFaceup() and not c:IsType(TYPE_TUNER) and c:IsSetCard(0x625)
 end
 function c24007.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end

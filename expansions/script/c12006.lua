@@ -1,4 +1,3 @@
- 
 --明罗
 function c12006.initial_effect(c)
 	--atkup
@@ -34,7 +33,7 @@ function c12006.atop(e,tp,eg,ep,ev,re,r,rp)
 		local bc=e:GetLabelObject()
 		local atk=bc:GetBaseAttack()
 		if atk<0 then atk=0 end
-		if atk>2000 then atk=2000 end
+		if atk>2500 then atk=2500 end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

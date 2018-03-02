@@ -9,7 +9,6 @@ function c24088.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(c24088.pcon)
-	e1:SetCost(c24088.pcost)
 	e1:SetTarget(c24088.ptg)
 	e1:SetOperation(c24088.pop)
 	c:RegisterEffect(e1)
@@ -29,11 +28,6 @@ function c24088.initial_effect(c)
 end
 function c24088.pcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
-end
-function c24088.pcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
-	local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(sg,REASON_COST)
 end
 function c24088.pfilter(c)
 	return not c:IsPublic()
@@ -58,17 +52,10 @@ function c24088.discon(e,tp,eg,ep,ev,re,r,rp)
 		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) 
 		and re:GetHandler():GetLevel()>0 and re:GetHandler():GetLevel()<=e:GetHandler():GetLevel()
 end
-function c24088.disfilter(c)
-	return c:IsAbleToGrave() and c:IsSetCard(0x625)
-end
 function c24088.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c24088.disfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function c24088.disop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(c24088.disfilter,tp,LOCATION_HAND,0,1,nil) then 
 		Duel.NegateActivation(ev)
-		local g=Duel.SelectMatchingCard(tp,c24088.disfilter,tp,LOCATION_HAND,0,1,1,nil)
-		Duel.SendtoGrave(g,REASON_EFFECT)
-	end
 end

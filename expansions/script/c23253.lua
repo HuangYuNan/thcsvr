@@ -73,7 +73,7 @@ function c23253.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c23253.tpfilter,1,nil,tp)
 end
 function c23253.tpfilter(c,tp)
-	return c:GetSummonPlayer()~=tp
+	return c:GetSummonPlayer()~=tp and c:GetAttack()>=1500
 end
 function c23253.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dmg=eg:GetCount()*500
@@ -91,12 +91,18 @@ function c23253.op(e,tp,eg,ep,ev,re,r,rp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
-	e3:SetCondition(c23253.condition)
+	e3:SetCondition(c23253.condition2)
 	e3:SetOperation(c23253.operation2)
 	Duel.RegisterEffect(e3,tp)
 	local e6=e3:Clone()
 	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
 	Duel.RegisterEffect(e6,tp)
+end
+function c23253.condition2(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c23253.tpfilter2,1,nil,tp)
+end
+function c23253.tpfilter2(c,tp)
+	return c:GetSummonPlayer()~=tp
 end
 function c23253.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local dmg=eg:GetCount()*100

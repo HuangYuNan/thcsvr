@@ -1,4 +1,3 @@
- 
 --八坂神奈子
 function c23022.initial_effect(c)
 	--synchro summon
@@ -75,16 +74,11 @@ function c23022.costfilter(c)
 	return c:IsAbleToDeckAsCost() and c:IsType(TYPE_MONSTER)
 end
 function c23022.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 and Duel.IsExistingMatchingCard(c23022.costfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c23022.costfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,c23022.costfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.SendtoDeck(g,nil,1,REASON_COST)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-	e:GetHandler():RegisterEffect(e1)
 end
 function c23022.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsDestructable() end
