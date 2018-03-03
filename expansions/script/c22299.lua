@@ -73,9 +73,9 @@ end
 function c22299.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=e:GetHandler():GetFlagEffect(22299)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE+LOCATION_MZONE,ct,nil) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE+LOCATION_ONFIELD,ct,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE+LOCATION_MZONE,ct,ct,nil)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE+LOCATION_ONFIELD,ct,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 end
 function c22299.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -84,7 +84,7 @@ function c22299.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if tg:GetCount()>0 then
 		Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
-		local opc=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_DECK)
+		local opc=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
 		local gnc=ct-opc
 		if gnc>0 then
 			Duel.Draw(tp,gnc,REASON_EFFECT)

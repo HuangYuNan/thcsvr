@@ -11,7 +11,7 @@ function c22066.initial_effect(c)
 	e1:SetTarget(c22066.tg1)
 	e1:SetOperation(c22066.op1)
 	c:RegisterEffect(e1)
---	
+--  
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(22066,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -25,7 +25,7 @@ function c22066.initial_effect(c)
 --
 end
 --
-function c22066.cfilter(c)
+function c22066.cfilter1(c)
 	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x813) and c:IsType(TYPE_MONSTER)
 end
 function c22066.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
