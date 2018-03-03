@@ -56,7 +56,7 @@ function c31043.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if not tc or Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	if c:IsRelateToEffect(e) and tc:IsAbleToChangeControler() then
-		Duel.Equip(tp,tc,c,false)
+		Duel.Equip(tp,tc,c)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)

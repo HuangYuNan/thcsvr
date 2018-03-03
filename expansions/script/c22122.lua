@@ -1,4 +1,3 @@
- 
 --华符「破山炮」
 function c22122.initial_effect(c)
 	--c:EnableCounterPermit(0x128c)
@@ -96,7 +95,7 @@ function c22122.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c22122.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22122.filter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,800)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,200)
 end
 function c22122.op2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c22122.filter,tp,LOCATION_MZONE,0,nil)
@@ -121,6 +120,6 @@ function c22122.op2(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetValue(1)
 			rg:RegisterEffect(e2)
 		end
-		Duel.Damage(1-tp,500,REASON_EFFECT)
+		Duel.Damage(1-tp,200,REASON_EFFECT)
 	end
 end

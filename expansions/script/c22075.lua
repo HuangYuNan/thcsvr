@@ -1,10 +1,11 @@
 --红魔✿秘白之女仆长 十六夜咲夜
 function c22075.initial_effect(c)
+	--
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e1:SetRange(LOCATION_HAND+LOCATION_REMOVED)
+	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,22075)
 	e1:SetCondition(c22075.con1)
 	c:RegisterEffect(e1)
@@ -17,6 +18,14 @@ function c22075.initial_effect(c)
 	e2:SetTarget(c22075.tg2)
 	e2:SetOperation(c22075.op2)
 	c:RegisterEffect(e2)
+--  
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EVENT_FREE_CHAIN+EFFECT_TYPE_CONTINUOUS)
+	e3:SetRange(LOCATION_REMOVED)
+	e3:SetCountLimit(1,22075)
+	e3:SetTarget(c22075.tg3)
+	e3:SetOperation(c22075.op3)
+	c:RegisterEffect(e3)   
 end
 function c22075.con1_1(c)
 	return c:IsSetCard(0x814) and c:IsType(TYPE_MONSTER)
@@ -26,7 +35,8 @@ function c22075.con1_2(c)
 end
 function c22075.con1(e,c)
 	if c==nil then return true end
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0,nil)<1 or Duel.IsExistingMatchingCard(c22075.cfilter1_1,tp,LOCATION_GRAVE,0,1,nil) or Duel.IsExistingMatchingCard(c22075.cfilter1_2,tp,LOCATION_ONFIELD,0,2,nil)
+	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0,nil)<1
+		or Duel.IsExistingMatchingCard(c22075.cfilter1_1,tp,LOCATION_GRAVE,0,1,nil) or Duel.IsExistingMatchingCard(c22075.cfilter1_2,tp,LOCATION_ONFIELD,0,2,nil)
 end
 --
 function c22075.tfilter2(c)
@@ -43,6 +53,16 @@ function c22075.op2(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()<=0 then return end
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,g)
+end
+function c22075.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetTurnPlayer()==c:GetControler()
+		and (Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0,nil)<1 or Duel.IsExistingMatchingCard(c22075.cfilter1_1,c:GetControler(),LOCATION_GRAVE,0,1,nil)
+		or Duel.IsExistingMatchingCard(c22075.cfilter1_2,c:GetControler(),LOCATION_ONFIELD,0,2,nil)) end
+end
+function c22075.op3(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 
 
