@@ -35,8 +35,8 @@ function c22075.con1_2(c)
 end
 function c22075.con1(e,c)
 	if c==nil then return true end
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0,nil)<1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		or Duel.IsExistingMatchingCard(c22075.cfilter1_1,tp,LOCATION_GRAVE,0,1,nil) or Duel.IsExistingMatchingCard(c22075.cfilter1_2,tp,LOCATION_ONFIELD,0,2,nil)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and (Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0,nil)<1
+		or Duel.IsExistingMatchingCard(c22075.cfilter1_1,tp,LOCATION_GRAVE,0,1,nil) or Duel.IsExistingMatchingCard(c22075.cfilter1_2,tp,LOCATION_ONFIELD,0,2,nil))
 end
 --
 function c22075.tfilter2(c)
@@ -56,7 +56,7 @@ function c22075.op2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c22075.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetTurnPlayer()==c:GetControler() and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetTurnPlayer()==c:GetControler() and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and (Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0,nil)<1 or Duel.IsExistingMatchingCard(c22075.cfilter1_1,c:GetControler(),LOCATION_GRAVE,0,1,nil)
 		or Duel.IsExistingMatchingCard(c22075.cfilter1_2,c:GetControler(),LOCATION_ONFIELD,0,2,nil)) end
 end
