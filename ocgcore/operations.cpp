@@ -332,8 +332,9 @@ void field::operation_replace(int32 type, int32 step, group* targets) {
 	int32 is_destroy = (type == EFFECT_DESTROY_REPLACE) ? TRUE : FALSE;
 	auto pr = effects.continuous_effect.equal_range(type);
 	std::vector<effect*> opp_effects;
-	for(auto it = pr.first; it != pr.second; ++it) {
-		effect* reffect = it->second;
+	for(auto eit = pr.first; eit != pr.second;) {
+		effect* reffect = eit->second;
+		++eit;
 		if(reffect->get_handler_player() == infos.turn_player)
 			add_process(PROCESSOR_OPERATION_REPLACE, step, reffect, targets, is_destroy, 0);
 		else
@@ -424,10 +425,12 @@ int32 field::draw(uint16 step, effect* reason_effect, uint32 reason, uint8 reaso
 			for (auto cit = drawed_set->begin(); cit != drawed_set->end(); ++cit) {
 				raise_single_event((*cit), 0, EVENT_DRAW, reason_effect, reason, reason_player, playerid, 0);
 				raise_single_event((*cit), 0, EVENT_TO_HAND, reason_effect, reason, reason_player, playerid, 0);
+				raise_single_event((*cit), 0, EVENT_MOVE, reason_effect, reason, reason_player, playerid, 0);
 			}
 			process_single_event();
 			raise_event(drawed_set, EVENT_DRAW, reason_effect, reason, reason_player, playerid, drawed);
 			raise_event(drawed_set, EVENT_TO_HAND, reason_effect, reason, reason_player, playerid, drawed);
+			raise_event(drawed_set, EVENT_MOVE, reason_effect, reason, reason_player, playerid, drawed);
 			process_instant_event();
 		}
 		return FALSE;
@@ -623,8 +626,9 @@ int32 field::pay_lp_cost(uint32 step, uint8 playerid, uint32 cost) {
 			core.select_effects.push_back(0);
 		}
 		auto pr = effects.continuous_effect.equal_range(EFFECT_LPCOST_REPLACE);
-		for (; pr.first != pr.second; ++pr.first) {
-			effect* peffect = pr.first->second;
+		for(auto eit = pr.first; eit != pr.second;) {
+			effect* peffect = eit->second;
+			++eit;
 			if(peffect->is_activateable(peffect->get_handler_player(), e)) {
 				core.select_options.push_back(peffect->description);
 				core.select_effects.push_back(peffect);
@@ -679,7 +683,6 @@ int32 field::remove_counter(uint16 step, uint32 reason, card* pcard, uint8 rplay
 			core.select_effects.push_back(0);
 		}
 		auto pr = effects.continuous_effect.equal_range(EFFECT_RCOUNTER_REPLACE + countertype);
-		effect* peffect;
 		tevent e;
 		e.event_cards = 0;
 		e.event_player = rplayer;
@@ -687,8 +690,9 @@ int32 field::remove_counter(uint16 step, uint32 reason, card* pcard, uint8 rplay
 		e.reason = reason;
 		e.reason_effect = core.reason_effect;
 		e.reason_player = rplayer;
-		for (; pr.first != pr.second; ++pr.first) {
-			peffect = pr.first->second;
+		for(auto eit = pr.first; eit != pr.second;) {
+			effect* peffect = eit->second;
+			++eit;
 			if(peffect->is_activateable(peffect->get_handler_player(), e)) {
 				core.select_options.push_back(peffect->description);
 				core.select_effects.push_back(peffect);
@@ -756,7 +760,6 @@ int32 field::remove_overlay_card(uint16 step, uint32 reason, card* pcard, uint8 
 			core.select_effects.push_back(0);
 		}
 		auto pr = effects.continuous_effect.equal_range(EFFECT_OVERLAY_REMOVE_REPLACE);
-		effect* peffect;
 		tevent e;
 		e.event_cards = 0;
 		e.event_player = rplayer;
@@ -764,8 +767,9 @@ int32 field::remove_overlay_card(uint16 step, uint32 reason, card* pcard, uint8 
 		e.reason = reason;
 		e.reason_effect = core.reason_effect;
 		e.reason_player = rplayer;
-		for (; pr.first != pr.second; ++pr.first) {
-			peffect = pr.first->second;
+		for(auto eit = pr.first; eit != pr.second;) {
+			effect* peffect = eit->second;
+			++eit;
 			if(peffect->is_activateable(peffect->get_handler_player(), e)) {
 				core.select_options.push_back(peffect->description);
 				core.select_effects.push_back(peffect);
@@ -925,9 +929,12 @@ int32 field::get_control(uint16 step, effect* reason_effect, uint8 reason_player
 			if(pcard->unique_code && (pcard->unique_location & LOCATION_MZONE))
 				add_unique_card(pcard);
 			raise_single_event(pcard, 0, EVENT_CONTROL_CHANGED, reason_effect, REASON_EFFECT, reason_player, playerid, 0);
+			raise_single_event(pcard, 0, EVENT_MOVE, reason_effect, REASON_EFFECT, reason_player, playerid, 0);
 		}
-		if(targets->container.size())
+		if(targets->container.size()) {
 			raise_event(&targets->container, EVENT_CONTROL_CHANGED, reason_effect, REASON_EFFECT, reason_player, playerid, 0);
+			raise_event(&targets->container, EVENT_MOVE, reason_effect, REASON_EFFECT, reason_player, playerid, 0);
+		}
 		process_single_event();
 		process_instant_event();
 		return FALSE;
@@ -1116,8 +1123,10 @@ int32 field::swap_control(uint16 step, effect* reason_effect, uint8 reason_playe
 			if(pcard->unique_code && (pcard->unique_location & LOCATION_MZONE))
 				add_unique_card(pcard);
 			raise_single_event(pcard, 0, EVENT_CONTROL_CHANGED, reason_effect, REASON_EFFECT, reason_player, pcard->current.controler, 0);
+			raise_single_event(pcard, 0, EVENT_MOVE, reason_effect, REASON_EFFECT, reason_player, pcard->current.controler, 0);
 		}
 		raise_event(&targets1->container, EVENT_CONTROL_CHANGED, reason_effect, REASON_EFFECT, reason_player, 0, 0);
+		raise_event(&targets1->container, EVENT_MOVE, reason_effect, REASON_EFFECT, reason_player, 0, 0);
 		process_single_event();
 		process_instant_event();
 		return FALSE;
@@ -1252,9 +1261,12 @@ int32 field::control_adjust(uint16 step) {
 			if(pcard->unique_code && (pcard->unique_location & LOCATION_MZONE))
 				add_unique_card(pcard);
 			raise_single_event(pcard, 0, EVENT_CONTROL_CHANGED, 0, REASON_RULE, 0, pcard->current.controler, 0);
+			raise_single_event(pcard, 0, EVENT_MOVE, 0, REASON_RULE, 0, pcard->current.controler, 0);
 		}
-		if(core.control_adjust_set[0].size())
+		if(core.control_adjust_set[0].size()) {
 			raise_event(&core.control_adjust_set[0], EVENT_CONTROL_CHANGED, 0, 0, 0, 0, 0);
+			raise_event(&core.control_adjust_set[0], EVENT_MOVE, 0, 0, 0, 0, 0);
+		}
 		process_single_event();
 		process_instant_event();
 		return FALSE;
@@ -3142,7 +3154,7 @@ int32 field::destroy(uint16 step, group * targets, effect * reason_effect, uint3
 						pduel->lua->add_param(pcard->current.reason_player, PARAM_TYPE_INT);
 						int32 ct;
 						if(ct = eset[i]->get_value(3)) {
-							auto it = pcard->indestructable_effects.insert(std::make_pair(eset[i]->id, 0));
+							auto it = pcard->indestructable_effects.emplace(eset[i]->id, 0);
 							if(++it.first->second <= ct) {
 								indestructable_effect_set.insert(eset[i]);
 								is_destructable = false;
@@ -3363,7 +3375,7 @@ int32 field::destroy(uint16 step, group * targets, effect * reason_effect, uint3
 						pduel->lua->add_param(pcard->current.reason_player, PARAM_TYPE_INT);
 						int32 ct;
 						if(ct = eset[i]->get_value(3)) {
-							auto it = pcard->indestructable_effects.insert(std::make_pair(eset[i]->id, 0));
+							auto it = pcard->indestructable_effects.emplace(eset[i]->id, 0);
 							if(++it.first->second <= ct) {
 								pduel->write_buffer8(MSG_HINT);
 								pduel->write_buffer8(HINT_CARD);
@@ -3997,6 +4009,7 @@ int32 field::send_to(uint16 step, group * targets, effect * reason_effect, uint3
 				for(auto clit = pcard->xyz_materials.begin(); clit != pcard->xyz_materials.end(); ++clit)
 					overlays.insert(*clit);
 			}
+			raise_single_event(pcard, 0, EVENT_MOVE, pcard->current.reason_effect, pcard->current.reason, pcard->current.reason_player, 0, 0);
 		}
 		if(tohand.size())
 			raise_event(&tohand, EVENT_TO_HAND, reason_effect, reason, reason_player, 0, 0);
@@ -4012,6 +4025,7 @@ int32 field::send_to(uint16 step, group * targets, effect * reason_effect, uint3
 			raise_event(&destroyed, EVENT_DESTROYED, reason_effect, reason, reason_player, 0, 0);
 		if(retgrave.size())
 			raise_event(&retgrave, EVENT_RETURN_TO_GRAVE, reason_effect, reason, reason_player, 0, 0);
+		raise_event(&targets->container, EVENT_MOVE, reason_effect, reason, reason_player, 0, 0);
 		process_single_event();
 		process_instant_event();
 		if(equipings.size())
@@ -4126,6 +4140,7 @@ int32 field::discard_deck(uint16 step, uint8 playerid, uint8 count, uint32 reaso
 				remove.insert(pcard);
 				raise_single_event(pcard, 0, EVENT_REMOVE, pcard->current.reason_effect, pcard->current.reason, pcard->current.reason_player, 0, 0);
 			}
+			raise_single_event(pcard, 0, EVENT_MOVE, pcard->current.reason_effect, pcard->current.reason, pcard->current.reason_player, 0, 0);
 			core.discarded_set.insert(pcard);
 		}
 		if(tohand.size())
@@ -4136,6 +4151,7 @@ int32 field::discard_deck(uint16 step, uint8 playerid, uint8 count, uint32 reaso
 			raise_event(&tograve, EVENT_TO_GRAVE, core.reason_effect, reason, core.reason_player, 0, 0);
 		if(remove.size())
 			raise_event(&remove, EVENT_REMOVE, core.reason_effect, reason, core.reason_player, 0, 0);
+		raise_event(&core.discarded_set, EVENT_MOVE, core.reason_effect, reason, core.reason_player, 0, 0);
 		process_single_event();
 		process_instant_event();
 		adjust_instant();
@@ -4333,6 +4349,12 @@ int32 field::move_to_field(uint16 step, card* target, uint32 enable, uint32 ret,
 			target->enable_field_effect(true);
 		if(ret == 1 && target->current.location == LOCATION_MZONE && !(target->data.type & TYPE_MONSTER))
 			send_to(target, 0, REASON_RULE, PLAYER_NONE, PLAYER_NONE, LOCATION_GRAVE, 0, 0);
+		else {
+			raise_single_event(target, 0, EVENT_MOVE, target->current.reason_effect, target->current.reason, target->current.reason_player, 0, 0);
+			raise_event(target, EVENT_MOVE, target->current.reason_effect, target->current.reason, target->current.reason_player, 0, 0);
+			process_single_event();
+			process_instant_event();
+		}
 		adjust_disable_check_list();
 		return FALSE;
 	}
