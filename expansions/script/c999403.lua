@@ -52,7 +52,7 @@ function M.activate(e,tp,eg,ep,ev,re,r,rp)
 			while tc do
 				local e1 = Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_SET_DEFENSE)
+				e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
 				e1:SetValue(0)
 				e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 				tc:RegisterEffect(e1)

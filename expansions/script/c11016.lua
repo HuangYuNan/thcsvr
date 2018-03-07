@@ -48,7 +48,7 @@ function c11016.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if c:IsHasEffect(EFFECT_REVERSE_UPDATE) then
 		c:RegisterFlagEffect(11016,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 	end
-	c:RegisterFlagEffect(1101600,RESET_EVENT+0x0800,0,1)
+	c:RegisterFlagEffect(1101600,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)

@@ -56,14 +56,14 @@ function c25040.desop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetOperation(c25040.damop)
 	if Duel.GetCurrentPhase()==PHASE_STANDBY then
 		e2:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,2)
-		Duel.RegisterFlagEffect(tp,25040,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,25041,RESET_PHASE+PHASE_END,0,1)
 	else
 		e2:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN)
 	end
 	Duel.RegisterEffect(e2,tp)
 end
 function c25040.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetFlagEffect(tp,25040)==0
+	return Duel.GetTurnPlayer()~=tp and Duel.GetFlagEffect(tp,25041)==0
 end
 function c25040.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,25040)
