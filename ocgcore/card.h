@@ -34,8 +34,6 @@ struct card_data {
 	uint32 lscale;
 	uint32 rscale;
 	uint32 link_marker;
-
-	void clear();
 };
 
 struct card_state {
@@ -106,7 +104,7 @@ public:
 	public:
 		void addcard(card* pcard);
 	};
-
+	
 	//millux
 	uint32 get_ritual_type();
 	//modded
