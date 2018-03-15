@@ -78,7 +78,7 @@ end
 function c20219.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c20219.tfilter3,tp,0,LOCATION_MZONE,1,nil,c) end
-	local sg=Duel.GetMatchingGroup(c20219.tfilter3,tp,0,LOCATION_MZONE,nil)
+	local sg=Duel.GetMatchingGroup(c20219.tfilter3,tp,0,LOCATION_MZONE,nil,c)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,sg:GetCount(),0,0)
 end
 --
