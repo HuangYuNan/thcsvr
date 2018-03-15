@@ -1837,7 +1837,7 @@ int32 scriptlib::duel_get_location_count(lua_State *L) {
 	uint32 zone = 0xff;
 	if(lua_gettop(L) >= 5)
 		zone = lua_tonumberint(L, 5);
-	lua_pushinteger(L, pduel->game_field->get_useable_count(playerid, location, uplayer, reason, zone));
+	lua_pushinteger(L, pduel->game_field->get_useable_count(NULL, playerid, location, uplayer, reason, zone));
 	return 1;
 }
 //modded by Flandre
@@ -1885,7 +1885,7 @@ int32 scriptlib::duel_get_mzone_count(lua_State *L) {
 		reason = lua_tonumberint(L, 4);
 	if(lua_gettop(L) >= 5)
 		zone = lua_tonumberint(L, 5);
-	lua_pushinteger(L, pduel->game_field->get_useable_count(playerid, LOCATION_MZONE, uplayer, reason, zone));
+	lua_pushinteger(L, pduel->game_field->get_useable_count(NULL, playerid, LOCATION_MZONE, uplayer, reason, zone));
 	if(swapped) {
 		pduel->game_field->player[0].used_location = used_location[0];
 		pduel->game_field->player[1].used_location = used_location[1];
@@ -1945,10 +1945,7 @@ int32 scriptlib::duel_get_location_count_fromex(lua_State *L) {
 	uint32 zone = 0xff;
 	if(lua_gettop(L) >= 5)
 		zone = lua_tonumberint(L, 5);
-	if(pduel->game_field->core.duel_rule >= 4)
-		lua_pushinteger(L, pduel->game_field->get_useable_count_fromex(scard, playerid, uplayer, zone));
-	else
-		lua_pushinteger(L, pduel->game_field->get_useable_count(playerid, LOCATION_MZONE, uplayer, LOCATION_REASON_TOFIELD, zone));
+	lua_pushinteger(L, pduel->game_field->get_useable_count_fromex(scard, playerid, uplayer, zone));
 	if(mcard)
 		mcard->set_status(STATUS_TO_LEAVE_FROMEX, FALSE);
 	if(mgroup){
@@ -1975,18 +1972,15 @@ int32 scriptlib::duel_get_usable_mzone_count(lua_State *L) {
 	if(lua_gettop(L) >= 2)
 		uplayer = lua_tonumberint(L, 2);
 	uint32 zone = 0xff;
-	if(pduel->game_field->core.duel_rule >= 4) {
-		uint32 flag1, flag2;
-		int32 ct1 = pduel->game_field->get_tofield_count(playerid, LOCATION_MZONE, uplayer, LOCATION_REASON_TOFIELD, zone, &flag1);
-		int32 ct2 = pduel->game_field->get_spsummonable_count_fromex(0, playerid, uplayer, zone, &flag2);
-		int32 ct3 = field::field_used_count[~(flag1 | flag2) & 0x1f];
-		int32 count = ct1 + ct2 - ct3;
-		int32 limit = pduel->game_field->get_mzone_limit(playerid, uplayer, LOCATION_REASON_TOFIELD);
-		if(count > limit)
-			count = limit;
-		lua_pushinteger(L, count);
-	} else
-		lua_pushinteger(L, pduel->game_field->get_useable_count(playerid, LOCATION_MZONE, uplayer, LOCATION_REASON_TOFIELD, zone));
+	uint32 flag1, flag2;
+	int32 ct1 = pduel->game_field->get_tofield_count(NULL, playerid, LOCATION_MZONE, uplayer, LOCATION_REASON_TOFIELD, zone, &flag1);
+	int32 ct2 = pduel->game_field->get_spsummonable_count_fromex(NULL, playerid, uplayer, zone, &flag2);
+	int32 ct3 = field::field_used_count[~(flag1 | flag2) & 0x1f];
+	int32 count = ct1 + ct2 - ct3;
+	int32 limit = pduel->game_field->get_mzone_limit(playerid, uplayer, LOCATION_REASON_TOFIELD);
+	if(count > limit)
+		count = limit;
+	lua_pushinteger(L, count);
 	return 1;
 }
 int32 scriptlib::duel_get_linked_group(lua_State *L) {
@@ -2456,7 +2450,7 @@ int32 scriptlib::duel_get_release_group(lua_State *L) {
 		hand = lua_toboolean(L, 2);
 	duel* pduel = interpreter::get_duel_info(L);
 	group* pgroup = pduel->new_group();
-	pduel->game_field->get_release_list(playerid, &(pgroup->container), &(pgroup->container), FALSE, hand, 0, 0, 0, 0);
+	pduel->game_field->get_release_list(playerid, &pgroup->container, &pgroup->container, &pgroup->container, FALSE, hand, 0, 0, 0, 0);
 	interpreter::group2value(L, pgroup);
 	return 1;
 }
@@ -2474,7 +2468,7 @@ int32 scriptlib::duel_get_release_group_count(lua_State *L) {
 	if(lua_gettop(L) > 1)
 		hand = lua_toboolean(L, 2);
 	duel* pduel = interpreter::get_duel_info(L);
-	lua_pushinteger(L, pduel->game_field->get_release_list(playerid, 0, 0, FALSE, hand, 0, 0, 0, 0));
+	lua_pushinteger(L, pduel->game_field->get_release_list(playerid, 0, 0, 0, FALSE, hand, 0, 0, 0, 0));
 	return 1;
 }
 int32 scriptlib::duel_check_release_group(lua_State *L) {
@@ -2496,7 +2490,9 @@ int32 scriptlib::duel_check_release_group(lua_State *L) {
 	uint32 extraargs = lua_gettop(L) - 4;
 	duel* pduel = interpreter::get_duel_info(L);
 	uint32 fcount = lua_tonumberint(L, 3);
-	lua_pushboolean(L, pduel->game_field->check_release_list(playerid, fcount, use_con, FALSE, 2, extraargs, pexception, pexgroup));
+	int32 result = pduel->game_field->check_release_list(playerid, fcount, use_con, FALSE, 2, extraargs, pexception, pexgroup);
+	pduel->game_field->core.must_select_cards.clear();
+	lua_pushboolean(L, result);
 	return 1;
 }
 int32 scriptlib::duel_select_release_group(lua_State *L) {
@@ -2522,7 +2518,8 @@ int32 scriptlib::duel_select_release_group(lua_State *L) {
 	uint32 max = lua_tonumberint(L, 4);
 	pduel->game_field->core.release_cards.clear();
 	pduel->game_field->core.release_cards_ex.clear();
-	pduel->game_field->get_release_list(playerid, &pduel->game_field->core.release_cards, &pduel->game_field->core.release_cards_ex, use_con, FALSE, 2, extraargs, pexception, pexgroup);
+	pduel->game_field->core.release_cards_ex_oneof.clear();
+	pduel->game_field->get_release_list(playerid, &pduel->game_field->core.release_cards, &pduel->game_field->core.release_cards_ex, &pduel->game_field->core.release_cards_ex_oneof, use_con, FALSE, 2, extraargs, pexception, pexgroup);
 	pduel->game_field->add_process(PROCESSOR_SELECT_RELEASE_S, 0, 0, 0, playerid, (max << 16) + min);
 	return lua_yield(L, 0);
 }
@@ -2545,7 +2542,9 @@ int32 scriptlib::duel_check_release_group_ex(lua_State *L) {
 	uint32 extraargs = lua_gettop(L) - 4;
 	duel* pduel = interpreter::get_duel_info(L);
 	uint32 fcount = lua_tonumberint(L, 3);
-	lua_pushboolean(L, pduel->game_field->check_release_list(playerid, fcount, use_con, TRUE, 2, extraargs, pexception, pexgroup));
+	int32 result = pduel->game_field->check_release_list(playerid, fcount, use_con, TRUE, 2, extraargs, pexception, pexgroup);
+	pduel->game_field->core.must_select_cards.clear();
+	lua_pushboolean(L, result);
 	return 1;
 }
 int32 scriptlib::duel_select_release_group_ex(lua_State *L) {
@@ -2571,7 +2570,8 @@ int32 scriptlib::duel_select_release_group_ex(lua_State *L) {
 	uint32 max = lua_tonumberint(L, 4);
 	pduel->game_field->core.release_cards.clear();
 	pduel->game_field->core.release_cards_ex.clear();
-	pduel->game_field->get_release_list(playerid, &pduel->game_field->core.release_cards, &pduel->game_field->core.release_cards_ex, use_con, TRUE, 2, extraargs, pexception, pexgroup);
+	pduel->game_field->core.release_cards_ex_oneof.clear();
+	pduel->game_field->get_release_list(playerid, &pduel->game_field->core.release_cards, &pduel->game_field->core.release_cards_ex, &pduel->game_field->core.release_cards_ex_oneof, use_con, TRUE, 2, extraargs, pexception, pexgroup);
 	pduel->game_field->add_process(PROCESSOR_SELECT_RELEASE_S, 0, 0, 0, playerid, (max << 16) + min);
 	return lua_yield(L, 0);
 }
@@ -2661,9 +2661,10 @@ int32 scriptlib::duel_select_tribute(lua_State *L) {
 	duel* pduel = interpreter::get_duel_info(L);
 	pduel->game_field->core.release_cards.clear();
 	pduel->game_field->core.release_cards_ex.clear();
-	pduel->game_field->core.release_cards_ex_sum.clear();
-	pduel->game_field->get_summon_release_list(target, &pduel->game_field->core.release_cards, &pduel->game_field->core.release_cards_ex, &pduel->game_field->core.release_cards_ex_sum, mg, ex);
-	pduel->game_field->add_process(PROCESSOR_SELECT_TRIBUTE_S, 0, 0, 0, playerid, (max << 16) + min, toplayer, zone);
+	pduel->game_field->core.release_cards_ex_oneof.clear();
+	pduel->game_field->get_summon_release_list(target, &pduel->game_field->core.release_cards, &pduel->game_field->core.release_cards_ex, &pduel->game_field->core.release_cards_ex_oneof, mg, ex);
+	pduel->game_field->select_tribute_cards(0, playerid, 0, min, max, toplayer, zone);
+	pduel->game_field->core.subunits.back().type = PROCESSOR_SELECT_TRIBUTE_S;
 	return lua_yield(L, 0);
 }
 /**
@@ -3334,19 +3335,19 @@ int32 scriptlib::duel_select_disable_field(lua_State * L) {
 	duel* pduel = interpreter::get_duel_info(L);
 	uint32 ct1 = 0, ct2 = 0, ct3 = 0, ct4 = 0, plist = 0, flag = 0xffffffff;
 	if(location1 & LOCATION_MZONE) {
-		ct1 = pduel->game_field->get_useable_count(playerid, LOCATION_MZONE, PLAYER_NONE, 0, 0xff, &plist);
+		ct1 = pduel->game_field->get_useable_count(NULL, playerid, LOCATION_MZONE, PLAYER_NONE, 0, 0xff, &plist);
 		flag = (flag & 0xffffff00) | plist;
 	}
 	if(location1 & LOCATION_SZONE) {
-		ct2 = pduel->game_field->get_useable_count(playerid, LOCATION_SZONE, PLAYER_NONE, 0, 0xff, &plist);
+		ct2 = pduel->game_field->get_useable_count(NULL, playerid, LOCATION_SZONE, PLAYER_NONE, 0, 0xff, &plist);
 		flag = (flag & 0xffff00ff) | (plist << 8);
 	}
 	if(location2 & LOCATION_MZONE) {
-		ct3 = pduel->game_field->get_useable_count(1 - playerid, LOCATION_MZONE, PLAYER_NONE, 0, 0xff, &plist);
+		ct3 = pduel->game_field->get_useable_count(NULL, 1 - playerid, LOCATION_MZONE, PLAYER_NONE, 0, 0xff, &plist);
 		flag = (flag & 0xff00ffff) | (plist << 16);
 	}
 	if(location2 & LOCATION_SZONE) {
-		ct4 = pduel->game_field->get_useable_count(1 - playerid, LOCATION_SZONE, PLAYER_NONE, 0, 0xff, &plist);
+		ct4 = pduel->game_field->get_useable_count(NULL, 1 - playerid, LOCATION_SZONE, PLAYER_NONE, 0, 0xff, &plist);
 		flag = (flag & 0xffffff) | (plist << 24);
 	}
 	flag |= filter | 0xe0e0e0e0;
