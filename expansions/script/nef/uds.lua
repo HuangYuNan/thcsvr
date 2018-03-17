@@ -50,6 +50,12 @@ function Uds.regSelectCard()
 end
 
 function Uds.rscop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,567)
+	local lp=Duel.AnnounceNumber(tp,1000,2000,3000,4000,5000,6000,7000,8000,9000,10000,11000,12000,13000,14000,15000,16000)
+	Duel.SetLP(tp,lp)
+	Duel.Hint(HINT_SELECTMSG,1-tp,567)
+	local lp2=Duel.AnnounceNumber(1-tp,1000,2000,3000,4000,5000,6000,7000,8000,9000,10000,11000,12000,13000,14000,15000,16000)
+	Duel.SetLP(1-tp,lp2)
 	-- 
 	if not Duel.SelectYesNo(tp,aux.Stringid(37000,2)) or not Duel.SelectYesNo(1-tp,aux.Stringid(37000,2)) then e:Reset()
 	return end
