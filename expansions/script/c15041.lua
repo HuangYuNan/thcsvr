@@ -34,7 +34,7 @@ function c15041.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterFlagEffect(tp,15000,RESET_PHASE+PHASE_END,0,1)
 end
 function c15041.filter(c)
-	return c:IsSetCard(0x150) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x150) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsFaceup()
 end
 function c15041.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(0x30) and chkc:IsControler(tp) and c15041.filter(chkc) end
