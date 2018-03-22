@@ -5,10 +5,9 @@ function c25022.initial_effect(c)
 	e1:SetDescription(aux.Stringid(25022,0))
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetProperty(EFFECT_FLAG_CHAIN_UNIQUE)
+	e1:SetCountLimit(1,25022)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCondition(c25022.drcon)
-	e1:SetCost(c25022.cost)
 	e1:SetTarget(c25022.drtg)
 	e1:SetOperation(c25022.drop)
 	c:RegisterEffect(e1)
@@ -24,10 +23,6 @@ function c25022.initial_effect(c)
 end
 function c25022.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<2
-end
-function c25022.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,25022)==0 end
-	Duel.RegisterFlagEffect(tp,25022,RESET_PHASE+PHASE_END,0,1)
 end
 function c25022.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
