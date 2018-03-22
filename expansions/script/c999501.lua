@@ -112,7 +112,7 @@ function M.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function M.drfilter(c)
-	return c:IsDestructable() and c:IsSetCard(0x999)
+	return c:IsDestructable() and c:IsSetCard(0x999) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 
 function M.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
