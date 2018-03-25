@@ -61,5 +61,3 @@ function c22066.op2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,g)
 end
---
-

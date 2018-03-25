@@ -34,7 +34,7 @@ function c23510.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c23510.matfilter(c)
-	return not c:IsLinkType(TYPE_PENDULUM) and not c:IsLinkType(TYPE_EFFECT)
+	return not c:IsLinkType(TYPE_PENDULUM) and c:IsLinkType(TYPE_EFFECT)
 end
 function c23510.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_LINK

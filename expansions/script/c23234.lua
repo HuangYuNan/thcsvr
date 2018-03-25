@@ -25,9 +25,9 @@ function c23234.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c23234.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND+LOCATION_MZONE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,0xe,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckAsCost,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckAsCost,tp,0xe,0,1,1,e:GetHandler())
 	Duel.ConfirmCards(1-tp,g)
 	Duel.SendtoDeck(g,nil,1,REASON_COST)
 end
