@@ -1,4 +1,3 @@
- 
 --泰坦妮娅人形✿
 function c20136.initial_effect(c)
 	--special summon
@@ -27,7 +26,7 @@ function c20136.spcon(e,c)
 	if c==nil then return true end
 	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)<=0 then return false end
 	local g=Duel.GetMatchingGroupCount(c20136.spfilter,c:GetControler(),LOCATION_GRAVE,0,nil)
-	return g>4
+	return g>2
 end
 function c20136.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

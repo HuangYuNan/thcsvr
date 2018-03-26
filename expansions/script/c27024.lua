@@ -1,4 +1,3 @@
- 
 --仙符「豪族乱舞」
 function c27024.initial_effect(c)
 	--Activate
@@ -55,16 +54,9 @@ function c27024.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetCode(EFFECT_DISABLE)
+		e2:SetCode(EFFECT_MUST_ATTACK)
 		e2:SetReset(RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetCode(EFFECT_DISABLE_EFFECT)
-		e3:SetReset(RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e3)
 		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,true,false,POS_FACEUP)
 		tc:CompleteProcedure()
 	end

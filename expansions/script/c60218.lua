@@ -7,7 +7,6 @@ function c60218.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
-	--e1:SetCondition(c60218.condition)
 	e1:SetCost(c60218.cost)
 	e1:SetOperation(c60218.operation)
 	c:RegisterEffect(e1)
@@ -29,9 +28,6 @@ function c60218.umbfilter(c)
 	local mt=_G["c" .. code]
 	return mt and mt.DescSetName == 0x229 and not c:IsPublic()
 end
-function c60218.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-end
 function c60218.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
@@ -40,23 +36,29 @@ function c60218.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
+	e2:SetCode(EFFECT_SET_ATTACK)
 	e2:SetTarget(c60218.tg)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetReset(RESET_PHASE+PHASE_END)
-	e2:SetValue(-800)
+	e2:SetValue(c60218.adval1)
 	Duel.RegisterEffect(e2,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	e2:SetCode(EFFECT_SET_DEFENSE)
 	e2:SetTarget(c60218.tg)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetReset(RESET_PHASE+PHASE_END)
-	e2:SetValue(-800)
+	e2:SetValue(c60218.adval2)
 	Duel.RegisterEffect(e2,tp)
 end
 function c60218.tg(e,c)
-	return c:IsFaceup()
+	return c:IsFaceup() and c:IsPreviousLocation(LOCATION_DECK+LOCATION_EXTRA)
+end
+function c60218.adval1(e,c)
+	return c:GetAttack()/2
+end
+function c60218.adval2(e,c)
+	return c:GetDefense()/2
 end
 function c60218.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
