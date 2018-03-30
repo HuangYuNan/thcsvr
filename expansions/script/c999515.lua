@@ -45,7 +45,7 @@ end
 function M.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g = Duel.GetMatchingGroup(M.desfilter, tp, LOCATION_MZONE, LOCATION_MZONE, nil)
 	local ming = g:GetMinGroup(M.lvfilter)
-
+	if not ming then return end
 	local sg = ming:FilterSelect(tp, Card.IsDestructable, 1, 1, nil)
 	if sg:GetCount() < 1 then return end
 
