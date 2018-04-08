@@ -827,6 +827,7 @@ function Nef.AddLinkProcedureWithDesc(c,f,min,max,gf,desc)
 	e1:SetDescription(desc)
 	if max==nil then max=99 end
 	e1:SetCondition(Auxiliary.LinkCondition(f,min,max,gf))
+	e1:SetTarget(Auxiliary.LinkTarget(f,min,max,gf))
 	e1:SetOperation(Auxiliary.LinkOperation(f,min,max,gf))
 	e1:SetValue(SUMMON_TYPE_LINK)
 	c:RegisterEffect(e1)
