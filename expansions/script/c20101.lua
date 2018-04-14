@@ -1,4 +1,3 @@
- 
 --夜棱镜-露娜萨✿普莉兹姆利巴
 function c20101.initial_effect(c)
 	--search
@@ -76,7 +75,7 @@ function c20101.filter(c,e,tp)
 	return c:GetLevel()==3 and c:IsType(TYPE_SPIRIT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c20101.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFlagEffect(tp,20101)==0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 --and Duel.GetFlagEffect(tp,20101)==0
 		and Duel.IsExistingMatchingCard(c20101.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -86,7 +85,7 @@ function c20101.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(c20101.aclimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	--Duel.RegisterEffect(e1,tp)
 end
 function c20101.aclimit(e,re,tp)
 	return re:GetHandler():GetType()==TYPE_SPELL

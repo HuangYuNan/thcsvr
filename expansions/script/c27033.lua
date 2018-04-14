@@ -63,6 +63,6 @@ function c27033.activate(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e2)
 			tc=dg:GetNext()
 		end
-		Duel.Recover(tp,ct*500,REASON_EFFECT)
+		Duel.Recover(tp,ct*1000,REASON_EFFECT)
 	end
 end

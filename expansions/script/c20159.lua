@@ -1,4 +1,3 @@
- 
 --咒符「稻草人形神风」
 function c20159.initial_effect(c)
 	--Activate
@@ -15,8 +14,8 @@ function c20159.cfilter(c)
 end
 function c20159.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gc=Duel.GetMatchingGroupCount(c20159.cfilter,tp,LOCATION_GRAVE,0,nil)
-	if chk==0 then return gc>2 end
-	local g=Duel.SelectMatchingCard(tp,c20159.cfilter,tp,LOCATION_GRAVE,0,3,58,nil)
+	if chk==0 then return gc>1 end
+	local g=Duel.SelectMatchingCard(tp,c20159.cfilter,tp,LOCATION_GRAVE,0,2,58,nil)
 	e:SetLabel(g:GetCount())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end

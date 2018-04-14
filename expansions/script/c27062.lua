@@ -10,9 +10,6 @@ function c27062.initial_effect(c)
 	e1:SetOperation(c27062.activate)
 	c:RegisterEffect(e1)
 end
-function c27062.cfilter(c)
-	return c:IsSetCard(0x240) and c:IsFaceup()
-end
 function c27062.filter(c,e,tp)
 	return bit.band(c:GetReason(),REASON_RELEASE)~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -21,8 +18,7 @@ function c27062.spfilter(c,e,tp,code)
 end
 function c27062.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c27062.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c27062.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingTarget(c27062.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(c27062.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c27062.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)

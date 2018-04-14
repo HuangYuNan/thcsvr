@@ -1,4 +1,3 @@
- 
 --旧秘境史-Old History-
 function c21058.initial_effect(c)
 	--spsummon
@@ -24,7 +23,7 @@ function c21058.initial_effect(c)
 end
 function c21058.filter(c,e,tp,tid)
 	return c:GetTurnID()==tid and bit.band(c:GetReason(),REASON_BATTLE)~=0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x208) and c:IsLevelBelow(4)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelBelow(8)
 end
 function c21058.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()

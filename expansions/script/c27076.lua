@@ -51,7 +51,7 @@ function c27076.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c27076.filter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x912) and not c:IsCode(27076)
+	return c:IsSetCard(0x912) and not c:IsCode(27076)
 end
 function c27076.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c27076.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -89,17 +89,33 @@ function c27076.ptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c27076.pfilter,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(c27076.pfilter,tp,0,LOCATION_MZONE,nil)
 	local tg=g:GetMaxGroup(Card.GetAttack)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tg,1,0,0)
+	local ct=g:GetCount()
+	if ct>2 then ct=2 end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tg,ct,0,0)
 end
 function c27076.pop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c27076.pfilter,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
 		local tg=g:GetMaxGroup(Card.GetAttack)
-		if tg:GetCount()>1 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local sg=tg:Select(tp,1,1,nil)
+		if tg:GetCount()==2 then Duel.SendtoHand(tg,nil,REASON_EFFECT) return end
+		if tg:GetCount()>2 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+			local sg=tg:Select(tp,2,2,nil)
 			Duel.HintSelection(sg)
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		else Duel.SendtoHand(tg,nil,REASON_EFFECT) end
+			Duel.SendtoHand(sg,nil,REASON_EFFECT) return
+		end
+		g:Sub(tg)
+		if g:GetCount()>0 then
+			local tg2=g:GetMaxGroup(Card.GetAttack)
+			if tg2:GetCount()>1 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+				local sg=tg2:Select(tp,1,1,nil)
+				Duel.HintSelection(sg)
+				tg:Merge(sg)
+			else
+				tg:Merge(tg2)
+			end
+		end
+		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	end
 end

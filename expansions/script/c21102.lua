@@ -1,4 +1,3 @@
- 
 --永夜返 -三日月-
 function c21102.initial_effect(c)
 	--Activate
@@ -30,5 +29,15 @@ function c21102.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tg:GetCount()>0 then
 		Duel.SSet(tp,tg)
 		Duel.ConfirmCards(1-tp,tg)
+		local tc=tg:GetFirst()
+		while tc do
+			local e3=Effect.CreateEffect(e:GetHandler())
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+			e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+			tc:RegisterEffect(e3)
+			tc:RegisterFlagEffect(21101,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+			tc=tg:GetNext()
+		end
     end
 end

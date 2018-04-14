@@ -1,4 +1,3 @@
- 
 --冬天的遗忘物
 function c20001.initial_effect(c)
 	--special summon
@@ -74,7 +73,7 @@ function c20001.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c20001.thfilter(c)
-	return c:IsCode(22009) and c:IsAbleToHand()
+	return c:IsSetCard(0x9999) and c:IsAbleToHand()
 end
 function c20001.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c20001.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -7,7 +7,7 @@ function c27052.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	--e1:SetCountLimit(1)
+	e1:SetCountLimit(1,27052)
 	e1:SetCost(c27052.drcost)
 	e1:SetTarget(c27052.drtg)
 	e1:SetOperation(c27052.drop)
@@ -28,9 +28,9 @@ function c27052.cfilter(c)
 	return c:IsSetCard(0x242) and c:IsAbleToRemoveAsCost()
 end
 function c27052.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c27052.cfilter,tp,LOCATION_GRAVE,0,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c27052.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c27052.cfilter,tp,LOCATION_GRAVE,0,2,2,nil)
+	local g=Duel.SelectMatchingCard(tp,c27052.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c27052.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

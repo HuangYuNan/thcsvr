@@ -60,7 +60,7 @@ function c27093.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(ftarget)
 		-- e1:SetLabelObject(tg)
 		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
+		--Duel.RegisterEffect(e1,tp)
 	end
 end
 -- function c27093.ftarget(e,c)

@@ -1,4 +1,3 @@
- 
 --✿骚灵三姐妹✿
 function c20112.initial_effect(c)
 	--fusion material
@@ -19,11 +18,18 @@ function c20112.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCountLimit(1)
+	if Duel.IsExistingMatchingCard(c20112.ctfilter,c:GetControler(),LOCATION_SZONE,0,1,nil) then
+		e2:SetCountLimit(2)
+	else
+		e2:SetCountLimit(1)
+	end
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(c20112.target)
 	e2:SetOperation(c20112.operation)
 	c:RegisterEffect(e2)
+end
+function c20112.ctfilter(c)
+	return c:GetOriginalCode()==20123 and c:IsFaceup()
 end
 function c20112.spfilter(c,code)
 	return c:IsFaceup() and c:GetCode()==code and c:IsAbleToRemoveAsCost() 

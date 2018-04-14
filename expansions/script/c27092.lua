@@ -49,7 +49,7 @@ function c27092.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
-		sg:GetFirst():RegisterEffect(e1,true)
+		--sg:GetFirst():RegisterEffect(e1,true)
 		sg:GetFirst():CompleteProcedure()
 	end
 end

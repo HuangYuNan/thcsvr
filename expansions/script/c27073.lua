@@ -92,17 +92,33 @@ function c27073.ptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c27073.pfilter,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(c27073.pfilter,tp,0,LOCATION_MZONE,nil)
 	local tg=g:GetMinGroup(Card.GetAttack)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
+	local ct=g:GetCount()
+	if ct>2 then ct=2 end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,ct,0,0)
 end
 function c27073.pop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c27073.pfilter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(c27076.pfilter,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
-		local tg=g:GetMinGroup(Card.GetAttack)
-		if tg:GetCount()>1 then
+		local tg=g:GetMaxGroup(Card.GetAttack)
+		if tg:GetCount()==2 then Duel.Destroy(tg,REASON_EFFECT) return end
+		if tg:GetCount()>2 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local sg=tg:Select(tp,1,1,nil)
+			local sg=tg:Select(tp,2,2,nil)
 			Duel.HintSelection(sg)
-			Duel.Destroy(sg,REASON_EFFECT)
-		else Duel.Destroy(tg,REASON_EFFECT) end
+			Duel.Destroy(sg,REASON_EFFECT) return
+		end
+		g:Sub(tg)
+		if g:GetCount()>0 then
+			local tg2=g:GetMaxGroup(Card.GetAttack)
+			if tg2:GetCount()>1 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+				local sg=tg2:Select(tp,1,1,nil)
+				Duel.HintSelection(sg)
+				tg:Merge(sg)
+			else
+				tg:Merge(tg2)
+			end
+		end
+		Duel.Destroy(tg,REASON_EFFECT)
 	end
 end

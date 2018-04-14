@@ -1,4 +1,3 @@
- 
 --骚符「幽灵絮语」
 function c20114.initial_effect(c)
 	--Activate

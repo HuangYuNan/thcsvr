@@ -1,4 +1,3 @@
- 
 --幻兔「并行交差」
 function c21053.initial_effect(c)
 	--Activate
@@ -53,13 +52,6 @@ function c21053.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetLabelObject(e)
 	e1:SetTarget(c21053.sumlimit)
 	Duel.RegisterEffect(e1,tp)
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-	e2:SetCode(EFFECT_CANNOT_SUMMON)
-	e2:SetReset(RESET_PHASE+PHASE_END)
-	e2:SetTargetRange(1,0)
-	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)

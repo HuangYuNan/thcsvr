@@ -1,4 +1,3 @@
- 
 --幽曲「埋骨于弘川」
 function c20092.initial_effect(c)
 	--Activate
@@ -83,7 +82,7 @@ function c20092.filter(c)
 	return c:IsSetCard(0x317) or c:IsSetCard(0x684)
 end
 function c20092.tgfilter(c)
-	return c:IsSetCard(0x684) and c:IsAbleToGrave()
+	return c:IsType(TYPE_SPIRIT) and c:IsAbleToGrave()
 end
 function c20092.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(c20092.filter,tp,LOCATION_GRAVE,0,nil)

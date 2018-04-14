@@ -32,7 +32,7 @@ function c21085.initial_effect(c)
 	Duel.AddCustomActivityCounter(21085,ACTIVITY_SPSUMMON,c21085.counterfilter)
 end
 function c21085.counterfilter(c)
-	return c:IsAttribute(ATTRIBUTE_FIRE)
+	return not c:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function c21085.cfilter(c)
 	return c:IsType(TYPE_FIELD)
@@ -60,7 +60,7 @@ function c21085.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function c21085.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsAttribute(ATTRIBUTE_FIRE)
+	return c:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function c21085.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

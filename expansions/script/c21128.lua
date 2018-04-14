@@ -1,4 +1,3 @@
- 
 --天丸「壶中的天地」
 function c21128.initial_effect(c)
 	--Activate
@@ -35,7 +34,7 @@ function c21128.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c21128.sfilter(c)
-	return c:IsSetCard(0x208) and c:IsLevelAbove(3)
+	return c:IsSetCard(0x208)
 end
 function c21128.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)

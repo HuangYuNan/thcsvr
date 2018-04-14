@@ -15,7 +15,7 @@ function c27089.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c27089.rifilter(c)
-	return c:GetLevel()==5 and c:IsSetCard(0x208) and c:IsRace(RACE_ZOMBIE) and bit.band(c:GetType(),0x81)==0x81
+	return c:GetLevel()>=5 and c:IsSetCard(0x208) and c:IsRace(RACE_ZOMBIE) and bit.band(c:GetType(),0x81)==0x81
 end
 function c27089.gfilter(c)
 	return c:IsType(TYPE_RITUAL) and c:IsSetCard(0x208)

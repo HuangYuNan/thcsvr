@@ -1,4 +1,3 @@
- 
 --文乐「人形思想」
 function c20156.initial_effect(c)
 	--Activate

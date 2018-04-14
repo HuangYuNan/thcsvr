@@ -25,12 +25,13 @@ function c21145.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c21145.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1+e:GetLabel(),1-tp,LOCATION_HAND)
 end
 function c21145.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
 	if g:GetCount()==0 then return end
-	local rg=g:RandomSelect(tp,1)
+	local ct=e:GetLabel()
+	local rg=g:RandomSelect(tp,1+ct)
 	if Duel.Remove(rg,POS_FACEDOWN,REASON_EFFECT)~=0 then
 		rg:KeepAlive()
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -42,7 +43,7 @@ function c21145.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		e1:SetOperation(c21145.retop)
 		Duel.RegisterEffect(e1,tp)
-		if e:GetLabel()==1 then
+		if ct==1 then
 			local g=Duel.SelectMatchingCard(tp,Card.IsCanTurnSet,tp,0,LOCATION_MZONE,1,1,nil)
 			if g:GetCount()>0 then
 				Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)

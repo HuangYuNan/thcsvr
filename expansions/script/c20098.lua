@@ -1,4 +1,3 @@
- 
 --反魂蝶 -伍分咲-
 function c20098.initial_effect(c)
 	--Activate
@@ -18,14 +17,17 @@ end
 function c20098.xfilter(c)
 	return c:IsFaceup() and c:IsCode(20086) and c:GetCounter(0x128b)>4
 end
+function c20098.filter(c)
+	return not (c:IsSetCard(0x338) and c:IsFaceup())
+end
 function c20098.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c20098.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 	and Duel.IsExistingMatchingCard(c20098.xfilter,tp,LOCATION_SZONE,0,1,nil) end
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local sg=Duel.GetMatchingGroup(c20098.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,sg,sg:GetCount(),0,0)
 end
 function c20098.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local sg=Duel.GetMatchingGroup(c20098.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if Duel.SendtoGrave(sg,REASON_EFFECT) then
 		Duel.SetLP(1-tp,Duel.GetLP(1-tp)/2) 
 	end

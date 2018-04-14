@@ -1,4 +1,3 @@
- 
 --永夜返 -初月-
 function c21101.initial_effect(c)
 	--Activate

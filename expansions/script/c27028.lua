@@ -1,4 +1,3 @@
- 
 --通灵「铜铃芳香」
 function c27028.initial_effect(c)
 	--Activate
@@ -13,9 +12,9 @@ function c27028.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_RELEASE)
-	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(c27028.condition)
+	e2:SetCost(c27028.cost)
 	e2:SetTarget(c27028.target)
 	e2:SetOperation(c27028.operation)
 	c:RegisterEffect(e2)
@@ -31,6 +30,10 @@ function c27028.cfilter(c,tp)
 end
 function c27028.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re and eg:IsExists(c27028.cfilter,1,nil,tp)
+end
+function c27028.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckLPCost(tp,500) end
+	Duel.PayLPCost(tp,500)
 end
 function c27028.filter(c,e,tp)
 	return c:IsSetCard(0x242) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -63,5 +66,12 @@ function c27028.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+0x1fe0000)
 		e3:SetValue(500)
 		tc:RegisterEffect(e3)
+		local e5=Effect.CreateEffect(e:GetHandler())
+		e5:SetType(EFFECT_TYPE_SINGLE)
+		e5:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+		e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e5:SetReset(RESET_EVENT+0x1fe0000)
+		e5:SetValue(1)
+		tc:RegisterEffect(e5)
 	end
 end

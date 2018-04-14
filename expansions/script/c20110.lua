@@ -1,4 +1,3 @@
- 
 --夜棱镜✿虹川三姐妹
 function c20110.initial_effect(c)
 	--tribute check
@@ -35,10 +34,17 @@ function c20110.initial_effect(c)
 	e5:SetCategory(CATEGORY_DESTROY)
 	e5:SetDescription(aux.Stringid(20110,0))
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCountLimit(1)
+	if Duel.IsExistingMatchingCard(c20110.ctfilter,c:GetControler(),LOCATION_SZONE,0,1,nil) then
+		e5:SetCountLimit(2)
+	else
+		e5:SetCountLimit(1)
+	end
 	e5:SetTarget(c20110.target)
 	e5:SetOperation(c20110.operation)
 	c:RegisterEffect(e5)
+end
+function c20110.ctfilter(c)
+	return c:GetOriginalCode()==20123 and c:IsFaceup()
 end
 function c20110.valcheck(e,c)
 	local g=c:GetMaterial()
@@ -109,16 +115,13 @@ function c20110.retop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end
-function c20110.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
-end
 function c20110.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c20110.filter,tp,0,LOCATION_ONFIELD,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,0,LOCATION_ONFIELD,1,nil)
 		and e:GetHandler():GetFlagEffect(20110)>0 end
-	local sg=Duel.GetMatchingGroup(c20110.filter,tp,0,LOCATION_ONFIELD,nil)
+	local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
 end
 function c20110.operation(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(c20110.filter,tp,0,LOCATION_ONFIELD,nil)
+	local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)
 	Duel.Destroy(sg,REASON_EFFECT)
 end

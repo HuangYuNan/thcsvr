@@ -1,4 +1,3 @@
- 
 --博丽灵梦
 function c10001.initial_effect(c)
 	--special summon
@@ -33,5 +32,5 @@ function c10001.atkcon(e)
 		and (Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()) and Duel.GetAttackTarget()~=nil
 end
 function c10001.atkval(e,c)
-	return e:GetHandler():GetBattleTarget():GetLevel()*100
+	return e:GetHandler():GetBattleTarget():GetLevel()*200
 end

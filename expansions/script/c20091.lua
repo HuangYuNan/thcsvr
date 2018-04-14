@@ -1,4 +1,3 @@
- 
 --亡舞「生者必灭之理」
 function c20091.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -35,14 +34,10 @@ end
 function c20091.xfilter(c)
 	return c:IsFaceup() and c:IsCode(20086)
 end
-function c20091.cfilter(c)
-	return c:IsSetCard(0x338)
-end
 function c20091.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tptpttpp=eg:GetFirst():GetControler()
 	if chk==0 then return tptpttpp~=tp
-		and Duel.IsExistingMatchingCard(c20091.xfilter,tp,LOCATION_SZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(c20091.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c20091.xfilter,tp,LOCATION_SZONE,0,1,nil) end
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,eg,1,0,0)
 end

@@ -1,4 +1,3 @@
- 
 --知识与历史的半兽 上白泽慧音
 function c21059.initial_effect(c)
 	--xyz summon
@@ -11,7 +10,6 @@ function c21059.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
 	e1:SetCost(c21059.tdcost)
 	e1:SetTarget(c21059.tdtg)
 	e1:SetOperation(c21059.tdop)

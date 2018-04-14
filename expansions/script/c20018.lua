@@ -1,4 +1,3 @@
- 
 --露娜萨·普莉兹姆利巴
 function c20018.initial_effect(c)
 	--special summon
@@ -111,19 +110,5 @@ function c20018.op2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c20018.filter2,tp,LOCATION_DECK,0,2,2,nil,e,tp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	local tc=g:GetFirst()
-	while tc do
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
-		e1:SetValue(c20018.synlimit)
-		tc:RegisterEffect(e1,true)
-		tc=g:GetNext()
-	end
 	Duel.Recover(1-tp,600,REASON_EFFECT)
-end
-function c20018.synlimit(e,c)
-	if not c then return false end
-	return not c:IsSetCard(0x208)
 end

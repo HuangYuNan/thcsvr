@@ -46,13 +46,6 @@ function c20080.initial_effect(c)
 	e5:SetTarget(c20080.addct)
 	e5:SetOperation(c20080.addc)
 	c:RegisterEffect(e5)
-	--cannot be xyzmat
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e6:SetValue(1)
-	c:RegisterEffect(e6)
 	--cannot release
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)

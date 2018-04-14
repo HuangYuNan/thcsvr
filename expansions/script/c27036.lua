@@ -1,4 +1,3 @@
- 
 --毒爪「剧毒夷灭」
 function c27036.initial_effect(c)
 	--Activate
@@ -32,8 +31,8 @@ end
 function c27036.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) then return end
-	if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>=2 and Duel.IsChainDisablable(0) and Duel.SelectYesNo(1-tp,aux.Stringid(27036,0)) then
-		Duel.DiscardHand(1-tp,aux.TRUE,2,2,REASON_EFFECT+REASON_DISCARD,nil)
+	if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>=3 and Duel.IsChainDisablable(0) and Duel.SelectYesNo(1-tp,aux.Stringid(27036,0)) then
+		Duel.DiscardHand(1-tp,aux.TRUE,3,3,REASON_EFFECT+REASON_DISCARD,nil)
 	else
 		Duel.Destroy(tc,REASON_EFFECT)
 		Duel.Damage(1-tp,800,REASON_EFFECT)

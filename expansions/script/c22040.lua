@@ -21,6 +21,7 @@ function c22040.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e2:SetCondition(c22040.condition)
+	e2:SetCost(c22040.cost)
 	e2:SetTarget(c22040.target)
 	e2:SetOperation(c22040.operation)
 	c:RegisterEffect(e2)
@@ -33,6 +34,7 @@ function c22040.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e3:SetCondition(c22040.condition)
+	e3:SetCost(c22040.cost)
 	e3:SetTarget(c22040.thtg)
 	e3:SetOperation(c22040.thop)
 	c:RegisterEffect(e3)
@@ -70,9 +72,12 @@ function c22040.cccccccfilter(c)
 end
 function c22040.condition(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
-	local g=Duel.GetMatchingGroup(c22040.cccccccfilter,tp,LOCATION_MZONE,0,nil)
 	local g2=Duel.GetMatchingGroup(c22040.cfilter,tp,LOCATION_GRAVE,0,nil)
-	return g:GetCount()==0 and g2:GetCount()==0
+	return g2:GetCount()==0
+end
+function c22040.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	Duel.PayLPCost(tp,1000)
 end
 function c22040.filter(c,e,sp)
 	return c:IsCanBeSpecialSummoned(e,0,sp,false,false)

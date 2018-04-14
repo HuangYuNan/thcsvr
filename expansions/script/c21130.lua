@@ -1,4 +1,3 @@
- 
 --狂符「幻视调律」
 function c21130.initial_effect(c)
 	--Activate
@@ -50,5 +49,11 @@ function c21130.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetValue(TYPE_TUNER)
 		tc:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_UPDATE_ATTACK)
+		e2:SetReset(RESET_EVENT+0x1fe0000)
+		e2:SetValue(800)
+		tc:RegisterEffect(e2)
 	end
 end

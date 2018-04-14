@@ -1,4 +1,3 @@
- 
 --梦与传统的巫女 博丽灵梦
 function c11001.initial_effect(c)
 	--indes
@@ -22,8 +21,8 @@ function c11001.indes(e,c)
 	return c:IsSetCard(0x208) and c:GetAttack()>=2400
 end
 function c11001.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
+	if chk==0 then return Duel.CheckLPCost(tp,500) end
+	Duel.PayLPCost(tp,500)
 end
 function c11001.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()

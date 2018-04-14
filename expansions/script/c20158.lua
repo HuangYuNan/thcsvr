@@ -1,4 +1,3 @@
- 
 --魔操「回归虚无」
 function c20158.initial_effect(c)
 	--Activate
@@ -40,6 +39,6 @@ function c20158.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT,LOCATION_REMOVED)
-		Duel.Damage(1-tp,gc*300+1000,REASON_EFFECT)
+		Duel.Damage(1-tp,gc*400+2000,REASON_EFFECT)
 	end
 end

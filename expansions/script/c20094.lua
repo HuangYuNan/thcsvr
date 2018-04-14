@@ -1,4 +1,3 @@
- 
 --幽雅「死亡的诱蛾灯」
 function c20094.initial_effect(c)
 	--Activate
@@ -14,7 +13,7 @@ function c20094.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetRange(LOCATION_SZONE)
+	e2:SetRange(LOCATION_SZONE+LOCATION_GRAVE)
 	e2:SetOperation(c20094.operation)
 	c:RegisterEffect(e2)
 end
@@ -35,6 +34,6 @@ function c20094.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c20094.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not eg or eg:FilterCount(Card.IsSetCard,nil,0x684)==0 then return end
-	local ct=eg:FilterCount(Card.IsSetCard,nil,0x684)*400+300
+	local ct=eg:FilterCount(Card.IsSetCard,nil,0x684)*400
 	Duel.Damage(1-tp,ct,REASON_EFFECT)
 end
