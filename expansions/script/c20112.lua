@@ -18,18 +18,10 @@ function c20112.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	if Duel.IsExistingMatchingCard(c20112.ctfilter,c:GetControler(),LOCATION_SZONE,0,1,nil) then
-		e2:SetCountLimit(2)
-	else
-		e2:SetCountLimit(1)
-	end
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(c20112.target)
 	e2:SetOperation(c20112.operation)
 	c:RegisterEffect(e2)
-end
-function c20112.ctfilter(c)
-	return c:GetOriginalCode()==20123 and c:IsFaceup()
 end
 function c20112.spfilter(c,code)
 	return c:IsFaceup() and c:GetCode()==code and c:IsAbleToRemoveAsCost() 
@@ -53,13 +45,18 @@ function c20112.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g1:Merge(g3)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
+function c20112.ctfilter(c)
+	return c:GetOriginalCode()==20123 and c:IsFaceup()
+end
 function c20112.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPIRIT) and c:IsAbleToHand()
 end
 function c20112.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp)
 		and c20112.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c20112.filter,tp,LOCATION_REMOVED,0,1,nil) end
+		local ct=0
+		if Duel.IsExistingMatchingCard(c20112.ctfilter,tp,LOCATION_SZONE,0,1,nil) then ct=1 end
+	if chk==0 then return e:GetHandler():GetFlagEffect(20123)<=ct and Duel.IsExistingTarget(c20112.filter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c20112.filter,tp,LOCATION_REMOVED,0,1,1,nil)
 	e:GetHandler():RegisterFlagEffect(20112,RESET_EVENT+0xff0000,0,0)
@@ -72,6 +69,7 @@ function c20112.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetCategory(CATEGORY_TOHAND)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 	end
+	e:GetHandler():RegisterFlagEffect(20123,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c20112.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()

@@ -34,11 +34,6 @@ function c20110.initial_effect(c)
 	e5:SetCategory(CATEGORY_DESTROY)
 	e5:SetDescription(aux.Stringid(20110,0))
 	e5:SetRange(LOCATION_MZONE)
-	if Duel.IsExistingMatchingCard(c20110.ctfilter,c:GetControler(),LOCATION_SZONE,0,1,nil) then
-		e5:SetCountLimit(2)
-	else
-		e5:SetCountLimit(1)
-	end
 	e5:SetTarget(c20110.target)
 	e5:SetOperation(c20110.operation)
 	c:RegisterEffect(e5)
@@ -116,10 +111,13 @@ function c20110.retop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c20110.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,0,LOCATION_ONFIELD,1,nil)
+	local ct=0
+	if Duel.IsExistingMatchingCard(c20110.ctfilter,tp,LOCATION_SZONE,0,1,nil) then ct=1 end
+	if chk==0 then return e:GetHandler():GetFlagEffect(20123)<=ct and Duel.IsExistingMatchingCard(Card.IsDestructable,tp,0,LOCATION_ONFIELD,1,nil)
 		and e:GetHandler():GetFlagEffect(20110)>0 end
 	local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
+	e:GetHandler():RegisterFlagEffect(20123,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c20110.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)

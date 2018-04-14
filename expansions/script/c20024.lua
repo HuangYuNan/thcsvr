@@ -10,11 +10,6 @@ function c20024.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	if Duel.IsExistingMatchingCard(c20024.ctfilter,c:GetControler(),LOCATION_SZONE,0,1,nil) then
-		e2:SetCountLimit(2,20024+EFFECT_COUNT_CODE_SINGLE)
-	else
-		e2:SetCountLimit(1,20024+EFFECT_COUNT_CODE_SINGLE)
-	end
 	e1:SetCondition(c20024.condition)
 	e1:SetCost(c20024.cost)
 	e1:SetTarget(c20024.target)
@@ -27,11 +22,6 @@ function c20024.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	if Duel.IsExistingMatchingCard(c20024.ctfilter,c:GetControler(),LOCATION_SZONE,0,1,nil) then
-		e2:SetCountLimit(2,20024+EFFECT_COUNT_CODE_SINGLE)
-	else
-		e2:SetCountLimit(1,20024+EFFECT_COUNT_CODE_SINGLE)
-	end
 	e2:SetCondition(c20024.condition2)
 	e2:SetCost(c20024.cost)
 	e2:SetTarget(c20024.target2)
@@ -62,11 +52,14 @@ function c20024.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else
 		ctb=2
 	end
+		local ct=0
+		if Duel.IsExistingMatchingCard(c20024.ctfilter,tp,LOCATION_SZONE,0,1,nil) then ct=1 end
 	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:IsAbleToRemove() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
+	if chk==0 then return e:GetHandler():GetFlagEffect(20123)<=ct and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,ctb,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
+	e:GetHandler():RegisterFlagEffect(20123,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c20024.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
@@ -83,11 +76,14 @@ function c20024.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else
 		ctb=1
 	end
+		local ct=0
+		if Duel.IsExistingMatchingCard(c20024.ctfilter,tp,LOCATION_SZONE,0,1,nil) then ct=1 end
 	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:IsAbleToRemove() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
+	if chk==0 then return e:GetHandler():GetFlagEffect(20123)<=ct and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,4*ctb,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
+	e:GetHandler():RegisterFlagEffect(20123,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c20024.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
