@@ -23,7 +23,7 @@ function c22075.cfilter1_1(c)
 	return c:IsSetCard(0x814) and c:IsType(TYPE_MONSTER)
 end
 function c22075.cfilter1_2(c)
-	return c:IsSetCard(0x813) and c:IsFaceup()
+	return (c:IsSetCard(0x813) or c:GetOriginalCode()==(22100) or c:GetOriginalCode()==(22117)) and c:IsFaceup()
 end
 function c22075.con1(e,c)
 	if c==nil then return true end
