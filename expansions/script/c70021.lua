@@ -1,4 +1,3 @@
- 
 --GreenHeart
 function c70021.initial_effect(c)
 	--xyz summon

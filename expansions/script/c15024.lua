@@ -1,4 +1,3 @@
- 
 --死之少女
 function c15024.initial_effect(c)
 	c:EnableReviveLimit()
