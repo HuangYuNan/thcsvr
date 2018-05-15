@@ -36,8 +36,11 @@ function c10226.initial_effect(c)
 	e3:SetCondition(c10226.cons)
 	e3:SetValue(c10226.atkval)
 	c:RegisterEffect(e3)
---
 end
+c10226.hana_mat={
+aux.FilterBoolFunction(Card.IsFusionSetCard,0x100),
+aux.FilterBoolFunction(Card.IsFusionCode,10260),
+}
 function c10226.filter(c)
 	return c:IsSetCard(0x279) or c:IsSetCard(0x1012) and c:IsAbleToHand()
 end

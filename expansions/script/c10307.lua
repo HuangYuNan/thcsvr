@@ -38,7 +38,7 @@ function c10307.con4(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c10307.sfilter(c)
-	return  c:IsSetCard(0x2024) and c:IsAbleToHand()
+	return  c:IsSetCard(0x2023) and c:IsAbleToHand()
 end
 function c10307.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10307.sfilter,tp,LOCATION_DECK,0,1,nil) end

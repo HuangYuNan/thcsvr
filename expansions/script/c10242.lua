@@ -40,6 +40,10 @@ function c10242.initial_effect(c)
 	e4:SetValue(c10242.atkval)
 	c:RegisterEffect(e4) 
 end
+c10242.hana_mat={
+aux.FilterBoolFunction(Card.IsFusionSetCard,0x100),
+aux.FilterBoolFunction(Card.IsFusionCode,10260),
+}
 function c10242.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end

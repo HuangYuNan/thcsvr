@@ -94,7 +94,7 @@ function c10256.tfilter(c)
 	return c:GetLevel()>0 and c:GetLevel()<3 and c:IsFaceup()
 end
 function c10256.tg4(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	local sg=Duel.GetMatchingGroup(c10256.tfilter,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
 end
