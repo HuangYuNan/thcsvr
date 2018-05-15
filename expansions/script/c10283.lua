@@ -11,7 +11,7 @@ function c10283.initial_effect(c)
 	c:RegisterEffect(e1)
 	--csfe
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_ONFIELD)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -29,7 +29,7 @@ function c10283.initial_effect(c)
 	e3:SetValue(c10283.val)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
-	e4:SetCode(EFFECT_UPDATE_ATTACK)
+	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
 end
 function c10283.splimit(e,c,sump,sumtype,sumpos,targetp,se)
@@ -55,12 +55,8 @@ end
 function c10283.disable(e)
 	return e:GetHandler():GetCounter(0x1038)>0
 end
-function c10283.dfilter(c,g)
-	return g:IsContains(c)
-end
 function c10283.con(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetHandler():GetCardTarget()
-	return Duel.IsExistingMatchingCard(c10283.dfilter,tp,0,LOCATION_MZONE,1,nil,g)
+	return e:GetHandler():GetCardTarget():FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0
 end
 function c10283.val(e,c)
 	return c:GetLevel()*100
