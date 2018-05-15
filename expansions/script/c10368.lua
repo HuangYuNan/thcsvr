@@ -7,7 +7,7 @@ function c10368.initial_effect(c)
 	c:RegisterEffect(e5)
 --
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCondition(c10368.sumcon)
