@@ -59,8 +59,9 @@ function c10226.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c10226.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and Duel.CheckLPCost(tp,500) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD)
+	Duel.PayLPCost(tp,500)
 end
 function c10226.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -47,7 +47,7 @@ function c10207.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c10207.cfilter2(c)
-	return c:IsSetCard(0x10a) and c:IsSSetable()
+	return c:IsSetCard(0x1011) and c:IsSSetable()
 end
 function c10207.con2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
