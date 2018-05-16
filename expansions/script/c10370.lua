@@ -65,8 +65,8 @@ end
 function c10370.val(e,c)
 	local ac=e:GetHandler()
 	local tc=e:GetLabelObject()
-	local num1=(ac:GetLevel()+ac:GetRank()+ac:GetLink())*200
-	local num2=(tc:GetLevel()+tc:GetRank()+tc:GetLink())*200
+	local num1=(ac:GetLevel()+ac:GetRank()+ac:GetLink())*300
+	local num2=(tc:GetLevel()+tc:GetRank()+tc:GetLink())*300
 	return num1+num2
 end
 function c10370.damval(e,re,val,r,rp,rc)
