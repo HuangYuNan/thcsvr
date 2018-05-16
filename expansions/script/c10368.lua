@@ -5,7 +5,7 @@ function c10368.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_ACTIVATE)
 	e5:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e5)
---
+	--
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetRange(LOCATION_SZONE)
@@ -38,11 +38,11 @@ function c10368.initial_effect(c)
 	e4:SetOperation(c10368.op)
 	c:RegisterEffect(e4)
 end
-function c10368.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x200)
+function c10368.cfilter(c)
+	return c:IsSetCard(0x200)
 end
 function c10368.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c10368.filter,1,nil)
+	return eg:IsExists(c10368.cfilter,1,nil)
 end
 function c10368.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(c10368.efun)
