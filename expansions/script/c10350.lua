@@ -1,7 +1,7 @@
 --奇妙的魔女✿雾雨魔理沙
 function c10350.initial_effect(c)
 --
-	aux.AddXyzProcedure(c,nil,7,3)
+	aux.AddXyzProcedure(c,nil,7,2)
 	c:EnableReviveLimit()
 	--handes
 	local e1=Effect.CreateEffect(c)

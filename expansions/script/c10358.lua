@@ -41,8 +41,7 @@ function c10358.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10358.op1(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,e:GetHandler())
-	Duel.Destroy(sg,REASON_EFFECT)
-	local g=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE+LOCATION_REMOVED)
+	local g=Duel.Destroy(sg,REASON_EFFECT)
 	if Duel.Damage(1-tp,g:GetCount()*200,REASON_EFFECT)>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
