@@ -43,7 +43,7 @@ function c10322.sfilter(c)
 	return  c:IsSetCard(0x2024) and c:IsAbleToHand()
 end
 function c10322.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c10307.sfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c10322.sfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c10322.op1(e,tp,eg,ep,ev,re,r,rp)
@@ -86,9 +86,6 @@ end
 function c10322.con4(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
-end
-function c10322.sfilter(c)
-	return  c:IsSetCard(0x2024) and c:IsAbleToHand()
 end
 function c10322.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10322.sfilter,tp,LOCATION_GRAVE,0,1,nil) end

@@ -107,7 +107,7 @@ end
 function c10335.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local g=Duel.SelectMatchingCard(tp,c10335.xfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
+	if g:GetCount()>0 and e:GetHandler():IsRelateToEffect(e) then
 		Duel.Overlay(e:GetHandler(),g)
 	end
 end
