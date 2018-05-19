@@ -26,6 +26,7 @@ function c10304.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetCountLimit(1)
 	e4:SetCost(c10304.cost1)
 	e4:SetTarget(c10304.thtg)
 	e4:SetOperation(c10304.thop)
@@ -39,9 +40,9 @@ function c10304.cfilter(c)
 end
 function c10304.cos(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10350.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,c10350.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST)
+	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function c10304.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
@@ -54,14 +55,14 @@ function c10304.op1(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-function c10304.cfilter(c)
+function c10304.cfilter2(c)
 	return c:IsAbleToGraveAsCost()
 end
 function c10304.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c10304.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c10304.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST)
+	if chk==0 then return Duel.IsExistingMatchingCard(c10304.cfilter2,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local g=Duel.SelectMatchingCard(tp,c10304.cfilter2,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function c10304.tgfilter(c)
 	return (c:IsSetCard(0x2024) or c:IsSetCard(0x2022)) and c:IsAbleToHand()

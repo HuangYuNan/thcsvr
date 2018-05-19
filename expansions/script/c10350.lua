@@ -72,7 +72,8 @@ function c10350.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c10350.tfilter1(c,mls)
-	return (c:IsType(TYPE_MONSTER) and c:IsAbleToChangeControler() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0) or c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetEquipTarget()~=mls
+	return (c:IsType(TYPE_MONSTER) and c:IsAbleToChangeControler() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0) or c:IsType(TYPE_SPELL+TYPE_TRAP)
+		and (not c:GetEquipTarget() or c:GetEquipTarget()~=mls)
 end
 function c10350.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsAbleToChangeControler() end
@@ -107,6 +108,10 @@ function c10350.operation1(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetRange(LOCATION_SZONE)
 				e2:SetReset(RESET_EVENT+0x1fe0000)
 				tc:RegisterEffect(e2)
+			end
+			local ug=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3,true)
+			if ug:RandomSelect(tp,1,true):IsContains(ug:GetFirst()) then
+				Duel.Hint(11,0,aux.Stringid(10350,4))
 			end
 		else Duel.SendtoGrave(tc,REASON_EFFECT) end
 	end

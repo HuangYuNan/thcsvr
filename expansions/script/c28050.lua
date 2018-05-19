@@ -46,7 +46,7 @@ function c28050.op1(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 then
 		c:CompleteProcedure()
-		local ug=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,2,true)
+		local ug=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,4,true)
 		if ug:RandomSelect(tp,1,true):IsContains(ug:GetFirst()) then
 			Duel.Hint(11,0,aux.Stringid(28050,4))
 		end

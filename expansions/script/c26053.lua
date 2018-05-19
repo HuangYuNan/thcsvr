@@ -1,4 +1,3 @@
- 
 --命莲-搜符「金子探测器」
 function c26053.initial_effect(c)
 	--Activate

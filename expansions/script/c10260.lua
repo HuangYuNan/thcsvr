@@ -135,6 +135,10 @@ function c10260.op4(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
 		end
 		tc:CompleteProcedure()
+		local ug=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3,true)
+		if ug:RandomSelect(tp,1,true):IsContains(ug:GetFirst()) then
+			Duel.Hint(11,0,aux.Stringid(10260,4))
+		end
 	end
 end
 --

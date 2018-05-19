@@ -1,4 +1,3 @@
- 
 --大合葬「灵车大协奏曲怪」
 function c20120.initial_effect(c)
 	--Activate
@@ -28,6 +27,10 @@ function c20120.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,20120)>8
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE,0x1c,1,e:GetHandler()) end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,0x1c,nil)
+	local ug=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3,true)
+	if ug:RandomSelect(tp,1,true):IsContains(ug:GetFirst()) then
+		Duel.Hint(11,0,aux.Stringid(20120,4))
+	end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,1-tp,g:GetCount()*400)
 end

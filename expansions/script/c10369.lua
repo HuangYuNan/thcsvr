@@ -24,7 +24,7 @@ function c10369.con1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c10369.filter1(c,e,tp,ac)
-	local atk=ac:GetTextAttack()
+	local atk=ac:GetAttack()
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x200) and c:GetAttack()~=atk
 end
 function c10369.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -47,7 +47,7 @@ function c10369.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ac=e:GetLabelObject()
 	if not ac:IsRelateToBattle() then return end
-	if Duel.SendtoHand(ac,nil,2,REASON_EFFECT)>0 then
+	if Duel.SendtoHand(ac,nil,REASON_EFFECT)>0 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tg=Duel.SelectMatchingCard(tp,c10369.filter1,tp,LOCATION_DECK,0,1,1,nil,e,tp,ac)

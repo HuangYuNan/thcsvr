@@ -65,15 +65,14 @@ function c10240.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local cg=Duel.GetDecktopGroup(1-tp,7)
 	if cg:GetCount()==7 then Duel.ConfirmCards(tp,cg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_DECK,1,4,nil)
+	local g=cg:Select(tp,4,4,nil)
 	if g:GetCount()>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
---
 function c10240.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
+	if chk==0 then return Duel.CheckLPCost(tp,700) end
+	Duel.PayLPCost(tp,700)
 end
 function c10240.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1,9 +1,9 @@
 --永远的巫女✿博丽灵梦
 function c10250.initial_effect(c)
---
+	--
 	c:EnableReviveLimit()
 	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x208),aux.NonTuner(Card.IsSetCard,0x208),1)
---
+	--
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(10250,0))
 	e1:SetCategory(CATEGORY_RECOVER)
@@ -14,7 +14,7 @@ function c10250.initial_effect(c)
 	e1:SetTarget(c10250.tg1)
 	e1:SetOperation(c10250.op1)
 	c:RegisterEffect(e1)
---
+	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -23,7 +23,7 @@ function c10250.initial_effect(c)
 	e2:SetCondition(c10250.con2)
 	e2:SetValue(c10250.val2)
 	c:RegisterEffect(e2)
---
+	--
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(10250,1))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -37,7 +37,6 @@ function c10250.initial_effect(c)
 	e3:SetTarget(c10250.tg3)
 	e3:SetOperation(c10250.op3)
 	c:RegisterEffect(e3)
---
 end
 function c10250.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -88,6 +87,10 @@ function c10250.op3(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
+		local ug=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3,true)
+		if ug:RandomSelect(tp,1,true):IsContains(ug:GetFirst()) then
+			Duel.Hint(11,0,aux.Stringid(10250,4))
+		end
 	end
 end
 

@@ -64,7 +64,7 @@ end
 
 function M.value(e,c)
 	local tp = e:GetHandler():GetControler()
-	return Duel.GetMatchingGroupCount(M.ffilter, tp, LOCATION_GRAVE, 0, nil)*300
+	return Duel.GetMatchingGroupCount(M.ffilter, tp, LOCATION_GRAVE, 0, nil)*400
 end
 
 function M.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

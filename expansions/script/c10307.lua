@@ -3,9 +3,9 @@ function c10307.initial_effect(c)
 	 --handes
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(10307,0))
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_BATTLE_DAMAGE)
-	e1:SetCondition(c10307.condition)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e4:SetCost(c10307.cost1)
 	e1:SetTarget(c10307.target)
 	e1:SetOperation(c10307.operation)
 	c:RegisterEffect(e1)   
@@ -20,8 +20,14 @@ function c10307.initial_effect(c)
 	e4:SetOperation(c10307.opop)
 	c:RegisterEffect(e4)
 end
-function c10307.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttackTarget()==nil
+function c10307.cfilter2(c)
+	return c:IsAbleToGraveAsCost()
+end
+function c10307.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c10307.cfilter2,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local g=Duel.SelectMatchingCard(tp,c10307.cfilter2,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function c10307.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.GetDecktopGroup(1-tp,1)

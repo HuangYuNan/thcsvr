@@ -85,7 +85,7 @@ function c22516.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 	if lv==16 then
 		Duel.Draw(tp,3,REASON_EFFECT)
-		local ug=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,1,true)
+		local ug=Duel.GetMatchingGroup(aux.TRUE,tp,0x33,0x33,nil):RandomSelect(tp,3,true)
 		if ug:RandomSelect(tp,1,true):IsContains(ug:GetFirst()) then
 			Duel.Hint(11,0,aux.Stringid(22516,4))
 		end

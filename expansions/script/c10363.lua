@@ -1,18 +1,18 @@
 --恋符『非定向光线』
 function c10363.initial_effect(c)
---
+	--
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(c10363.tg1)
 	e1:SetOperation(c10363.op1)
 	c:RegisterEffect(e1)
---  
+	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_REMAIN_FIELD)
 	c:RegisterEffect(e2)
---
+	--
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_HANDES+CATEGORY_DECKDES+CATEGORY_DEFCHANGE+CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -22,7 +22,7 @@ function c10363.initial_effect(c)
 	e3:SetTarget(c10363.tg3)
 	e3:SetOperation(c10363.op3)
 	c:RegisterEffect(e3)
---
+	--
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_HANDES+CATEGORY_DECKDES+CATEGORY_DEFCHANGE+CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -32,9 +32,11 @@ function c10363.initial_effect(c)
 	e4:SetTarget(c10363.tg3)
 	e4:SetOperation(c10363.op3)
 	c:RegisterEffect(e4)
---
+	--
+	local e5=e3:Clone()
+	e5:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e5)
 end
---
 function c10363.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return true end
@@ -62,12 +64,10 @@ function c10363.op1_1(e,tp,eg,ep,ev,re,r,rp)
 		c:ResetFlagEffect(10363)
 	end
 end
---
 function c10363.con3(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(0x200)
 end
---
 function c10363.tg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) and Duel.IsPlayerCanDiscardDeck(tp,1) and Duel.IsPlayerCanDiscardDeck(1-tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,800)
@@ -93,7 +93,7 @@ function c10363.op3(e,tp,eg,ep,ev,re,r,rp,chk)
 				local e3_1=Effect.CreateEffect(c)
 				e3_1:SetType(EFFECT_TYPE_SINGLE)
 				e3_1:SetCode(EFFECT_UPDATE_ATTACK)
-				e3_1:SetValue(-200)
+				e3_1:SetValue(-400)
 				e3_1:SetReset(RESET_EVENT+0x1fe0000)
 				sc:RegisterEffect(e3_1)
 				sc=sg1:GetNext()
@@ -107,7 +107,7 @@ function c10363.op3(e,tp,eg,ep,ev,re,r,rp,chk)
 				local e3_2=Effect.CreateEffect(c)
 				e3_2:SetType(EFFECT_TYPE_SINGLE)
 				e3_2:SetCode(EFFECT_UPDATE_DEFENSE)
-				e3_2:SetValue(-200)
+				e3_2:SetValue(-400)
 				e3_2:SetReset(RESET_EVENT+0x1fe0000)
 				sc:RegisterEffect(e3_2)
 				sc=sg2:GetNext()

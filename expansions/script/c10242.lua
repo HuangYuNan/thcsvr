@@ -18,7 +18,7 @@ function c10242.initial_effect(c)
 	local e1=e2:Clone()
 	e1:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e1)
-   --remove
+	--remove
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(10242,1))
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -27,6 +27,7 @@ function c10242.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
+	e3:SetCost(c10242.hspcost)
 	e3:SetTarget(c10242.rmtg)
 	e3:SetOperation(c10242.rmop)
 	c:RegisterEffect(e3)
@@ -59,7 +60,15 @@ function c10242.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
 end
---
+function c10242.rfilter(c)
+	return c:IsSetCard(0x100) and c:IsAbleToRemoveAsCost()
+end
+function c10242.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c10242.rfilter,tp,LOCATION_GRAVE,0,2,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,c10242.rfilter,tp,LOCATION_GRAVE,0,2,2,e:GetHandler())
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+end
 function c10242.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToRemove() end
