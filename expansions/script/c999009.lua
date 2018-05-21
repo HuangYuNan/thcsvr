@@ -8,6 +8,7 @@ function M.initial_effect(c)
 
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetDescription(aux.Stringid(Mid, 0))
 	e1:SetRange(LOCATION_MZONE)
