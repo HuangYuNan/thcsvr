@@ -27,8 +27,9 @@ function c22075.cfilter1_2(c)
 end
 function c22075.con1(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and (Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0,nil)<1
-		or Duel.IsExistingMatchingCard(c22075.cfilter1_1,tp,LOCATION_GRAVE,0,1,nil) or Duel.IsExistingMatchingCard(c22075.cfilter1_2,tp,LOCATION_ONFIELD,0,2,nil))
+	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and (Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0,nil)<1
+		or Duel.IsExistingMatchingCard(c22075.cfilter1_1,c:GetControler(),LOCATION_GRAVE,0,1,nil)
+		or Duel.IsExistingMatchingCard(c22075.cfilter1_2,c:GetControler(),LOCATION_ONFIELD,0,2,nil))
 end
 --
 function c22075.tfilter2(c)
