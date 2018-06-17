@@ -28,13 +28,14 @@ function c10363.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCondition(c10363.con3)
+	e4:SetCondition(c10363.con4)
 	e4:SetTarget(c10363.tg3)
 	e4:SetOperation(c10363.op3)
 	c:RegisterEffect(e4)
 	--
 	local e5=e3:Clone()
 	e5:SetCode(EVENT_SUMMON_SUCCESS)
+	e5:SetCondition(c10363.con5)
 	c:RegisterEffect(e5)
 end
 function c10363.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -65,11 +66,20 @@ function c10363.op1_1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c10363.con3(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetAttackTarget()
+	return tc and tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(0x200)
+end
+function c10363.con4(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetAttacker()
+	return tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(0x200)
+end
+function c10363.con5(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(0x200)
 end
-function c10363.tg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) and Duel.IsPlayerCanDiscardDeck(tp,1) and Duel.IsPlayerCanDiscardDeck(1-tp,1) end
+function c10363.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) and Duel.IsPlayerCanDiscardDeck(tp,1) and Duel.IsPlayerCanDiscardDeck(1-tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,800)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,1,1-tp,LOCATION_DECK)

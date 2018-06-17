@@ -85,6 +85,9 @@ end
 function c10260.tfilter4_1(c,e,tp,m,f,gc,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsSetCard(0x1013) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
 end
+function c10260.tfilter4_2(c,e)
+	return c:IsSetCard(0x100) and not c:IsImmuneToEffect(e)
+end
 function c10260.tg4(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=c:GetEquipTarget()
@@ -93,7 +96,7 @@ function c10260.tg4(e,tp,eg,ep,ev,re,r,rp,chk)
 		if not c:IsCanBeFusionMaterial() then return false end
 		if not c:IsAbleToGrave() then return false end
 		local chkf=tp
-		local mg=Duel.GetFusionMaterial(tp):Filter(Card.IsSetCard,nil,0x100)
+		local mg=Duel.GetFusionMaterial(tp):Filter(c10260.tfilter4_2,nil,e)
 		if not tc then return false end
 		if not mg:IsContains(tc) then return false end
 		local mg1=Group.CreateGroup()
@@ -111,7 +114,7 @@ function c10260.op4(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsAbleToGrave() then return end
 	if not c:IsCanBeFusionMaterial() then return end
 	local chkf=tp
-	local mg=Duel.GetFusionMaterial(tp):Filter(Card.IsSetCard,nil,0x100)
+	local mg=Duel.GetFusionMaterial(tp):Filter(c10260.tfilter4_2,nil,e)
 	if not sc then return end
 	if not mg:IsContains(sc) then return end
 	local mg1=Group.CreateGroup()
