@@ -28,7 +28,7 @@ function c10358.initial_effect(c)
 	end
 end
 function c10358.cfilter1(c)
-	return c:IsSetCard(0x100) and c:IsFaceup()
+	return c:IsSetCard(0x200) and c:IsFaceup()
 end
 function c10358.con1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,10358)>0 and Duel.IsExistingMatchingCard(c10358.cfilter1,tp,LOCATION_MZONE,0,1,nil)
@@ -42,7 +42,7 @@ end
 function c10358.op1(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,e:GetHandler())
 	local g=Duel.Destroy(sg,REASON_EFFECT)
-	if Duel.Damage(1-tp,g:GetCount()*200,REASON_EFFECT)>0 then
+	if Duel.Damage(1-tp,g*200,REASON_EFFECT)>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
@@ -53,14 +53,18 @@ function c10358.op1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
+function c10358.cfilter(c)
+	return c:IsType(TYPE_SPELL) and c:IsPreviousLocation(LOCATION_HAND)
+end
 function c10358.con2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND)
+	return eg:IsExists(c10358.cfilter,1,nil)
 end
 function c10358.op2(e,tp,eg,ep,ev,re,r,rp)
-	local rg=eg:Filter(Card.IsControler,nil,tp)
+	local fg=eg:Filter(c10358.cfilter,nil)
+	local rg=fg:Filter(Card.IsControler,nil,tp)
 	if rg:GetCount()>1 then eg:Sub(rg) end
 	local num1=rg:GetCount()
-	local num2=eg:GetCount()
+	local num2=fg:GetCount()
 	while num1>0 do
 		if c10358[tp]<=1 then 
 			Duel.RegisterFlagEffect(tp,10358,RESET_PHASE+PHASE_END,0,1)
