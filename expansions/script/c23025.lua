@@ -1,4 +1,3 @@
- 
 --土著神的顶点 洩矢诹访子
 function c23025.initial_effect(c)
 	--synchro summon
@@ -49,12 +48,12 @@ function c23025.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck()
 end
 function c23025.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c23025.filter,tp,0,LOCATION_ONFIELD,1,nil) end
-	local sg=Duel.GetMatchingGroup(c23025.filter,tp,0,LOCATION_ONFIELD,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c23025.filter,tp,0,0x1c,1,nil) end
+	local sg=Duel.GetMatchingGroup(c23025.filter,tp,0,0x1c,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),0,0)
 end
 function c23025.operation(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(c23025.filter,tp,0,LOCATION_ONFIELD,e:GetHandler())
+	local sg=Duel.GetMatchingGroup(c23025.filter,tp,0,0x1c,e:GetHandler())
 	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
 end
 function c23025.atkval(e,c)

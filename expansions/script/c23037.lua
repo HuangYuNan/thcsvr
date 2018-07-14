@@ -30,6 +30,10 @@ function c23037.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,c23037.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
+	Duel.SetChainLimit(c23037.chainlimit)
+end
+function c23037.chainlimit(e,rp,tp)
+	return not e:GetHandler():IsLocation(LOCATION_ONFIELD)
 end
 function c23037.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

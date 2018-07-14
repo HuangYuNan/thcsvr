@@ -1,4 +1,3 @@
- 
 --诹访大战
 function c23034.initial_effect(c)
 	--Activate
@@ -23,7 +22,7 @@ function c23034.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,Duel.GetLP(tp)/2)
 end
 function c23034.filter(c)
-	return not (c:IsCode(23022) or c:IsCode(23025)) and c:IsDestructable()
+	return not (c:IsSetCard(0x498) or c:IsSetCard(0x499))
 end
 function c23034.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c23034.filter,tp,0xe,0xe,1,nil) end

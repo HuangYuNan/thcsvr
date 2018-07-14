@@ -34,6 +34,7 @@ function c10260.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_SZONE)
+	e4:SetCondition(c10260.con)
 	e4:SetTarget(c10260.tg4)
 	e4:SetOperation(c10260.op4)
 	c:RegisterEffect(e4)
@@ -87,6 +88,12 @@ function c10260.tfilter4_1(c,e,tp,m,f,gc,chkf)
 end
 function c10260.tfilter4_2(c,e)
 	return c:IsSetCard(0x100) and not c:IsImmuneToEffect(e)
+end
+function c10260.cfilter(c)
+	return c:IsSetCard(0x279) and c:IsFaceup() and c:GetCode()~=10260
+end
+function c10260.con(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c10260.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
 end
 function c10260.tg4(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

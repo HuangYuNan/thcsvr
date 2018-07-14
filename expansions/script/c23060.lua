@@ -38,5 +38,24 @@ function c23060.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
 	if g:GetCount()==0 then return end
 	local sg=g:RandomSelect(1-tp,1)
-	Duel.SendtoGrave(sg,REASON_EFFECT)
+	if Duel.SendtoGrave(sg,REASON_EFFECT)>0 then
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCountLimit(1)
+		e2:SetCode(EVENT_PHASE+PHASE_END)
+		e2:SetLabel(0)
+		e2:SetOperation(c23060.damop)
+		e2:SetReset(RESET_PHASE+PHASE_END,2)
+		Duel.RegisterEffect(e2,tp)
+	end
+end
+function c23060.damop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local ct=e:GetLabel()
+	if(ct<2) then
+		ct=ct+1
+		e:SetLabel(ct)
+		c:SetTurnCounter(ct)
+		Duel.Damage(1-tp,800,REASON_EFFECT)
+	end
 end

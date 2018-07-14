@@ -19,7 +19,7 @@ function c60605.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetDescription(aux.Stringid(60605,1))
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,60605)
+	e2:SetCountLimit(1,60605+EFFECT_COUNT_CODE_DUEL)
 	e2:SetCondition(aux.exccon)
 	e2:SetCost(c60605.drcost)
 	e2:SetTarget(c60605.drtg)
@@ -44,7 +44,7 @@ function c60605.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c60605.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return eg:GetCount()>0 end
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,eg,eg:GetCount(),1-tp,0)
 end

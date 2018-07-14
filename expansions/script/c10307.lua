@@ -48,13 +48,13 @@ function c10307.sfilter(c)
 end
 function c10307.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10307.sfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
 end
 function c10307.opop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c10307.sfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	local g=Duel.GetMatchingGroup(c10307.sfilter,tp,LOCATION_DECK,0,nil)
+	if g:GetCount()>1 then
+		Duel.SendtoHand(g:RandomSelect(tp,2),nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end

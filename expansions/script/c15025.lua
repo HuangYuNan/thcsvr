@@ -62,6 +62,12 @@ function c15025.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetReset(RESET_EVENT+0x1fe0000)
 			g:GetFirst():RegisterEffect(e1)
+			local e3=Effect.CreateEffect(e:GetHandler())
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetCode(EFFECT_CANNOT_ATTACK)
+			e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+			e3:SetReset(RESET_EVENT+0x1fe0000)
+			g:GetFirst():RegisterEffect(e3)
 			Duel.SpecialSummonComplete()
 		end
 	end

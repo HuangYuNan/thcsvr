@@ -7,9 +7,9 @@ function c10304.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
-	e1:SetCost(c10304.cos)
 	e1:SetCountLimit(1,10304)
 	e1:SetCondition(c10304.con1)
+	e1:SetCost(c10304.cos)
 	e1:SetTarget(c10304.tg1)
 	e1:SetOperation(c10304.op1)
 	c:RegisterEffect(e1)
@@ -33,15 +33,16 @@ function c10304.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c10304.con1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==1 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function c10304.cfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost()
 end
 function c10304.cos(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c10350.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,c10350.cfilter,tp,LOCATION_HAND,0,1,1,nil)
+	if chk==0 then 
+		local g=Duel.GetMatchingGroup(c10350.cfilter,tp,LOCATION_HAND,0,nil)
+		local ct=g:GetCount()
+		return ct==Duel.GetFieldGroupCount(tp,LOCATION_HAND,0) and ct>0 end
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function c10304.tg1(e,tp,eg,ep,ev,re,r,rp,chk)

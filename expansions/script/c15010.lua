@@ -1,4 +1,3 @@
- 
 --雪
 function c15010.initial_effect(c)
 	--immune effect
@@ -45,7 +44,7 @@ function c15010.infilter(c)
 	return c:IsSetCard(0x150) and c:IsFaceup()
 end
 function c15010.indcon(e)
-	return Duel.IsExistingMatchingCard(c15010.infilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(c15010.infilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,3,e:GetHandler())
 end
 function c15010.efilter(e,te)
 	return te:IsActiveType(TYPE_MONSTER)

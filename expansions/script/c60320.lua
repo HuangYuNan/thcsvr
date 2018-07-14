@@ -24,7 +24,7 @@ function c60320.initial_effect(c)
 	e2:SetCondition(c60320.incon)
 	e2:SetTarget(c60320.tgtg)
 	e2:SetValue(aux.imval1)
-	c:RegisterEffect(e2)
+	--c:RegisterEffect(e2)
 	--去世
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_TOGRAVE)

@@ -64,9 +64,9 @@ function c10242.rfilter(c)
 	return c:IsSetCard(0x100) and c:IsAbleToRemoveAsCost()
 end
 function c10242.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c10242.rfilter,tp,LOCATION_GRAVE,0,2,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c10242.rfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c10242.rfilter,tp,LOCATION_GRAVE,0,2,2,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c10242.rfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c10242.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

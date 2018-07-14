@@ -57,13 +57,13 @@ function c10240.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function c10240.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_DECK,7,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_DECK,5,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,4,tp,LOCATION_EXTRA)
 end
 function c10240.tdop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)<7 then return end
-	local cg=Duel.GetDecktopGroup(1-tp,7)
-	if cg:GetCount()==7 then Duel.ConfirmCards(tp,cg) end
+	if Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)<5 then return end
+	local cg=Duel.GetDecktopGroup(1-tp,5)
+	if cg:GetCount()==5 then Duel.ConfirmCards(tp,cg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=cg:Select(tp,4,4,nil)
 	if g:GetCount()>0 then

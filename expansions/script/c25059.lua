@@ -43,14 +43,13 @@ function c25059.initial_effect(c)
 	e5:SetTarget(c25059.stg)
 	e5:SetOperation(c25059.sop)
 	c:RegisterEffect(e5)
-	--cant be target
+	--magic sweet
 	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e6:SetRange(LOCATION_SZONE)
-	e6:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e6:SetCondition(c25059.indcon)
-	e6:SetValue(1)
+	e6:SetCode(EVENT_DAMAGE)
+	e6:SetCondition(c25059.vacon)
+	e6:SetOperation(c25059.vaop)
 	c:RegisterEffect(e6)
 end
 function c25059.cfilter(c)
@@ -88,6 +87,10 @@ end
 function c25059.ifilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND)
 end
-function c25059.indcon(e)
-	return Duel.IsExistingMatchingCard(c25059.ifilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+function c25059.vacon(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
+	return ph==PHASE_STANDBY and Duel.IsExistingMatchingCard(c25059.ifilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) and ep~=tp 
+end
+function c25059.vaop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Recover(tp,ev,REASON_EFFECT)
 end

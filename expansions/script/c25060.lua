@@ -36,7 +36,6 @@ function c25060.initial_effect(c)
 	--spell set
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(25060,0))
-	e5:SetCategory(CATEGORY_TOHAND)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_NO_TURN_RESET)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetCountLimit(1)
@@ -44,14 +43,13 @@ function c25060.initial_effect(c)
 	e5:SetTarget(c25060.stg)
 	e5:SetOperation(c25060.sop)
 	c:RegisterEffect(e5)
-	--cant be target
+	--magic sweet
 	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e6:SetRange(LOCATION_SZONE)
-	e6:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e6:SetCondition(c25060.indcon)
-	e6:SetValue(1)
+	e6:SetCode(EVENT_DAMAGE)
+	e6:SetCondition(c25060.vacon)
+	e6:SetOperation(c25060.vaop)
 	c:RegisterEffect(e6)
 end
 function c25060.cfilter(c)
@@ -74,7 +72,7 @@ end
 function c25060.stg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c25060.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c25060.filter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectTarget(tp,c25060.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
@@ -89,6 +87,10 @@ end
 function c25060.ifilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND)
 end
-function c25060.indcon(e)
-	return Duel.IsExistingMatchingCard(c25060.ifilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+function c25060.vacon(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
+	return ph==PHASE_STANDBY and Duel.IsExistingMatchingCard(c25060.ifilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) and ep~=tp 
+end
+function c25060.vaop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Recover(tp,ev,REASON_EFFECT)
 end

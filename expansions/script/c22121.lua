@@ -1,4 +1,3 @@
- 
 --禁忌「恋的迷路」
 function c22121.initial_effect(c)
 	--draw
@@ -55,8 +54,7 @@ function c22121.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c22121.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,22121)
-	local g=Duel.GetMatchingGroup(c22121.thfilter,tp,LOCATION_GRAVE,0,nil)
-	local tc=g:GetMaxGroup(Card.GetSequence):GetFirst()
+	local tc=Duel.GetMatchingGroup(c22121.thfilter,tp,LOCATION_GRAVE,0,nil):GetFirst()
 	if tc and tc:IsAbleToHand() then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(tp,tc)
