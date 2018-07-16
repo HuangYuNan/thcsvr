@@ -63,12 +63,13 @@ function c10262.tfilter1_2_1(c,e,fc)
 		and ((checknum==1 and not c:IsSetCard(0x100)) or checknum==2)
 		and c:IsAbleToRemove()
 		and c:IsType(TYPE_MONSTER)
+		and Duel.GetLocationCountFromEx(tp,tp,c,fc)>0
 		and not c:IsImmuneToEffect(e)
 end
 function c10262.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local b1=Duel.IsExistingTarget(c10262.tfilter1_1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-	local b2=Duel.IsExistingMatchingCard(c10262.tfilter1_2,tp,LOCATION_EXTRA,0,1,nil,e,tp) and Duel.GetLocationCountFromEx(tp)>0
+	local b2=Duel.IsExistingMatchingCard(c10262.tfilter1_2,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 	if chk==0 then return (b1 or b2) end
 	local off=1
 	local ops={}
@@ -116,6 +117,7 @@ function c10262.op1(e,tp,eg,ep,ev,re,r,rp)
 		if sg:GetCount()<1 then return end
 		if Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)<1 then return end
 		if Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)<1 then return end
+		tc:CompleteProcedure()
 		Duel.Equip(tp,c,tc)
 	end
 end

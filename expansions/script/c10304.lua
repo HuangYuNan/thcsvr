@@ -39,8 +39,8 @@ function c10304.cfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost()
 end
 function c10304.cos(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetMatchingGroup(c10350.cfilter,tp,LOCATION_HAND,0,nil)
 	if chk==0 then 
-		local g=Duel.GetMatchingGroup(c10350.cfilter,tp,LOCATION_HAND,0,nil)
 		local ct=g:GetCount()
 		return ct==Duel.GetFieldGroupCount(tp,LOCATION_HAND,0) and ct>0 end
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
