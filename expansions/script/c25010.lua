@@ -66,7 +66,7 @@ function c25010.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function c25010.filter(c)
-	return c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsType(TYPE_MONSTER)
 end
 function c25010.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c25010.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
