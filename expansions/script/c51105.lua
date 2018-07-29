@@ -54,7 +54,5 @@ function c51105.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c51105.sccon(e)
-	local seq=e:GetHandler():GetSequence()
-	local tc=Duel.GetFieldCard(e:GetHandlerPlayer(),LOCATION_SZONE,13-seq)
-	return tc and tc:IsCode(51109)
+	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),51109)
 end
