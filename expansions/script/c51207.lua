@@ -20,8 +20,8 @@ function c51207.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c51207.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc1=Duel.GetFieldCard(tp,LOCATION_SZONE,6)
-	local tc2=Duel.GetFieldCard(tp,LOCATION_SZONE,7)
+	local tc1=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
+	local tc2=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
 	if not tc1 or not tc2 or not tc1:IsSetCard(0x511) or not tc2:IsSetCard(0x511) then return false end
 	local scl1=tc1:GetLeftScale()
 	local scl2=tc2:GetRightScale()
@@ -29,8 +29,8 @@ function c51207.condition(e,tp,eg,ep,ev,re,r,rp)
 	return scl1==1 and scl2==7
 end
 function c51207.condition2(e,tp,eg,ep,ev,re,r,rp)
-	local tc1=Duel.GetFieldCard(tp,LOCATION_SZONE,6)
-	local tc2=Duel.GetFieldCard(tp,LOCATION_SZONE,7)
+	local tc1=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
+	local tc2=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
 	if not tc1 or not tc2 or not tc1:IsSetCard(0x511) or not tc2:IsSetCard(0x511) then return false end
 	local scl1=tc1:GetLeftScale()
 	local scl2=tc2:GetRightScale()
