@@ -55,8 +55,7 @@ function c21100.initial_effect(c)
 end
 function c21100.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==Duel.GetTurnPlayer() then
-			local val=(ev)
-			c21100[ep]=val+c21100[ep]
+			c21100[ep]=ev+c21100[ep]
 	end
 end
 function c21100.clear(e,tp,eg,ep,ev,re,r,rp)

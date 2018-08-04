@@ -33,7 +33,7 @@ function M.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
 	local c=e:GetHandler()
 	local chkf = Duel.GetLocationCountFromEx(tp) > 0 and PLAYER_NONE or tp
-	if chk==0 then return rc and c and ep == tp and rc:IsAbleToDeck() and c:IsAbleToDeck() 
+	if chk==0 then return rc and c and ep == tp and rc:IsAbleToDeck() and c:IsAbleToDeck() and not rc:IsLocation(LOCATION_DECK)
 		and Duel.IsExistingMatchingCard(M.filter, tp, LOCATION_EXTRA, 0, 1, nil, e, tp, Group.FromCards(rc, c), chkf) end
 	Duel.SetOperationInfo(0, CATEGORY_SPECIAL_SUMMON, nil, 1, tp, LOCATION_EXTRA)
 end
@@ -44,7 +44,8 @@ function M.operation(e,tp,eg,ep,ev,re,r,rp)
 	local chkf = Duel.GetLocationCountFromEx(tp) > 0 and PLAYER_NONE or tp
 	if not rc or not c then return end
 	local mg = Group.FromCards(rc, c)
-	if ep == tp and rc:IsAbleToDeck() and c:IsAbleToDeck() and Duel.IsExistingMatchingCard(M.filter, tp, LOCATION_EXTRA, 0, 1, nil, e, tp, Group.FromCards(rc, c), chkf) then
+	if ep == tp and rc:IsAbleToDeck() and c:IsAbleToDeck() and not rc:IsLocation(LOCATION_DECK) 
+		and Duel.IsExistingMatchingCard(M.filter, tp, LOCATION_EXTRA, 0, 1, nil, e, tp, Group.FromCards(rc, c), chkf) then
 		local g = Duel.SelectMatchingCard(tp, M.filter, tp, LOCATION_EXTRA, 0, 1, 1, nil, e, tp, Group.FromCards(rc, c), chkf)
 		Duel.SendtoDeck(mg, nil, 2, REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 		Duel.SpecialSummon(g, SUMMON_TYPE_FUSION, tp, tp, false, false, POS_FACEUP)
