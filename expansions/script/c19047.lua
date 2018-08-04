@@ -26,27 +26,22 @@ function c19047.initial_effect(c)
 	e2:SetCondition(c19047.con2)
 	e2:SetOperation(c19047.op2)
 	c:RegisterEffect(e2)
---
 end
---
 c19047.hana_mat={
 aux.FilterBoolFunction(Card.IsFusionSetCard,0x100),
 aux.FilterBoolFunction(Card.IsFusionSetCard,0x115),
 }
---
 function c19047.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	if chk==0 then return true end
 end
---
 function c19047.cfilter1(c)
-	return c:IsType(TYPE_MONSTER) and c:IsReason(REASON_DESTROY)
+	return c:IsType(TYPE_MONSTER) and c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c19047.con1(e,tp,eg,ep,ev,re,r,rp)
 	local sg=eg:Filter(c19047.cfilter1,nil)
 	return sg:GetCount()==1
 end
---
 function c19047.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local sg=eg:Filter(c19047.cfilter1,nil)
@@ -65,7 +60,6 @@ function c19047.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
---
 function c19047.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
@@ -78,7 +72,6 @@ function c19047.op1(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
---
 function c19047.con2(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp 
 		and re 
@@ -90,9 +83,7 @@ function c19047.con2(e,tp,eg,ep,ev,re,r,rp)
 		and re:IsHasType(EFFECT_TYPE_ACTIONS) 
 		and not re:IsHasType(EFFECT_TYPE_CONTINUOUS)
 end
---
 function c19047.op2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,19047)
 	Duel.Damage(1-tp,ev,REASON_EFFECT)
 end
---

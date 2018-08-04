@@ -15,7 +15,7 @@ function c61207.initial_effect(c)
 	e1:SetOperation(c61207.operation)
 	c:RegisterEffect(e1)
 	--to grave
-	local e2 = Effect.CreateEffect(c)
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetDescription(aux.Stringid(61207,1))
 	e2:SetRange(LOCATION_GRAVE)
@@ -23,7 +23,6 @@ function c61207.initial_effect(c)
 	e2:SetCost(c61207.drcost)
 	e2:SetTarget(c61207.drtg)
 	e2:SetOperation(c61207.drop)
-	e2:SetCountLimit(1)
 	c:RegisterEffect(e2)
 end
 c61207.DescSetName = 0x229
