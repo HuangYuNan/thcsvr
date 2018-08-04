@@ -1,4 +1,3 @@
- 
 --冰华⑨咲
 function c22089.initial_effect(c)
 	--Activate
@@ -34,9 +33,7 @@ function c22089.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c22089.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		local tc=g:GetFirst()
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-		tc:CompleteProcedure()
-		Duel.SpecialSummonComplete()
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		local tc=g:GetFirst()
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetCategory(CATEGORY_TODECK)
