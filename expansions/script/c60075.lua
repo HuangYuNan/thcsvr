@@ -13,7 +13,7 @@ function c60075.initial_effect(c)
 	--pos
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(60075,0))
-	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetCategory(CATEGORY_POSITION+CATEGORY_ATKCHANGE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -32,15 +32,18 @@ function c60075.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(aux.TURE,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectTarget(tp,aux.TURE,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end
 function c60075.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		if tc:IsType(TYPE_LINK) then
-			Duel.Destroy(tc,REASON_EFFECT)
-		else
+	if tc then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT+0x1ff0000)
+		e1:SetValue(tc:GetAttack())
+		e:GetHandler():RegisterEffect(e1)
+		if tc:IsRelateToEffect(e) and Duel.SelectYesNo(tp,aux.Stringid(60075,1)) then
 			Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 		end
 	end

@@ -1,6 +1,6 @@
- 
 --逆袭的天邪鬼✿鬼人正邪
 function c29016.initial_effect(c)
+c29016.dfc_front_side=29084
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

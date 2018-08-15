@@ -1,4 +1,3 @@
- 
 --道符「道家萌芽」
 function c27027.initial_effect(c)
 	--Activate
@@ -30,7 +29,7 @@ function c27027.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c27027.tfilter(c)
-	return c:IsSetCard(0x194) and c:IsAbleToHand()
+	return (c:IsSetCard(0x194) or c:IsSetCard(0x119)) and c:IsAbleToHand()
 end
 function c27027.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

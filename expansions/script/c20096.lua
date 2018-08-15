@@ -1,4 +1,3 @@
- 
 --反魂蝶 -一分咲-
 function c20096.initial_effect(c)
 	--Activate2

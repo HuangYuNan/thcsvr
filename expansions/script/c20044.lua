@@ -1,4 +1,3 @@
- 
 --Lost·魂魄妖忌
 function c20044.initial_effect(c)
 	c:EnableReviveLimit()
@@ -98,7 +97,7 @@ function c20044.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c20044.filter(c)
-	return c:IsCode(20026) and c:IsAbleToHand()
+	return c:IsCode(20026) and c:IsAbleToHand() and c:IsFaceup()
 end
 function c20044.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

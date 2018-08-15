@@ -41,7 +41,7 @@ end
 --
 function c10222.con4(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT)
+	return c:IsReason(REASON_EFFECT) and c:GetPreviousLocation()~=LOCATION_DECK
 end
 --
 function c10222.op4(e,tp,eg,ep,ev,re,r,rp)

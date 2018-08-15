@@ -1,5 +1,6 @@
 --古神灵✿布都姬
 function c27113.initial_effect(c)
+c27113.dfc_front_side=27127
 	c:EnableReviveLimit()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
