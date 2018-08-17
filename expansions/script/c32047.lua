@@ -5,7 +5,7 @@ c32047.dfc_front_side=32035
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(c32047.con1)
 	e1:SetValue(1800)
