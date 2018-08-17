@@ -1,5 +1,6 @@
 --四季隐星-究极的绝对秘神✿摩多罗隐岐奈
 function c32047.initial_effect(c)
+c:EnableReviveLimit()
 c32047.dfc_front_side=32035
 --
 	local e1=Effect.CreateEffect(c)

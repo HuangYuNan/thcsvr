@@ -1,5 +1,6 @@
 --正义的伙伴✿鬼人正邪
 function c29084.initial_effect(c)
+c:EnableReviveLimit()
 c29084.dfc_front_side=29016
 --
 	local e1=Effect.CreateEffect(c)

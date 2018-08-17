@@ -1,5 +1,6 @@
 --过于危险的背景舞者✿尔子田里乃
 function c32045.initial_effect(c)
+c:EnableReviveLimit()
 c32045.dfc_front_side=32018
 --
 	local e1=Effect.CreateEffect(c)

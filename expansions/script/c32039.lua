@@ -1,5 +1,6 @@
 --常夜之神✿爱塔妮缇拉尔瓦
 function c32039.initial_effect(c)
+c:EnableReviveLimit()
 c32039.dfc_front_side=32001
 --
 	local e1=Effect.CreateEffect(c)
