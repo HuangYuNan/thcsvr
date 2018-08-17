@@ -8,6 +8,7 @@ c32039.dfc_front_side=32001
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetCondition(c32039.con1)
 	e1:SetTarget(c32039.tg1)
 	e1:SetOperation(c32039.op1)

@@ -27,7 +27,7 @@ function c32020.con(e,tp,eg,ep,ev,re,r,rp)
 		or Duel.IsExistingMatchingCard(c32020.cfilter1,tp,LOCATION_PZONE,0,1,nil)
 end
 function c32020.tfilter(c)
-	return c:IsFaceup() and c:IsCanTurnSet()
+	return not c:IsType(TYPE_LINK)
 end
 function c32020.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c32020.tfilter(chkc) end
@@ -45,6 +45,8 @@ function c32020.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local mc=Duel.SelectMatchingCard(tp,c32020.tobirafilter,tp,0x3,0,1,1,nil):GetFirst()
 	local tc=Duel.GetFirstTarget()
+	local c=e:GetHandler()
+	local mcode=tc:GetOriginalCode()
 	if not tc:IsRelateToEffect(e) then return end
 	if not tc:IsLocation(LOCATION_MZONE) then return end 
 	if Duel.ChangePosition(tc,POS_FACEDOWN_ATTACK,POS_FACEDOWN_DEFENSE,POS_FACEDOWN_ATTACK,POS_FACEDOWN_DEFENSE)>0 then
@@ -57,5 +59,23 @@ function c32020.op(e,tp,eg,ep,ev,re,r,rp)
 			Duel.GetControl(tc,tp)
 		end
 		Duel.SendtoGrave(mc,REASON_EFFECT)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_ADJUST)
+		e2:SetRange(LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_HAND+LOCATION_EXTRA)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+		e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+			local c=e:GetHandler()
+			if not mcode then return end
+			c:SetEntityCode(mcode)
+			c:ReplaceEffect(mcode,0,0)
+			Duel.SetMetatable(c,_G["c"..mcode])
+		end)
+		tc:RegisterEffect(e2)	
+		local e3=e2:Clone()
+		e3:SetRange(0)
+		e3:SetCode(EVENT_LEAVE_FIELD)
+		e3:SetCode(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		tc:RegisterEffect(e3)
 	end
 end

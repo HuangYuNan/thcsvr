@@ -81,7 +81,7 @@ end
 function c32012.op3(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if ep~=tp then return end
-	if not rc:IsHasCategory(32035) then return end
+	if not re:IsHasCategory(32035) then return end
 	Duel.SetChainLimit(c32012.chain3)
 end
 --
